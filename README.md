@@ -1,0 +1,2 @@
+# Globetrotter
+Group project
