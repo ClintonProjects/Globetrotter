@@ -1,0 +1,22 @@
+* {
+    margin: 0 !important;
+    padding: 0 !important;
+    /* border: 0.0 px solid red; */
+}
+
+footer {
+    width: 100%;
+}
+
+.bt {
+    /* border-top: 1.5px solid white;
+    border-bottom: 1.5px solid white; */
+    /* padding-top: 0.5% !important;
+    padding-bottom: 0.5% !important; */
+    margin-bottom: 0.2% !important;
+    margin-top: 0.2% !important
+  }
+
+.margin-left-1 {
+    padding-left: 10%;
+}
