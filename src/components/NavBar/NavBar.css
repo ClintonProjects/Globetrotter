@@ -1,0 +1,33 @@
+/*start of nav bar styling*/
+#bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 8vh;
+  padding: 0 2vw;
+  background: #000;
+  color: #FFF;
+  font-size: 1.15rem;
+}
+.logo {
+  height: 15px;
+  width: 10vw;
+}
+.links {
+  height: 15px;
+  width: 60vw
+}
+.settings {
+  height: 15px;
+  width: 15vw;
+}
+.burger {
+  cursor: pointer;
+}
+.burger div {
+  height: 2px;
+  width: 30px;
+  background: #FFF;
+  margin: 3px;
+}
+/*end of nav bar styling*/
