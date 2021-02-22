@@ -3,11 +3,11 @@ import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">Team 8
-      </div>
-    );
-  }
+    render() {
+        return ( <
+            div className = "App" > Team 8 test <
+            /div>
+        );
+    }
 }
 export default App;
