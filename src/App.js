@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import Login from "./Login";
 
 class App extends Component {
   render() {
+    const loginPage = <Login></Login>;
     return (
-      <div className="App">Team 8
+      <div className="App">
+        {loginPage}
+      
+        
+        Team 8
       </div>
     );
   }
