@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as FaIcons from "react-icons/fa";
 import "./NavBar.css";
 
 class NavBar extends Component {
@@ -12,9 +13,15 @@ class NavBar extends Component {
             <div id="bottom"></div>
           </div>
 
-          <div className="logo"></div>
           <div className="links"></div>
-          <div className="settings"></div>
+          <div className="logo">
+          <FaIcons.FaGlobeEurope />
+          </div>
+
+          <div className="settings">
+            <FaIcons.FaCog />
+            <FaIcons.FaUser />
+          </div>
 
         </nav>
       </>
