@@ -13,9 +13,15 @@ class NavBar extends Component {
             <div id="bottom"></div>
           </div>
 
-          <div className="links"></div>
           <div className="logo">
           <FaIcons.FaGlobeEurope />
+          </div>
+
+          <div className="links">
+            <span>Home</span>
+            <span>Map</span>
+            <span>Photos</span>
+            <span>About</span>
           </div>
 
           <div className="settings">
