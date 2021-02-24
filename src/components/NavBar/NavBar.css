@@ -27,12 +27,18 @@
     height: inherit;
     width: 60vw
 }
+.links span{
+    cursor: pointer;
+}
 .settings {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: inherit;
     width: 10vw;
+}
+.settings span{
+    cursor: pointer;
 }
 .burger {
     cursor: pointer;

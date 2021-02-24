@@ -25,8 +25,8 @@ class NavBar extends Component {
           </div>
 
           <div className="settings">
-            <FaIcons.FaCog />
-            <FaIcons.FaUser />
+          <span><FaIcons.FaCog /></span>
+          <span><FaIcons.FaUser /></span>
           </div>
 
         </nav>
