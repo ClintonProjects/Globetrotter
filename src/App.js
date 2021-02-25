@@ -7,7 +7,7 @@ import 'firebase/database';
 class App extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             countryList: [],
             emailData: [],
@@ -18,7 +18,7 @@ class App extends Component {
     getMessagesFromDatabase() {
         //download and create json array of product data
         let ref1 = Firebase.database().ref('country_list');
-    
+
         ref1.on('value', (snapshot) => {
           // json array
           let msgData = snapshot.val();
@@ -60,10 +60,8 @@ class App extends Component {
     this.setState({ emailData: localEmails });
   }
     render() {
-        return ( 
-        <div className = "App" > Team 9 test 
-        <Login></Login>
-        
+        return (
+        <div className="App">
         </div>
         );
     }
