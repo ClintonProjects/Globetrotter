@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Map.css";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import geodata from "@amcharts/amcharts4-geodata/worldLow";
