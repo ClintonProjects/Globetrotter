@@ -19,6 +19,41 @@ class Map extends Component {
         map.series.push(polygonSeries);
         polygonSeries.useGeodata = true;
         polygonSeries.exclude = ["AQ"];
+
+        let polygonTemplate = polygonSeries.mapPolygons.template;
+        // set base color for map
+        // polygonTemplate.fill = am4core.color("#98FB98");
+
+        polygonSeries.data = [{
+            "id": "IE",
+            "name": "Ireland",
+            "fill": am4core.color("#000")
+          }, {
+            "id": "IT",
+            "name": "Italy",
+            "fill": am4core.color("#000")
+          }, {
+            "id": "ES",
+            "name": "Spain",
+            "fill": am4core.color("#000")
+          }, {
+            "id": "SE",
+            "name": "Sweden",
+            "fill": am4core.color("#000")
+          }, {
+            "id": "JP",
+            "name": "Japan",
+            "fill": am4core.color("#000")
+          }];
+          polygonTemplate.propertyFields.fill = "fill";
+
+          this.map = map;
+    }
+    componentWillUnmount() {
+        if (this.map) {
+          this.map.dispose();
+        }
+    }
   render() {
     return (
         <>
