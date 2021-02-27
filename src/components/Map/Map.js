@@ -13,6 +13,12 @@ class Map extends Component {
 
         // set the map projection type
         map.projection = new am4maps.projections.NaturalEarth1();
+
+        // draw the countries using polygons
+        let polygonSeries = new am4maps.MapPolygonSeries();
+        map.series.push(polygonSeries);
+        polygonSeries.useGeodata = true;
+        polygonSeries.exclude = ["AQ"];
   render() {
     return (
         <>
