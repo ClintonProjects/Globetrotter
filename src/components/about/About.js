@@ -12,6 +12,8 @@ class About extends Component {
             <hr/> 
             <h5>Company:</h5>
             <p>Globetrotter Point</p><br/>
+            <p>TODO company description
+            </p>
             <h5>Address:</h5>
             <p>Maynooth University,<br/>
                 Maynooth,<br/>
