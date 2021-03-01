@@ -92,8 +92,8 @@ class App extends Component {
         return (
         <div className="App">
 
-            <Help/>
-            {/*<ContactUs/>*/}
+            {/*<Help/>*/}
+            <ContactUs/>
             <br/>
             {/*<About/>*/}
 
