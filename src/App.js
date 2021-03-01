@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Login from "./components/login/login";
+import Logout from "./components/login/logout";
 import firebase from './components/myFirebaseConfig.js';
-import Firebase from 'firebase/app';
+import Firebase from 'firebase';
 import 'firebase/database';
 import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
@@ -14,15 +15,25 @@ class App extends Component {
         this.state = {
             countryList: [],
             emailData: [],
+            authenticated: false,
+            currentUser: null
         };
         this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
         this.addItemToEmails = this.addItemToEmails.bind(this);
     }
+    async componentDidMount() {
+      try {
+        this.getMessagesFromDatabase();
+      } catch (error) {
+        console.log(error);
+        this.setState({ errorMsg: error });
+      } // end of try catch
+    } // end of componentDidMount()
     getMessagesFromDatabase() {
         //download and create json array of product data
-        let ref1 = Firebase.database().ref('country_list');
+        let ref = Firebase.database().ref('country_list');
 
-        ref1.on('value', (snapshot) => {
+        ref.on('value', (snapshot) => {
           // json array
           let msgData = snapshot.val();
           let newMessagesFromDB1 = [];
@@ -38,7 +49,22 @@ class App extends Component {
           this.setState({ countryList: newMessagesFromDB1 });
         });
     }
-
+     //check if user is authenticated,
+  // if they are set to true, otherwise false
+  // currentUser holds the user object (if logged on)
+  componentDidMount() {
+    Firebase.auth().onAuthStateChanged((user) => {
+      user
+        ? this.setState(() => ({
+            authenticated: true,
+            currentUser: user
+          }))
+        : this.setState(() => ({
+            authenticated: false,
+            currentUser: null
+          }));
+    });
+  }
     /* append a new email address to the JSON array in firebase */
   addItemToEmails(address) {
     // get the current state array for emails
@@ -70,7 +96,7 @@ class App extends Component {
             {/*<ContactUs/>*/}
             <br/>
             {/*<About/>*/}
-            
+
         </div>
         );
     }

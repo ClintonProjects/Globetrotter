@@ -1,7 +1,7 @@
 /*start of nav bar styling*/
-#bar *{
-    /* border: white solid 1px; */
-}
+/* #bar *{
+    border: white solid 1px;
+} */
 #bar {
     display: flex;
     justify-content: space-between;
