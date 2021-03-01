@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import Login from "./components/login/login";
+import Footer from "./components/footer/Footer";
 import Logout from "./components/login/logout";
 import firebase from './components/myFirebaseConfig.js';
 import Firebase from 'firebase';
 import 'firebase/database';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 
 class App extends Component {
     constructor(props) {
@@ -87,8 +95,19 @@ class App extends Component {
   }
     render() {
         return (
-        <div className="App">
-        
+          <div className="App">
+          <Router>
+            <div>
+              <Switch>
+                <Route path="/about" component={Footer}>
+                </Route>
+                <Route path="/login" component={Login}>
+                </Route>
+                <Route path="/">
+                </Route>
+              </Switch>
+            </div>
+          </Router>
         </div>
         );
     }
