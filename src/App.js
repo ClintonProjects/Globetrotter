@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Login from "./components/login/login";
 import Logout from "./components/login/logout";
+
 import Rego from "./components/login/rego";
 import firebase from "./components/myFirebaseConfig";
 import Firebase from 'firebase/app';
 import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
 import Help from "./components/help/Help";
+import Map from "./components/Map/Map";
 
 class App extends Component {
     constructor(props) {
@@ -66,9 +68,14 @@ class App extends Component {
    
     render() {
         return (
-        <div className="App"> 
-            
-            <Login/>
+
+        <div className="App">
+            {/*<Help/>*/}
+            {/*<ContactUs/>*/}
+            <Map/>
+            <br/>
+            {/*<About/>*/}
+
         </div>
         );
     }
