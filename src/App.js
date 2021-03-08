@@ -5,6 +5,7 @@ import Footer from "./components/footer/Footer";
 import firebase from './components/myFirebaseConfig.js';
 import Firebase from 'firebase';
 import 'firebase/database';
+// import Settings from " ";
 import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
 import Help from "./components/help/Help";
