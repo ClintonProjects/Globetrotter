@@ -34,9 +34,6 @@ export class RegisterMessage extends Component {
         </div>
         <Router>
           <Switch>
-            <div onClick={() => null}>
-              <Map />
-            </div>
           </Switch>
         </Router>
       </div>

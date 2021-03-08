@@ -8,7 +8,7 @@ import Firebase from 'firebase/app';
 import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
 import Help from "./components/help/Help";
-import Map from "./components/Map/Map";
+import Preloginmap from "./views/PreLoginMap/Preloginmap";
 
 class App extends Component {
     constructor(props) {
@@ -68,14 +68,8 @@ class App extends Component {
    
     render() {
         return (
-
-        <div className="App">
-            {/*<Help/>*/}
-            {/*<ContactUs/>*/}
-            <Map/>
-            <br/>
-            {/*<About/>*/}
-
+        <div>
+            <Preloginmap/>
         </div>
         );
     }
