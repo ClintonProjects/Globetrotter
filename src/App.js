@@ -5,10 +5,10 @@ import Footer from "./components/footer/Footer";
 import firebase from './components/myFirebaseConfig.js';
 import Firebase from 'firebase';
 import 'firebase/database';
-// import Settings from " ";
 import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
 import Help from "./components/help/Help";
+import Map from "./components/Map/Map";
 
 class App extends Component {
     constructor(props) {
@@ -94,9 +94,15 @@ class App extends Component {
         return (
         <div className="App">
             {/*<Help/>*/}
-            <ContactUs/>
+            {/*<ContactUs/>*/}
+            <Map/>
             <br/>
             {/*<About/>*/}
+<<<<<<< HEAD
+=======
+            
+
+>>>>>>> 0054b2802d8cd96955de402754c843ec5456e556
         </div>
         );
     }
