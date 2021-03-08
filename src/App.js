@@ -4,10 +4,10 @@ import Logout from "./components/login/logout";
 import firebase from './components/myFirebaseConfig.js';
 import Firebase from 'firebase';
 import 'firebase/database';
-// import Settings from " ";
 import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
 import Help from "./components/help/Help";
+import Map from "./components/Map/Map";
 
 class App extends Component {
     constructor(props) {
@@ -94,9 +94,11 @@ class App extends Component {
         <div className="App">
 
             {/*<Help/>*/}
-            <ContactUs/>
+            {/*<ContactUs/>*/}
+            <Map/>
             <br/>
             {/*<About/>*/}
+            
 
         </div>
         );
