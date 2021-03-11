@@ -9,6 +9,7 @@ import About from "./components/about/About";
 import ContactUs from "./components/contactUs/ContactUs";
 import Help from "./components/help/Help";
 import Preloginmap from "./views/PreLoginMap/Preloginmap";
+import MapView from "./views/MapView/MapView";
 
 class App extends Component {
     constructor(props) {
@@ -69,7 +70,8 @@ class App extends Component {
     render() {
         return (
         <div>
-            <Preloginmap/>
+            <MapView/>
+            {/*<Preloginmap/>*/}
         </div>
         );
     }
