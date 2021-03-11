@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Login from "./components/login/login";
 import Logout from "./components/login/logout";
-
+import User from "./components/User/User.js";
 import Rego from "./components/login/rego";
 import firebase from "./components/myFirebaseConfig";
 import Firebase from 'firebase/app';
@@ -70,8 +70,12 @@ class App extends Component {
     render() {
         return (
         <div>
-            <MapView/>
-            {/*<Preloginmap/>*/}
+            {this.state.currentUser !== null && (
+              <i>Logged on as {this.state.currentUser.email}</i>
+            )}{/*just there for testing purposes currently*/}
+            {this.state.authenticated && <MapView/>}
+            {this.state.authenticated && <Logout/>}{/*just here while routing not working*/}
+            {!this.state.authenticated && <User/>}{/*just here while routing not working - with routing will be to PreLogInView*/}
         </div>
         );
     }
