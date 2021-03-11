@@ -3,7 +3,7 @@ import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./rego.css";
 
-class Rego2 extends Component {
+class Rego extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -69,4 +69,4 @@ class Rego2 extends Component {
         );
     }
 }
-export default Rego2;
+export default Rego;
