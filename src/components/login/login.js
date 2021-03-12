@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import Firebase from "firebase";
+import Firebase from "firebase/app";
+import 'firebase/auth';
+import "./login.css";
+import RegisterMessage from "../Pre-LoginMap/RegisterMessage";
 
 class Login extends Component {
   constructor(props) {
@@ -12,8 +15,11 @@ class Login extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
-
+  changeView(){
+    console.log("testing function")
+  }
   handleInputChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -33,6 +39,7 @@ class Login extends Component {
       .catch((error) => {
         //if error occurs, push to error state
         this.setState({ error: error });
+        
       });
   }
 
@@ -40,22 +47,22 @@ class Login extends Component {
     const { email, password, error } = this.state;
     const handleInput = this.handleInputChange;
     return (
-      <div className="Login" style={{ height: '900px', width: '1000px' }}>
+      <div className="login" >
         <h3>Sign In</h3>
         {error && (
           <p>
             <strong>ERROR: {error.message} </strong>
           </p>
         )}
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="login-form">
           <div>
             <label>Email address: </label>
             <input
               type="email"
               name="email"
-              placeholder="Enter email"
               value={email}
               onChange={handleInput}
+              className="login-email"
             />
           </div>
           <div>
@@ -63,12 +70,13 @@ class Login extends Component {
             <input
               type="password"
               name="password"
-              placeholder="Password"
               value={password}
               onChange={handleInput}
+              className="login-password"
             />
           </div>
-          <button> Login </button>
+          <button className="login-button"> Login </button>
+          
           </form>
       </div>
     );

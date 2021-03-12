@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import Firebase from "firebase";
+import Firebase from "firebase/app";
+import 'firebase/auth';
+import "./logout.css";
 
 class Logout extends Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class Logout extends Component {
   render() {
     return (
       <div className="Logout">
-        <button onClick={this.logOutUser}>Logout</button>
+        <button onClick={this.logOutUser} className="logout-button">Logout</button>
       </div>
     ); // end of return statement
   } // end of render function

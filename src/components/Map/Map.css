@@ -1,0 +1,35 @@
+#map{
+    height: 90vh;
+    width: 100vw;
+    padding: 10px;
+}
+
+.tooltip-menu{
+    height: 50%;
+    width: 50%;
+}
+
+.tooltip-menu-countryName{
+    font-weight: bolder;
+}
+
+.tooltip-menu-icons-container{
+    height: 30px;
+    width: 170px;
+}
+
+.tooltip-menu-icons-container-small{
+    height: 30px;
+    width: 80px;
+}
+
+.tooltip-menu-icons{
+    padding: 2%;
+    float:left;
+}
+
+.tooltip-menu-text{
+    float:left;
+    text-align: left;
+    padding-right: 3%;
+}
