@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import "./TripForm.css";
 
 class TripForm extends Component {
+
+  const getValue = () => {
+    let country = document.getElementById("country").value;
+    let date = document.getElementById("date").value;
+    console.log(country);
+    console.log(date);
+  };
+  
   render() {
     return (
       <form class="trip-form">
