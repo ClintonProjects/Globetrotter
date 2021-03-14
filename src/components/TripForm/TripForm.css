@@ -1,0 +1,53 @@
+/* * {
+  border: solid 1px white;
+}
+body {
+  background-color: ghostwhite;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+.trip-form {
+  height: 350px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #474a59;
+  border-radius: 20px;
+}
+/* default for all elements inside form */
+.trip-form * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+#inputContainer {
+  justify-content: space-around;
+}
+#inputContainer input {
+  width: 75%;
+  background: transparent;
+  border: 0;
+  color: #f2f2f2;
+  font-size: 14px;
+  outline: none !important;
+  border: 1px solid #6ac5a1;
+  border-radius: 20px;
+  text-align: center;
+  padding: 15px;
+}
+#buttonContainer {
+  flex-direction: row;
+  justify-content: space-around;
+}
+#buttonContainer input {
+  width: 75%;
+  text-align: center;
+  cursor: pointer;
+  padding: 1px 6px;
+  border-width: 2px;
+}
