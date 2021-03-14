@@ -1,13 +1,13 @@
 /* * {
   border: solid 1px white;
-}
+} */
 body {
   background-color: ghostwhite;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-} */
+}
 .trip-form {
   height: 350px;
   width: 250px;
@@ -26,6 +26,7 @@ body {
   margin: 0;
 }
 #inputContainer {
+  height: 75%;
   justify-content: space-around;
 }
 #inputContainer input {
