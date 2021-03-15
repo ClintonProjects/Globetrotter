@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./login.css";
+import RegisterMessage from "../Pre-LoginMap/RegisterMessage";
 
 class Login extends Component {
   constructor(props) {
@@ -15,8 +16,11 @@ class Login extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
-
+  changeView(){
+    console.log("testing function")
+  }
   handleInputChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -73,6 +77,7 @@ class Login extends Component {
             />
           </div>
           <button className="login-button"> Login </button>
+          
           </form>
       </div>
     );

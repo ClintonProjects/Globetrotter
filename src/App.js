@@ -7,6 +7,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
+import User from "./components/User/User.js";
 import Rego from "./components/login/rego";
 import ContactUs from "./views/ContactUs/ContactUs";
 import firebase from "./components/myFirebaseConfig";
@@ -17,6 +18,7 @@ import MapView from "./views/MapView/MapView.js";
 import Preloginmap from "./views/PreLoginMap/Preloginmap";
 import Login from "./views/Login/Login";
 import { createHashHistory } from 'history';
+import MapView from "./views/MapView/MapView";
 
 class App extends Component {
   constructor(props) {
@@ -90,5 +92,18 @@ class App extends Component {
       </div>
     );
   }
+   
+    // render() {
+    //     return (
+    //     <div>
+    //         {this.state.currentUser !== null && (
+    //           <i>Logged on as {this.state.currentUser.email}</i>
+    //         )}{/*just there for testing purposes currently*/}
+    //         {this.state.authenticated && <MapView/>}
+    //         {this.state.authenticated && <Logout/>}{/*just here while routing not working*/}
+    //         {!this.state.authenticated && <User/>}{/*just here while routing not working - with routing will be to PreLogInView*/}
+    //     </div>
+    //     );
+    // }
 }
 export default App;
