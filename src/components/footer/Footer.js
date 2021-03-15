@@ -38,7 +38,7 @@ export class Footer extends Component {
               <a href="https://www.Facebook.com/">
                 <FaFacebook size="2em" className="icon" />
               </a>
-              <a href="https://www.Github.com/">
+              <a href="https://github.com/ClintonProjects/Globetrotter/blob/master/README.md">
                 <FaGithub size="2em" className="icon" />
               </a>
 
