@@ -1,54 +1,62 @@
 import React, { Component } from "react";
-import Login from "./components/login/login";
-import Logout from "./components/login/logout";
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 import Rego from "./components/login/rego";
+import ContactUs from "./views/ContactUs/ContactUs";
 import firebase from "./components/myFirebaseConfig";
 import Firebase from 'firebase/app';
 import About from "./components/about/About";
-import ContactUs from "./components/contactUs/ContactUs";
-import Help from "./components/help/Help";
+import Homepage from "./views/Home/Home.js";
+import MapView from "./views/MapView/MapView.js";
 import Preloginmap from "./views/PreLoginMap/Preloginmap";
+import Login from "./views/Login/Login";
+import { createHashHistory } from 'history';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            authenticated: false,
-            currentUser: null
+    this.state = {
+      authenticated: false,
+      currentUser: null
+    };
+    this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
+  }
+  async componentDidMount() {
+    try {
+      this.getMessagesFromDatabase();
+    } catch (error) {
+      console.log(error);
+      this.setState({ errorMsg: error });
+    } // end of try catch
+  } // end of componentDidMount()
+  getMessagesFromDatabase() {
+
+    //for importing data from our FIREBASE database
+    let ref = Firebase.database().ref('');
+
+    ref.on('value', (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+      let newMessagesFromDB1 = [];
+      for (let m in msgData) {
+        // create a JSON object version of our object.
+        let currObject = {
+          id: msgData[m].id,
         };
-        this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
-    }
-    async componentDidMount() {
-      try {
-        this.getMessagesFromDatabase();
-      } catch (error) {
-        console.log(error);
-        this.setState({ errorMsg: error });
-      } // end of try catch
-    } // end of componentDidMount()
-    getMessagesFromDatabase() {
-        
-        //for importing data from our FIREBASE database
-        let ref = Firebase.database().ref('');
-
-        ref.on('value', (snapshot) => {
-          // json array
-          let msgData = snapshot.val();
-          let newMessagesFromDB1 = [];
-          for (let m in msgData) {
-            // create a JSON object version of our object.
-            let currObject = {
-              id: msgData[m].id,
-            };
-            // add it to our newStateMessages array.
-            newMessagesFromDB1.push(currObject);
-          } // end for loop
-          // set state
-          this.setState({ users: newMessagesFromDB1 });
-        });
-    }
+        // add it to our newStateMessages array.
+        newMessagesFromDB1.push(currObject);
+      } // end for loop
+      // set state
+      this.setState({ users: newMessagesFromDB1 });
+    });
+  }
   //check if user is authenticated,
   // if they are set to true, otherwise false
   // currentUser holds the user object (if logged on)
@@ -56,22 +64,31 @@ class App extends Component {
     Firebase.auth().onAuthStateChanged((user) => {
       user
         ? this.setState(() => ({
-            authenticated: true,
-            currentUser: user
-          }))
+          authenticated: true,
+          currentUser: user
+        }))
         : this.setState(() => ({
-            authenticated: false,
-            currentUser: null
-          }));
+          authenticated: false,
+          currentUser: null
+        }));
     });
   }
-   
-    render() {
-        return (
-        <div>
-            <Preloginmap/>
-        </div>
-        );
-    }
+
+  render() {
+    return (
+      <div>
+        <Router>
+        <Switch>
+          <Route path="/" component={Preloginmap} exact/>
+          <Route path="/about" component={About}/>
+          <Route path="/mapview" component={MapView}/> 
+          <Route path="/preloginmap" component={Preloginmap}/> 
+          <Route path="/contactus" component={ContactUs}/> 
+          <Route path="/login" component={Login}/> 
+        </Switch>
+        </Router>
+      </div>
+    );
+  }
 }
 export default App;

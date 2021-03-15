@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import * as FaIcons from "react-icons/fa";
 import "./NavBar.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
 class NavBar extends Component {
+
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
   render() {
     return (
       <>
@@ -14,19 +27,20 @@ class NavBar extends Component {
           </div>
 
           <div className="logo">
-          <FaIcons.FaGlobeEurope />
+            <FaIcons.FaGlobeEurope />
           </div>
 
           <div className="links">
-            <span>Home</span>
-            <span>Map</span>
-            <span>Photos</span>
-            <span>About</span>
+
+            <Link to="/">Home</Link>
+            <Link to="/mapview">Map</Link>
+            <Link to="/">Photo</Link>
+            <Link to="/about">About</Link>
           </div>
 
           <div className="settings">
-          <span><FaIcons.FaCog /></span>
-          <span><FaIcons.FaUser /></span>
+            <Link to="/login"><span><FaIcons.FaCog /></span></Link>
+            <Link to="/login"><span><FaIcons.FaUser /></span></Link>
           </div>
 
         </nav>

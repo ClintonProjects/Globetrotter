@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import "./RegisterMessage.css";
 import Map from './Map';
-// import cat from './src/';
-
-
-
+import Login from '../../components/login/login.js';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,28 +11,17 @@ import {
   useParams
 } from "react-router-dom";
 
+
 export class RegisterMessage extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+  nextPath(path) {
+    this.props.history.push(path);
   }
 
   render() {
     return (
-      <div class="row text-center ">
         <div class="col-sm-12 loginMessage bg-danger text-white warning-borader">
-          <Router>
-            <Switch>
-              <h5>Register to unlock all featrues, Please login Click to login </h5>
-            </Switch>
-          </Router>
-        </div>
-        <Router>
-          <Switch>
-          </Switch>
-        </Router>
+        <Link to="/login">Login to unlock all featrues, Please Click to login</Link>
       </div>
     );
   }

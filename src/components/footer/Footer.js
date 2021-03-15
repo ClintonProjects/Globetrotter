@@ -57,6 +57,7 @@ export class Footer extends Component {
               Copyright @ Globetrotter 2021-2021. All Rights Reserved.</small>
               {/* <small class="col-sm-1 text-left text-light  footer-margin-bottom">support@Globetrotter.com</small> */}
              <small class="col-sm-1 text-left text-light"></small>
+             <div class="col-sm-1"></div>
           </div>
 
 
