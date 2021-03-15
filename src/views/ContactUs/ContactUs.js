@@ -7,9 +7,9 @@ class Preloginmap extends Component {
     render() {
         return (
             <div>
-                    <NavBar />
-                    <Login />
-                    <Foorter />
+                <NavBar />
+                <Login />
+                <Foorter />
             </div>
         );
     }

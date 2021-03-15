@@ -18,7 +18,7 @@ import MapView from "./views/MapView/MapView.js";
 import Preloginmap from "./views/PreLoginMap/Preloginmap";
 import Login from "./views/Login/Login";
 import { createHashHistory } from 'history';
-import MapView from "./views/MapView/MapView";
+// import MapView from "./views/MapView/MapView";
 
 class App extends Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class App extends Component {
         <Switch>
           <Route path="/" component={Preloginmap} exact/>
           <Route path="/about" component={About}/>
-          <Route path="/mapview" component={MapView}/> 
+          {/* <Route path="/mapview" component={MapView}/>  */}
           <Route path="/preloginmap" component={Preloginmap}/> 
           <Route path="/contactus" component={ContactUs}/> 
           <Route path="/login" component={Login}/> 
