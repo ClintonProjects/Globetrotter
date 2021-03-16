@@ -5,9 +5,11 @@ import "./rego.css";
 import {
     BrowserRouter as Router,
     Link,
+    useHistory,
   } from "react-router-dom";
 
 class Rego extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -17,16 +19,19 @@ class Rego extends Component {
         }
     this.registerUser = this.registerUser.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    
     }
     handleInput(e){
         this.setState({ [e.target.name]: e.target.value });
     }
+    
     registerUser(e) {
         e.preventDefault();
         const { email, password } = this.state;
         Firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((user) => {
         console.log(email);
+        this.props.history.push("/mapview")
     })
     .catch((error) => {
         //if error occurs, push to error state
@@ -37,6 +42,7 @@ class Rego extends Component {
     render(){
         const {email, password, error} = this.state;
         const handleInput = this.handleInput;
+        
         return(
             <div className="rego">
                 <h3>Register</h3>

@@ -83,6 +83,8 @@ class App extends Component {
     return (
       <div>
         <Router>
+        {this.state.currentUser !== null && (
+        <i>Logged on as {this.state.currentUser.email}</i>)}
           <NavBar/>
           <Switch>
             <Route path="/" component={Preloginmap} exact/>
