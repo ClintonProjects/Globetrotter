@@ -35,6 +35,7 @@ class Login extends Component {
         // once successfully authenticated set state in the Parent
         // for the authenticated variable.
         console.log("User logged on");
+        this.props.history.push("/mapview");
       })
       .catch((error) => {
         //if error occurs, push to error state
