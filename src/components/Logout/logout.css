@@ -1,7 +1,5 @@
 .Logout{
     position: relative;
-    margin-top: 5em;
-    margin-left: 5em;
     
 }
 .logout-button{
@@ -9,7 +7,7 @@
     background-color: black;
     color: white;
     padding: 14px 20px;
-    
+    margin: 2em;
     border: none;
     border-radius: 4px;
     cursor: pointer;
