@@ -78,9 +78,9 @@ class Login extends Component {
           </div>
           <button className="login-button"> Login </button>
           
-          </form>
-          <Link to= "/rego" id="regoLink">Don't have an account? Register</Link>
-          <Link to="/forgotPass" id="passLink">Forgot Password?</Link>
+        </form>
+        <Link to= "/rego" id="regoLink"><u>Don't have an account? Register</u></Link>
+        <Link to="/forgotPass" id="passLink"><u>Forgot Password?</u></Link>
       </div>
     );
   }
