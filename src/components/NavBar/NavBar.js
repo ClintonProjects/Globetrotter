@@ -34,7 +34,7 @@ class NavBar extends Component {
 
             <Link to="/">Home</Link>
             <Link to="/mapview">Map</Link>
-            <Link to="/">Photo</Link>
+            <Link to="uploadPhotos">Photo</Link>
             <Link to="/about">About</Link>
           </div>
 

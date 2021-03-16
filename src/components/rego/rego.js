@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./rego.css";
+import {
+    BrowserRouter as Router,
+    Link,
+  } from "react-router-dom";
 
 class Rego extends Component {
     constructor(props) {
@@ -65,6 +69,7 @@ class Rego extends Component {
                         <button className="rego-button">Register</button>
                     </div>
                 </form>
+                <Link to="/login" id="loginLink">Already have an account? Login</Link>
             </div>
         );
     }

@@ -109,7 +109,6 @@ class Map extends Component {
   render() {
     return (
         <>
-        <UploadPhotos/>
         <div id="map"></div>
         </>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./RegisterMessage.css";
 import Map from './Map';
-import Login from '../../components/login/login.js';
+import Login from '../Login/login.js';
 import {
   BrowserRouter as Router,
   Switch,

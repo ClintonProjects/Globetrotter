@@ -7,8 +7,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import User from "./components/User/User.js";
-import Rego from "./components/login/rego";
+import Rego from "./components/rego/rego";
 import ContactUs from "./views/ContactUs/ContactUs";
 import firebase from "./components/myFirebaseConfig";
 import Firebase from 'firebase/app';
@@ -16,8 +15,12 @@ import About from "./components/about/About";
 import Homepage from "./views/Home/Home.js";
 import MapView from "./views/MapView/MapView.js";
 import Preloginmap from "./views/PreLoginMap/Preloginmap";
-import Login from "./views/Login/Login";
+import Login from "./components/Login/login.js";
 import { createHashHistory } from 'history';
+import ForgotPass from "./components/ForgotPassword/forgotPass.js";
+import NavBar from "./components/NavBar/NavBar.js";
+import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
+import Footer from "./components/footer/Footer.js";
 // import MapView from "./views/MapView/MapView";
 
 class App extends Component {
@@ -80,14 +83,19 @@ class App extends Component {
     return (
       <div>
         <Router>
-        <Switch>
-          <Route path="/" component={Preloginmap} exact/>
-          <Route path="/about" component={About}/>
-          {/* <Route path="/mapview" component={MapView}/>  */}
-          <Route path="/preloginmap" component={Preloginmap}/> 
-          <Route path="/contactus" component={ContactUs}/> 
-          <Route path="/login" component={Login}/> 
-        </Switch>
+          <NavBar/>
+          <Switch>
+            <Route path="/" component={Preloginmap} exact/>
+            <Route path="/about" component={About}/>
+            <Route path="/mapview" component={MapView}/> 
+            <Route path="/preloginmap" component={Preloginmap}/> 
+            <Route path="/contactus" component={ContactUs}/> 
+            <Route path="/login" component={Login}/> 
+            <Route path="/rego" component={Rego}/>
+            <Route path="/forgotPass" component={ForgotPass}/>
+            <Route path="/uploadPhotos" component={UploadPhotos}/>
+          </Switch>
+          <Footer/>
         </Router>
       </div>
     );

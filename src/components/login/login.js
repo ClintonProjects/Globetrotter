@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./login.css";
-import RegisterMessage from "../Pre-LoginMap/RegisterMessage";
+import {
+  BrowserRouter as Router,
+  Link,
+} from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -16,10 +19,6 @@ class Login extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeView = this.changeView.bind(this);
-  }
-  changeView(){
-    console.log("testing function")
   }
   handleInputChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -79,6 +78,8 @@ class Login extends Component {
           <button className="login-button"> Login </button>
           
           </form>
+          <Link to= "/rego" id="regoLink">Don't have an account? Register</Link>
+          <Link to="/forgotPass" id="passLink">Forgot Password?</Link>
       </div>
     );
   }

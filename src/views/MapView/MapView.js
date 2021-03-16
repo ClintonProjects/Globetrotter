@@ -6,7 +6,7 @@ class MapView extends Component {
     render() {
         return (
             <div className='MapView'>
-                <NavBar />
+                
                 <Map />
             </div>
         );

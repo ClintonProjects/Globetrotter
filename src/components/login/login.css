@@ -8,6 +8,15 @@
     margin-top: 5em;
     margin-left: 5em;
 }
+#regoLink:hover{
+    color: blue;
+}
+#passLink:hover{
+    color: blue;
+}
+#passLink{
+    margin-left: 1em;
+}
 .notRego{
     font-size: small;
     margin-left: 1em;

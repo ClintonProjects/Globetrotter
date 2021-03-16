@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import NavBar from '../../components/NavBar/NavBar.js';
-import Login from '../../components/login/login';
-import Foorter from '../../components/footer/Footer';
+import Login from '../../components/Login/login.js';
+
 
 class Preloginmap extends Component {
     render() {
         return (
             <div>
-                <NavBar />
+                
                 <Login />
-                <Foorter />
+                
             </div>
         );
     }
