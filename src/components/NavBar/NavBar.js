@@ -40,7 +40,7 @@ class NavBar extends Component {
 
           <div className="settings">
             <Link to="/login"><span><FaIcons.FaCog /></span></Link>
-            <Link to="/login"><span><FaIcons.FaUser /></span></Link>
+            <Link to="/profile"><span><FaIcons.FaUser /></span></Link>
           </div>
 
         </nav>

@@ -12,7 +12,7 @@ import ContactUs from "./views/ContactUs/ContactUs";
 import firebase from "./components/myFirebaseConfig";
 import Firebase from 'firebase/app';
 import About from "./components/about/About";
-import Homepage from "./views/Home/Home.js";
+import Logout from "./components/Logout/logout.js";
 import MapView from "./views/MapView/MapView.js";
 import Preloginmap from "./views/PreLoginMap/Preloginmap";
 import Login from "./components/Login/login.js";
@@ -21,6 +21,7 @@ import ForgotPass from "./components/ForgotPassword/forgotPass.js";
 import NavBar from "./components/NavBar/NavBar.js";
 import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
 import Footer from "./components/footer/Footer.js";
+import Profile from "./components/Profile/profile.js"
 // import MapView from "./views/MapView/MapView";
 
 class App extends Component {
@@ -83,8 +84,6 @@ class App extends Component {
     return (
       <div>
         <Router>
-        {this.state.currentUser !== null && (
-        <i>Logged on as {this.state.currentUser.email}</i>)}
           <NavBar/>
           <Switch>
             <Route path="/" component={Preloginmap} exact/>
@@ -92,10 +91,15 @@ class App extends Component {
             <Route path="/mapview" component={MapView}/> 
             <Route path="/preloginmap" component={Preloginmap}/> 
             <Route path="/contactus" component={ContactUs}/> 
-            <Route path="/login" component={Login}/> 
+            <Route path="/login" component={Login}/>
+            <Route path="/logout" component={Logout}/>
             <Route path="/rego" component={Rego}/>
             <Route path="/forgotPass" component={ForgotPass}/>
             <Route path="/uploadPhotos" component={UploadPhotos}/>
+            <Route path="/profile" render={() => (<Profile
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}
+            />)}/>
           </Switch>
           <Footer/>
         </Router>
