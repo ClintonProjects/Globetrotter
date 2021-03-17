@@ -14,7 +14,7 @@ class ForgotPass extends Component {
       this.state = {
         email: "",
         error: null,
-        message: ""
+        message: false
       };
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,12 +26,12 @@ class ForgotPass extends Component {
     handleSubmit(event){
       
       event.preventDefault(); //stop default behaviour and allow our error checking
-      const { email, message } = this.state;
-      this.setState({message: ""})
+      const { email } = this.state;
+      this.setState({message: false})
       Firebase.auth().sendPasswordResetEmail(email)
       .then((user)=>{
         console.log("email sent");
-        this.setState({message: "Check your inbox for further instructions"});
+        this.setState({message: true});
          
       })
       .catch((error) => {
@@ -49,7 +49,7 @@ class ForgotPass extends Component {
           <div className="forgotPassword">
             <h3>Forgot Password</h3>
             {error && (<p><strong>ERROR: {error.message} </strong></p>)}
-            
+            {this.state.message ? "Check your email inbox for further instructions" : null}
             <form onSubmit={handleSubmit} id="passForm">
               <input 
                 type="email"
