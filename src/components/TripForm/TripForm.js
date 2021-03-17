@@ -65,7 +65,7 @@ class TripForm extends Component {
   render() {
     return (
       <>
-        <form class="trip-form">
+        <form class="trip-form" onSubmit={this.addData}>
           <h1>Your Trip</h1>
           <div id="inputContainer">
             <input
