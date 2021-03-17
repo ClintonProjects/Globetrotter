@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
+import ISO from "./names.json";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore(); // collection = users & user = evan
@@ -15,6 +16,9 @@ class TripForm extends Component {
       startDate: "",
       endDate: "",
     };
+    this.addData = this.addData.bind(this);
+    this.getKeyByValue = this.getKeyByValue.bind(this);
+
   }
   // use componentDidMount as it is an API call and we have to wait for response
   componentDidMount() {
@@ -33,6 +37,30 @@ class TripForm extends Component {
       this.setState({ startDate: json.startDate });
       this.setState({ endDate: json.endDate });
     });
+  }
+  // function that will add data to firestore
+  addData(event) {
+    // add try catch to prevent firestore error on invalid input
+    try {
+      event.preventDefault(); // prevent the form from actually submitting
+      var country = document.getElementById("country");
+      var startDate = document.getElementById("startdate");
+      var endDate = document.getElementById("enddate");
+      const json = {
+        // gets ISO for user chosen country
+        id: this.getKeyByValue(ISO, country.value),
+        name: country.value,
+        startDate: startDate.value,
+        endDate: endDate.value,
+      };
+      docRef.set(json); // possibly update
+    } catch (error) {
+      alert("invalid input");
+      // console.error(error);
+    }
+  }
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key].toLowerCase() === value.toLowerCase());
   }
   render() {
     return (
