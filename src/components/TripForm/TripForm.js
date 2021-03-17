@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import "./TripForm.css";
+import firebase from "../myFirebaseConfig.js"; // import the firebase app
+import "firebase/firestore"; // attach firestore
+
+// declare global variable for use in componentDidMount & addData
+const firestore = firebase.firestore(); // collection = users & user = evan
+const docRef = firestore.doc("users/evan"); // path to the document in fs
 
 class TripForm extends Component {
-
-  const getValue = () => {
-    let country = document.getElementById("country").value;
-    let date = document.getElementById("date").value;
-    console.log(country);
-    console.log(date);
-  };
-  
   render() {
     return (
       <form class="trip-form">
