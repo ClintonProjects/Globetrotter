@@ -7,34 +7,74 @@ const firestore = firebase.firestore(); // collection = users & user = evan
 const docRef = firestore.doc("users/evan"); // path to the document in fs
 
 class TripForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: "",
+      country: "",
+      startDate: "",
+      endDate: "",
+    };
+  }
+  // use componentDidMount as it is an API call and we have to wait for response
+  componentDidMount() {
+    /*
+    docRef.get().then( (data) => {
+      let json = data.data(); // .data() just accesses the data rather than file info aswell
+      this.setState( { country: json.country } );
+      console.log('fetch complete')
+    });
+    */
+    // onSnapshot listens for any changes in the document on firebase
+    docRef.onSnapshot((data) => {
+      let json = data.data(); // .data() will access the doc not file info
+      this.setState({ id: json.id });
+      this.setState({ name: json.name });
+      this.setState({ startDate: json.startDate });
+      this.setState({ endDate: json.endDate });
+    });
+  }
   render() {
     return (
-      <form class="trip-form">
-        <h1>Your Trip</h1>
-        <div id="inputContainer">
-          <input
-            type="text"
-            id="country"
-            name="country"
-            placeholder="Enter Country"
-          />
-          <input
-            type="text"
-            id="startdate"
-            name="startdate"
-            placeholder="Enter Start Date"
-          />
-          <input
-            type="text"
-            id="enddate"
-            name="enddate"
-            placeholder="Enter End Date"
-          />
-        </div>
-        <div id="buttonContainer">
-          <input type="submit" id="submit" value="Submit" />
-        </div>
-      </form>
+      <>
+        <form class="trip-form">
+          <h1>Your Trip</h1>
+          <div id="inputContainer">
+            <input
+              type="text"
+              id="country"
+              name="country"
+              placeholder="Enter Country"
+            />
+            <input
+              type="text"
+              id="startdate"
+              name="startdate"
+              placeholder="Enter Start Date"
+            />
+            <input
+              type="text"
+              id="enddate"
+              name="enddate"
+              placeholder="Enter End Date"
+            />
+          </div>
+          <div id="buttonContainer">
+            <input type="submit" id="submit" value="Submit" />
+          </div>
+        </form>
+
+        <br />
+        {this.state.id}
+        <br />
+        {this.state.name}
+        <br />
+        {this.state.startDate}
+        <br />
+        {this.state.endDate}
+        <br />
+        <br />
+      </>
     );
   }
 }
