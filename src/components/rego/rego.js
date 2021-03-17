@@ -75,7 +75,7 @@ class Rego extends Component {
                         <button className="rego-button">Register</button>
                     </div>
                 </form>
-                <Link to="/login" id="loginLink">Already have an account? Login</Link>
+                <Link to="/login" id="loginLink"><u>Already have an account? Login</u></Link>
             </div>
         );
     }
