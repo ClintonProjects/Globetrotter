@@ -10,7 +10,6 @@ import {
 class Login extends Component {
   constructor(props) {
     super(props);
-    
 
     this.state = {
       email: "",
@@ -35,7 +34,7 @@ class Login extends Component {
         // once successfully authenticated set state in the Parent
         // for the authenticated variable.
         console.log("User logged on");
-        this.props.history.push("/mapview");
+        this.props.history.push("/mapview");//redirect logged in user to correct path
       })
       .catch((error) => {
         //if error occurs, push to error state

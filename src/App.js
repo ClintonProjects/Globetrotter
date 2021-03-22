@@ -95,7 +95,10 @@ class App extends Component {
             <Route path="/logout" component={Logout}/>
             <Route path="/rego" component={Rego}/>
             <Route path="/forgotPass" component={ForgotPass}/>
-            <Route path="/uploadPhotos" component={UploadPhotos}/>
+            <Route path="/uploadPhotos" render={()=>(<UploadPhotos
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}
+            />)}/>
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
@@ -107,17 +110,5 @@ class App extends Component {
     );
   }
    
-    // render() {
-    //     return (
-    //     <div>
-    //         {this.state.currentUser !== null && (
-    //           <i>Logged on as {this.state.currentUser.email}</i>
-    //         )}{/*just there for testing purposes currently*/}
-    //         {this.state.authenticated && <MapView/>}
-    //         {this.state.authenticated && <Logout/>}{/*just here while routing not working*/}
-    //         {!this.state.authenticated && <User/>}{/*just here while routing not working - with routing will be to PreLogInView*/}
-    //     </div>
-    //     );
-    // }
 }
 export default App;
