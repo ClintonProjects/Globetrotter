@@ -13,16 +13,16 @@ import {
 
 class Preloginmap extends Component {
     render() {
-        const authenticated = this.props.authenticated;
-        console.log(authenticated);
+        //const authenticated = this.props.authenticated;
+        //console.log(authenticated);
         return (
             <div>
-                {!authenticated && (
+                {/* {!authenticated && ( */}
                     <RegisterMessage />
-                )}
-                {!authenticated && (
+                {/* )} */}
+                {/* {!authenticated && ( */}
                     <Link to="/login"><Map /></Link>
-                )}
+                {/* )} */}
             </div>
         );
     }
