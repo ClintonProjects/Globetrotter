@@ -1,24 +1,27 @@
-#aboutTable {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+  
+  .About {
+    padding-left: 25%;
+    padding-right: 25%;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: .8em;
+  }
 
-#aboutTable td, #aboutTable th {
-  padding: 8px;
-}
+  #aboutTable {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 1em;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #aboutTable td, #aboutTable th {
+    padding: 8px;
+  }
 
-
-#aboutTable th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #4CAF50;
-  color: white;
-}
-.content{
-  position: relative;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate( -50%);
-}
+  
+  #aboutTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }

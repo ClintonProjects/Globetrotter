@@ -8,7 +8,7 @@ import albums from "./img/albums30x30.png";
 import pictures from "./img/pictures30x30.png";
 import newAlbum from "./img/newAlbum30x30.png";
 import guestView from "./img/guestView30x30.png";
-import UploadPhotos from "../uploadPhotos/uploadPhotos";
+
 
 class Map extends Component {
     componentDidMount(){
