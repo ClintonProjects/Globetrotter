@@ -84,42 +84,47 @@ class App extends Component {
   render() {
     return (
       <div>
+        <link rel="icon" href="/favicon-16x16.png"></link>
+        
         <Router>
-          <NavBar/>
+          <NavBar authenticated={this.state.authenticated} />
           <Switch>
-            <Route path="/" component={Preloginmap} exact/>
-            <Route path="/about" component={About}/>
-            <Route path="/mapview" component={MapView}/> 
-            <Route path="/preloginmap" component={Preloginmap}/> 
-            <Route path="/contactus" component={ContactUs}/>
-            <Route path="/settings" component={Settings}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/logout" component={Logout}/>
-            <Route path="/rego" component={Rego}/>
-            <Route path="/forgotPass" component={ForgotPass}/>
-            <Route path="/uploadPhotos" component={UploadPhotos}/>
+            <Route path="/" component={Preloginmap} exact />
+            <Route path="/about" component={About} />
+            <Route path="/mapview" component={MapView} />
+            <Route path="/map" render={() => (<Preloginmap
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}
+            />)} />
+            <Route path="/contactus" component={ContactUs} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/login" component={Login} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/rego" component={Rego} />
+            <Route path="/forgotPass" component={ForgotPass} />
+            <Route path="/uploadPhotos" component={UploadPhotos} />
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
-            />)}/>
+            />)} />
           </Switch>
-          <Footer/>
+          <Footer currentUser={this.state.currentUser} />
         </Router>
       </div>
     );
   }
-   
-    // render() {
-    //     return (
-    //     <div>
-    //         {this.state.currentUser !== null && (
-    //           <i>Logged on as {this.state.currentUser.email}</i>
-    //         )}{/*just there for testing purposes currently*/}
-    //         {this.state.authenticated && <MapView/>}
-    //         {this.state.authenticated && <Logout/>}{/*just here while routing not working*/}
-    //         {!this.state.authenticated && <User/>}{/*just here while routing not working - with routing will be to PreLogInView*/}
-    //     </div>
-    //     );
-    // }
+
+  // render() {
+  //     return (
+  //     <div>
+  //         {this.state.currentUser !== null && (
+  //           <i>Logged on as {this.state.currentUser.email}</i>
+  //         )}{/*just there for testing purposes currently*/}
+  //         {this.state.authenticated && <MapView/>}
+  //         {this.state.authenticated && <Logout/>}{/*just here while routing not working*/}
+  //         {!this.state.authenticated && <User/>}{/*just here while routing not working - with routing will be to PreLogInView*/}
+  //     </div>
+  //     );
+  // }
 }
 export default App;
