@@ -2,42 +2,40 @@ import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
 import ISO from "./names.json";
-import "./TripForm.css";
+// import "./TripForm.css";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore(); // collection = users & user = evan
-const docRef = firestore.doc("users/evan"); // path to the document in fs
 
 class TripForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      id: "",
-      country: "",
-      startDate: "",
-      endDate: "",
+
+    try{
+
+    this.state = this.state = {
+      // ${this.props.currentUser.uid} passed down from Landing.js file
+      docRef: firestore
+        .collection("users")
+        .doc(`${this.props.currentUser.uid}`),
+      locationRef: firestore
+        .collection("users")
+        .doc(`${this.props.currentUser.uid}`)
+        .collection("locations"),
+      tripRef: firestore
+        .collection("users")
+        .doc(`${this.props.currentUser.uid}`)
+        .collection("trips"),
     };
+  }
+
+  catch(e){
+    console.log("the uid thing");
+  }
+
+
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
-
-  }
-  // use componentDidMount as it is an API call and we have to wait for response
-  componentDidMount() {
-    /*
-    docRef.get().then( (data) => {
-      let json = data.data(); // .data() just accesses the data rather than file info aswell
-      this.setState( { country: json.country } );
-      console.log('fetch complete')
-    });
-    */
-    // onSnapshot listens for any changes in the document on firebase
-    docRef.onSnapshot((data) => {
-      let json = data.data(); // .data() will access the doc not file info
-      this.setState({ id: json.id });
-      this.setState({ name: json.name });
-      this.setState({ startDate: json.startDate });
-      this.setState({ endDate: json.endDate });
-    });
   }
   // function that will add data to firestore
   addData(event) {
@@ -47,26 +45,38 @@ class TripForm extends Component {
       var country = document.getElementById("country");
       var startDate = document.getElementById("startdate");
       var endDate = document.getElementById("enddate");
-      const json = {
-        // gets ISO for user chosen country
-        id: this.getKeyByValue(ISO, country.value),
-        name: country.value,
-        startDate: startDate.value,
-        endDate: endDate.value,
+      const docID = country.value;
+      const userSeries = {
+        location: {
+          id: this.getKeyByValue(ISO, country.value),
+          name: country.value,
+          fill: `amd4color("#000")`,
+        },
       };
-      docRef.set(json); // possibly update
+      const userTrips = {
+        tripInfo: {
+          name: country.value,
+          startDate: startDate.value,
+          endDate: endDate.value,
+        },
+      };
+      this.state.locationRef.doc(`${docID}`).set(userSeries);
+      this.state.tripRef.doc(`${docID}`).set(userTrips);
     } catch (error) {
       alert("invalid input");
-      // console.error(error);
+      console.error(error);
     }
   }
+  // gets ISO for user chosen country
   getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key].toLowerCase() === value.toLowerCase());
+    return Object.keys(object).find(
+      (key) => object[key].toLowerCase() === value.toLowerCase()
+    );
   }
   render() {
     return (
       <>
-        <form class="trip-form" onSubmit={this.addData}>
+        <form className="trip-form" onSubmit={this.addData}>
           <h1>Your Trip</h1>
           <div id="inputContainer">
             <input
@@ -92,17 +102,6 @@ class TripForm extends Component {
             <input type="submit" id="submit" value="Submit" />
           </div>
         </form>
-
-        <br />
-        {this.state.id}
-        <br />
-        {this.state.name}
-        <br />
-        {this.state.startDate}
-        <br />
-        {this.state.endDate}
-        <br />
-        <br />
       </>
     );
   }

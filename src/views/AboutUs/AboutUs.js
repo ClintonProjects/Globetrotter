@@ -19,7 +19,7 @@
 //     render() {
 //         return (
 //             <div>
-//                 <div class="row text-center">
+//                 <div className="row text-center">
 //                     <Link to="/login">
 //                         <Aboutus />
 //                     </Link>

@@ -5,64 +5,64 @@ import "./Settings.css";
 class Settings extends Component {
   render() {
     return (
-      <div id="settingPageContainer" class="Settings">
-        <div class="leftbox">
+      <div id="settingPageContainer" className="Settings">
+        <div className="leftbox">
           <nav>
-            <a onclick="tabs(0)" class="tab active">
+            <a onclick="tabs(0)" className="tab active">
               <FaIcons.FaUserCog />
             </a>
-            <a onclick="tabs(1)" class="tab">
+            <a onclick="tabs(1)" className="tab">
               <FaIcons.FaCreditCard />
             </a>
-            <a onclick="tabs(2)" class="tab">
+            <a onclick="tabs(2)" className="tab">
               <FaIcons.FaLaptop />
             </a>
-            <a onclick="tabs(3)" class="tab">
+            <a onclick="tabs(3)" className="tab">
               <FaIcons.FaRegListAlt />
             </a>
-            <a onclick="tabs(4)" class="tab">
-              <i class="fa fa-cog"></i>
+            <a onclick="tabs(4)" className="tab">
+              <i className="fa fa-cog"></i>
             </a>
           </nav>
         </div>
-        <div class="rightbox">
-          <div class="profile tabShow">
+        <div className="rightbox">
+          <div className="profile tabShow">
             <h1>Personal Information</h1>
             <h2>Full name</h2>
-            <input type="text" class="input" value="Cristina Glez" />
+            <input type="text" className="input" value="Cristina Glez" />
             <h2>Birthday</h2>
-            <input type="text" class="input" value="April 7, 1994" />
+            <input type="text" className="input" value="April 7, 1994" />
             <h2>Gender</h2>
-            <input type="text" class="input" value="Female" />
+            <input type="text" className="input" value="Female" />
             <h2>Email</h2>
-            <input type="text" class="input" value="hola@gmail.com" />
+            <input type="text" className="input" value="hola@gmail.com" />
             <h2>Password</h2>
-            <input type="password" class="input" value="brightcode" />
-            <button class="btn">Update</button>
+            <input type="password" className="input" value="brightcode" />
+            <button className="btn">Update</button>
           </div>
-          <div class="payment tabShow">
+          <div className="payment tabShow">
             <h1>Payment Information</h1>
             <h2>Payment Method</h2>
             <input
               type="text"
-              class="input"
+              className="input"
               value="Master Card - 0202 ******** 7336"
             />
             <h2>Billing Address</h2>
             <input
               type="text"
-              class="input"
+              className="input"
               value="8, Maynooth, Co.Kildare. Ireland"
             />
             <h2>Zip Code</h2>
-            <input type="text" class="input" value="872316" />
+            <input type="text" className="input" value="872316" />
             <h2>Billing Date</h2>
-            <input type="text" class="input" value="17 March, 2021" />
+            <input type="text" className="input" value="17 March, 2021" />
             <h2>Reedem Card</h2>
-            <input type="password" class="input" value="Enter Gift Code" />
-            <button class="btn">Update</button>
+            <input type="password" className="input" value="Enter Gift Code" />
+            <button className="btn">Update</button>
           </div>
-          <div class="subscription tabShow">
+          <div className="subscription tabShow">
             <h1>Subscription Information</h1>
             <h2>Payment Date</h2>
             <p>17 March, 2021</p>
@@ -74,25 +74,25 @@ class Settings extends Component {
             <p>Limited Plan</p>
             <h2>Monthly</h2>
             <p>€108.5/Month</p>
-            <button class="btn">Update</button>
+            <button className="btn">Update</button>
           </div>
-          <div class="privacy tabShow">
+          <div className="privacy tabShow">
             <h1>Privacy Settings</h1>
             <h2>Manage Email Notifications</h2>
             <h2>Manage Privacy Settings</h2>
             <h2>View Terms of Use</h2>
             <h2>Personalized Ad Experience</h2>
             <h2>Protect Account</h2>
-            <button class="btn">Update</button>
+            <button className="btn">Update</button>
           </div>
-          <div class="settings tabShow">
+          <div className="settings tabShow">
             <h1>Account Settings</h1>
             <h2>Sync WatchList</h2>
             <h2>Hold Subscription</h2>
             <h2>Cancel Subscription</h2>
             <h2>Your Devices</h2>
             <h2>Referrals</h2>
-            <button class="btn">Update</button>
+            <button className="btn">Update</button>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@
 //     render() {
 //         return (
 //             <div>
-//                 <div class="row text-center">
+//                 <div className="row text-center">
 //                     <Login />
 //                 </div>
 //             </div>

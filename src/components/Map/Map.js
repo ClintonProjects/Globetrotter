@@ -8,58 +8,80 @@ import albums from "./img/albums30x30.png";
 import pictures from "./img/pictures30x30.png";
 import newAlbum from "./img/newAlbum30x30.png";
 import guestView from "./img/guestView30x30.png";
+import firebase from "../myFirebaseConfig.js"; // import the firebase app
+import "firebase/firestore"; // attach firestore
 
+// declare global variable for use in componentDidMount & addData
+const firestore = firebase.firestore(); // collection = users & user = evan
 
 class Map extends Component {
-    componentDidMount(){
-        // instantiate the map object
-        let map = am4core.create("map", am4maps.MapChart);
+  constructor(props) {
+    super(props);
 
-        // provide the map object with a definition (GEOJSON)
-        map.geodata = geodata;
+    try {
+      this.state = {
+        // ${this.props.currentUser.uid} passed down from Landing.js file
+        docRef: firestore
+          .collection("users")
+          .doc(`${this.props.currentUser.uid}`),
+        locationRef: firestore
+          .collection("users")
+          .doc(`${this.props.currentUser.uid}`)
+          .collection("locations"),
+        tripRef: firestore
+          .collection("users")
+          .doc(`${this.props.currentUser.uid}`)
+          .collection("trips"),
+      };
+    } catch (e) {
+      console.log("uid thing");
+    }
+  }
 
-        // set the map projection type
-        map.projection = new am4maps.projections.NaturalEarth1();
+  componentDidMount() {
+    try {
+      // onSnapshot listens for any changes in the document on firebase
+      this.state.locationRef.onSnapshot((doc) => {
+        if (doc.empty) {
+          console.log("no data");
+        } else {
+          const array = [];
+          doc.forEach((data) => {
+            const location = data.data().location;
+            array.push(location);
+          });
 
-        // draw the countries using polygons
-        let polygonSeries = new am4maps.MapPolygonSeries();
-        map.series.push(polygonSeries);
-        polygonSeries.useGeodata = true;
-        polygonSeries.exclude = ["AQ"];
+          // after array has been populated, instantiate map with locations
+          // instantiate the map object
+          let map = am4core.create("map", am4maps.MapChart);
 
-        let polygonTemplate = polygonSeries.mapPolygons.template;
-        // set base color for map
-        // polygonTemplate.fill = am4core.color("#98FB98");
+          // provide the map object with a definition (GEOJSON)
+          map.geodata = geodata;
 
-        polygonSeries.data = [{
-            "id": "IE",
-            "name": "Ireland",
-            "fill": am4core.color("#000")
-          }, {
-            "id": "IT",
-            "name": "Italy",
-            "fill": am4core.color("#000")
-          }, {
-            "id": "ES",
-            "name": "Spain",
-            "fill": am4core.color("#000")
-          }, {
-            "id": "SE",
-            "name": "Sweden",
-            "fill": am4core.color("#000")
-          }, {
-            "id": "JP",
-            "name": "Japan",
-            "fill": am4core.color("#000")
-          }];
+          // set the map projection type
+          map.projection = new am4maps.projections.NaturalEarth1();
+
+          // draw the countries using polygons
+          let polygonSeries = new am4maps.MapPolygonSeries();
+          map.series.push(polygonSeries);
+          polygonSeries.useGeodata = true;
+          polygonSeries.exclude = ["AQ"];
+
+          let polygonTemplate = polygonSeries.mapPolygons.template;
+          // set base color for map
+          // polygonTemplate.fill = am4core.color("#98FB98");
+
+          // array retrieved from firestore gets assigned to data here
+          polygonSeries.data = array;
 
           polygonSeries.calculateVisualCenter = true;
           polygonSeries.tooltip.label.interactionsEnabled = true;
           polygonSeries.tooltip.keepTargetHover = true;
           polygonTemplate.tooltipPosition = "fixed";
-          polygonTemplate.propertyFields.fill = "fill";
           //logged in user
-          polygonTemplate.tooltipHTML = renderToString(this.buildTooltipMenu('{name}'));
+          polygonTemplate.tooltipHTML = renderToString(
+            this.buildTooltipMenu("{name}")
+          );
 
           //guest user
           //polygonTemplate.tooltipHTML = renderToString(this.buildTooltipMenuGuest('{name}'));
@@ -68,49 +90,92 @@ class Map extends Component {
           let hs = polygonTemplate.states.create("hover");
           hs.properties.fill = am4core.color("#616b61");
 
-          this.map = map;
-    }
-    componentWillUnmount() {
-        if (this.map) {
-          this.map.dispose();
-        }
-    }
+          polygonTemplate.propertyFields.fill = "fill"; // fill in countries
 
-    //For logged in user
-    buildTooltipMenu = (name) => {
-      return(
-        <div className="tooltip-menu">
-          <div className="tooltip-menu-countryName">{name}
-            <div className="tooltip-menu-icons-container">
-              <img title="Browse albums" className="tooltip-menu-icons" src={albums}/>
-              <div className="tooltip-menu-text"> 5 </div> {/*TODO: get real data from system*/}
-              <img title="Browse pictures" className="tooltip-menu-icons" src={pictures}/>
-              <div className="tooltip-menu-text"> 25 </div> {/*TODO: get real data from system*/}
-              <img title="Create a new albums" className="tooltip-menu-icons" src={newAlbum}/> 
-            </div>
+          this.map = map;
+        }
+      });
+    } catch (e) {
+      console.log(e);
+      console.log("uid thing");
+    } finally {
+      let map = am4core.create("map", am4maps.MapChart);
+
+      // provide the map object with a definition (GEOJSON)
+      map.geodata = geodata;
+
+      // set the map projection type
+      map.projection = new am4maps.projections.NaturalEarth1();
+
+      // draw the countries using polygons
+      let polygonSeries = new am4maps.MapPolygonSeries();
+      map.series.push(polygonSeries);
+      polygonSeries.useGeodata = true;
+      polygonSeries.exclude = ["AQ"];
+    }
+  }
+  componentWillUnmount() {
+    if (this.map) {
+      this.map.dispose();
+    }
+  }
+
+  //For logged in user
+  buildTooltipMenu = (name) => {
+    return (
+      <div className="tooltip-menu">
+        <div className="tooltip-menu-countryName">
+          {name}
+          <div className="tooltip-menu-icons-container">
+            <img
+              title="Browse albums"
+              className="tooltip-menu-icons"
+              src={albums}
+            />
+            <div className="tooltip-menu-text"> 5 </div>{" "}
+            {/*TODO: get real data from system*/}
+            <img
+              title="Browse pictures"
+              className="tooltip-menu-icons"
+              src={pictures}
+            />
+            <div className="tooltip-menu-text"> 25 </div>{" "}
+            {/*TODO: get real data from system*/}
+            <img
+              title="Create a new albums"
+              className="tooltip-menu-icons"
+              src={newAlbum}
+            />
           </div>
         </div>
-      );
-    }
-    //For guest users
-    buildTooltipMenuGuest = (name) => {
-      return(
-        <div className="tooltip-menu">
-          <div className="tooltip-menu-countryName">{name}
-            <div className="tooltip-menu-icons-container-small">
-              <img title="Browse pictures" className="tooltip-menu-icons" src={guestView}/>
-              <div className="tooltip-menu-text"> 25 </div> {/*TODO: get real data from system*/}
-            </div>
+      </div>
+    );
+  };
+  //For guest users
+  buildTooltipMenuGuest = (name) => {
+    return (
+      <div className="tooltip-menu">
+        <div className="tooltip-menu-countryName">
+          {name}
+          <div className="tooltip-menu-icons-container-small">
+            <img
+              title="Browse pictures"
+              className="tooltip-menu-icons"
+              src={guestView}
+            />
+            <div className="tooltip-menu-text"> 25 </div>{" "}
+            {/*TODO: get real data from system*/}
           </div>
         </div>
-      );
-    }
+      </div>
+    );
+  };
 
   render() {
     return (
-        <>
+      <>
         <div id="map"></div>
-        </>
+      </>
     );
   }
 }

@@ -2,20 +2,13 @@ import React, { Component } from "react";
 import * as FaIcons from "react-icons/fa";
 import "./NavBar.css";
 import Firebase from "firebase/app";
-import 'firebase/auth';
-import {
-  BrowserRouter as Router,
-  Link,
-} from "react-router-dom";
+import "firebase/auth";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import Logout from "../Logout/logout";
-import Login from "../Login/login"
-import Logo from './SLEEPY.png';
-
-
+import Login from "../Login/login";
+import Logo from "./SLEEPY.png";
 
 class NavBar extends Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +16,7 @@ class NavBar extends Component {
       // notList: ["Notficiton #1", "Notficiton #2", "Notficiton #3"],
       // timelist: [8, 2, 1]
       notList: [],
-      timelist: []
+      timelist: [],
     };
     this.not = this.not.bind(this);
     this.notficitonBoxSettings = this.notficitonBoxSettings.bind(this);
@@ -36,8 +29,7 @@ class NavBar extends Component {
   notficitonBoxSettings() {
     if (this.state.notficitonBox == false)
       this.setState({ notficitonBox: true });
-    else
-      this.setState({ notficitonBox: false });
+    else this.setState({ notficitonBox: false });
   }
 
   notfalse() {
@@ -56,129 +48,141 @@ class NavBar extends Component {
     const notfalse = this.props.notfalse;
 
     return (
-      <div id="bar" class="container-fluid">
-        <div class="row" onClick={this.not}>
-          <div class="col-sm-1 boradercover">
+      <div id="bar" className="container-fluid">
+        <div className="row" onClick={this.not}>
+          <div className="col-sm-1 boradercover">
             <div className="logo">
               {!authenticated && (
-                <Link to="/"> <FaIcons.FaGlobeEurope /></Link>
+                <Link to="/">
+                  {" "}
+                  <FaIcons.FaGlobeEurope />
+                </Link>
               )}
               {authenticated && (
-                <Link to="/mapview"> <FaIcons.FaGlobeEurope /></Link>
+                <Link to="/mapview">
+                  {" "}
+                  <FaIcons.FaGlobeEurope />
+                </Link>
               )}
             </div>
           </div>
-          <div class="row col-sm-3" />
-          <div class="row col-sm-4 boradercover">
+          <div className="row col-sm-3" />
+          <div className="row col-sm-4 boradercover">
             <div className="links">
-              {!authenticated && (
-                <Link to="/">Home</Link>
-              )}
-              {authenticated && (
-                <Link to="/mapview" >Home</Link>
-              )}
+              {!authenticated && <Link to="/">Home</Link>}
+              {authenticated && <Link to="/mapview">Home</Link>}
 
-              {!authenticated && (
-                <Link to="/">Map</Link>
-              )}
-              {authenticated && (
-                <Link to="/mapview">Map</Link>
-              )}
+              {!authenticated && <Link to="/">Map</Link>}
+              {authenticated && <Link to="/mapview">Map</Link>}
 
-              {!authenticated && (
-                <Link to="/profile">Photo</Link>
-              )}
-              {authenticated && (
-                <Link to="/uploadPhotos">Photo</Link>
-              )}
+              {!authenticated && <Link to="/profile">Photo</Link>}
+              {authenticated && <Link to="/uploadPhotos">Photo</Link>}
 
-              {!authenticated && (
-                <Link to="/profile">About</Link>
-              )}
-              {authenticated && (
-                <Link to="/about">About</Link>
-              )}
-
+              {!authenticated && <Link to="/profile">About</Link>}
+              {authenticated && <Link to="/about">About</Link>}
             </div>
           </div>
-          <div class="col-sm-2">
-            <div class="rightsideLogos">
-              <div class="marginleftright">
+          <div className="col-sm-2">
+            <div className="rightsideLogos">
+              <div className="marginleftright">
                 {authenticated && (
-                  <span> <button onClick={this.notficitonBoxSettings}>
-                    <Link to="/settings"><span><FaIcons.FaUser /></span></Link>
-                  </button>
-                  </span>)}
+                  <span>
+                    {" "}
+                    <button onClick={this.notficitonBoxSettings}>
+                      <Link to="/settings">
+                        <span>
+                          <FaIcons.FaUser />
+                        </span>
+                      </Link>
+                    </button>
+                  </span>
+                )}
               </div>
-              <div class="marginleftright">
+              <div className="marginleftright">
                 {authenticated && (
-                  <span> <button onClick={this.notficitonBoxSettings}>
-                    <FaIcons.FaBell />
-                  </button>
-                  </span>)}
+                  <span>
+                    {" "}
+                    <button onClick={this.notficitonBoxSettings}>
+                      <FaIcons.FaBell />
+                    </button>
+                  </span>
+                )}
               </div>
-              <div class="marginleftright">
+              <div className="marginleftright">
                 <span>
-                  <Link to="/profile"><span><FaIcons.FaSignOutAlt /></span></Link>
+                  <Link to="/profile">
+                    <span>
+                      <FaIcons.FaSignOutAlt />
+                    </span>
+                  </Link>
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-
-
-
-        {this.state.notficitonBox && 
-          <div class="notbox">
-            <div class="Insidenotbox">
-              <div class="left-top-notbox">
-                <b><div class="text-dark nottext">Notifications</div></b>
-                {/* <b><span class="text-dark consize"> <FaIcons.FaCircle div class="green" /> Connected</span></b> */}
+        {this.state.notficitonBox && (
+          <div className="notbox">
+            <div className="Insidenotbox">
+              <div className="left-top-notbox">
+                <b>
+                  <div className="text-dark nottext">Notifications</div>
+                </b>
+                {/* <b><span className="text-dark consize"> <FaIcons.FaCircle div className="green" /> Connected</span></b> */}
               </div>
-              <div class="right-top-notbox" onClick={this.notficitonBoxSettings}>
-                <FaIcons.FaRegTimesCircle class="xicon" />
+              <div
+                className="right-top-notbox"
+                onClick={this.notficitonBoxSettings}
+              >
+                <FaIcons.FaRegTimesCircle className="xicon" />
               </div>
             </div>
 
+            {this.state.notList.length == 0 && (
+              <div className="not1">
+                <FaIcons.FaRegTimesCircle div className="red" />
+                <h6 className="not1text">
+                  <b>You have no Notficiton avaiable </b>
+                </h6>
+                {/* <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6> */}
+              </div>
+            )}
+            {this.state.notList.length == 0 && (
+              <div className="not2">
+                <img src={Logo} className="kirby" />
+              </div>
+            )}
 
-            {this.state.notList.length == 0 &&
-              < div class="not1">
-                <FaIcons.FaRegTimesCircle div class="red" />
-                <h6 class="not1text"><b>You have no Notficiton avaiable </b></h6>
-                {/* <h6 class="not1text">{this.state.timelist[0]} Hours ago</h6> */}
+            {this.state.notList.length > 0 && (
+              <div className="not1">
+                <FaIcons.FaRegTimesCircle div className="green" />
+                <h6 className="not1text">
+                  <b>{this.state.notList[0]}</b>
+                </h6>
+                <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6>
               </div>
-            }
-            {this.state.notList.length == 0 &&
-              < div class="not2">
-                <img src={(Logo)} class="kirby"/>
-              </div>
-            }
+            )}
 
-            {this.state.notList.length > 0 &&
-              < div class="not1">
-                <FaIcons.FaRegTimesCircle div class="green" />
-                <h6 class="not1text"><b>{this.state.notList[0]}</b></h6>
-                <h6 class="not1text">{this.state.timelist[0]} Hours ago</h6>
+            {this.state.notList.length > 1 && (
+              <div className="not1">
+                <FaIcons.FaRegTimesCircle div className="green" />
+                <h6 className="not1text">
+                  <b>{this.state.notList[1]}</b>
+                </h6>
+                <h6 className="not1text">{this.state.timelist[1]} Hours ago</h6>
               </div>
-            }
-
-            {this.state.notList.length > 1 &&
-              <div class="not1">
-                <FaIcons.FaRegTimesCircle div class="green" />
-                <h6 class="not1text"><b>{this.state.notList[1]}</b></h6>
-                <h6 class="not1text">{this.state.timelist[1]} Hours ago</h6>
+            )}
+            {this.state.notList.length > 2 && (
+              <div className="not1">
+                <FaIcons.FaRegTimesCircle div className="green" />
+                <h6 className="not1text">
+                  <b>{this.state.notList[2]}</b>
+                </h6>
+                <h6 className="not1text">{this.state.timelist[2]} Hours ago</h6>
               </div>
-            }
-            {this.state.notList.length > 2 &&
-              <div class="not1">
-                <FaIcons.FaRegTimesCircle div class="green" />
-                <h6 class="not1text"><b>{this.state.notList[2]}</b></h6>
-                <h6 class="not1text">{this.state.timelist[2]} Hours ago</h6>
-              </div>
-            }
+            )}
           </div>
-        }
+        )}
       </div>
     );
   }
