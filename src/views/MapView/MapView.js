@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import NavBar from '../../components/NavBar/NavBar.js';
 import Map from '../../components/Map/Map.js';
+import Footer from '../../components/footer/Footer.js';
+import NavBar from '../../components/NavBar/NavBar.js';
 
-class MapView extends Component {
+
+import {
+    BrowserRouter as Router,
+    Link,
+} from "react-router-dom";
+
+class Preloginmap extends Component {
     render() {
         return (
-            <div className='MapView'>
-                
-                <Map />
+            <div>
+                <div class="row text-center">
+                    <Map />
+                </div>
             </div>
         );
     }
 }
 
-export default MapView;
+export default Preloginmap;

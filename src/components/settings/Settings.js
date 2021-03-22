@@ -5,7 +5,7 @@ import "./Settings.css";
 class Settings extends Component {
   render() {
     return (
-      <div class="Settings">
+      <div id="settingPageContainer" class="Settings">
         <div class="leftbox">
           <nav>
             <a onclick="tabs(0)" class="tab active">

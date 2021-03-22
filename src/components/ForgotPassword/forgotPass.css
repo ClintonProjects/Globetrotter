@@ -1,8 +1,8 @@
-.forgotPassword{
+#forgotpasswordcon .forgotPassword{
     margin: 2em;
     position: relative;
 }
-button{
+#forgotpasswordcon button{
     background-color: black;
     color: white;
     padding: 14px 20px;
@@ -11,19 +11,19 @@ button{
     border-radius: 4px;
     cursor: pointer;
 }
-button:hover{
+#forgotpasswordcon button:hover{
     background-color: rgb(54, 53, 53);
 }
-#backtologin:hover{
+#forgotpasswordcon #backtologin:hover{
     color: blue;
 }
-#passForm{
+#forgotpasswordcon #passForm{
     box-sizing: border-box;
 }
-h3{
+#forgotpasswordcon h3{
     margin-bottom: 1em;
 }
-.passEmail{
+#forgotpasswordcon .passEmail{
     width: 500px;
     padding: 12px 20px;
     margin: 8px 0;

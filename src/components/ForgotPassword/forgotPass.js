@@ -46,7 +46,7 @@ class ForgotPass extends Component {
       const handleInput = this.handleInputChange;
       const handleSubmit = this.handleSubmit;
         return (
-          <div className="forgotPassword">
+          <div id = "forgotpasswordcon" className="forgotPassword">
             <h3>Forgot Password</h3>
             {error && (<p><strong>ERROR: {error.message} </strong></p>)}
             {this.state.message ? "Check your email inbox for further instructions" : null}

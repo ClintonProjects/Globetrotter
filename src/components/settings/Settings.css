@@ -4,7 +4,7 @@
   background: linear-gradient(to right, #2ed573, #f9ca24);
   /*overflow-x: hidden;*/
 
-.Settings {
+  #settingPageContainer .Settings {
   background: #fff;
   width: 540px;
   height: 450px;
@@ -14,7 +14,7 @@
   box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
 }
 
-.leftbox {
+#settingPageContainer .leftbox {
   float: left;
   top: 5%;
   left: 5%;
@@ -26,7 +26,7 @@
   border: solid #fff;
 }
 
-nav a {
+#settingPageContainer nav a {
   list-style: none;
   padding: 35px;
   color: #fff;
@@ -35,32 +35,32 @@ nav a {
   transition: all 0.3s ease-in-out;
 }
 
-nav a:hover {
+#settingPageContainer nav a:hover {
   color: #10ac84;
   cursor: pointer;
   transform: scale(1.2);
 }
 
-nav a:first-child {
+#settingPageContainer nav a:first-child {
   margin-top: 7px;
 }
 
-nav a.active {
+#settingPageContainer nav a.active {
   color: #10ac84;
 }
 
-.rightbox {
+#settingPageContainer .rightbox {
   width: 60%;
   /*margin-left: 27%;
   /*padding-top: 5px;*/
 }
-.tabShow {
+#settingPageContainer .tabShow {
   transition: all 0.5s ease-in;
   width: 80%;
   position: absolute;
 }
 
-h1 {
+#settingPageContainer h1 {
   font-family: "Montserrat", sans-serif;
   color: #7ed386;
   font-size: 1.2rem;
@@ -68,7 +68,7 @@ h1 {
   margin-bottom: 35px;
 }
 
-h2 {
+#settingPageContainer h2 {
   color: #777;
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -79,7 +79,7 @@ h2 {
 }
 
 .input,
-p {
+#settingPageContainer p {
   border: 0;
   border-bottom: 1px solid #3fb6a8;
   width: 80%;
@@ -89,11 +89,11 @@ p {
   color: none;
 }
 
-span {
+#settingPageContainer span {
   font-size: 0.7em;
   color: #777;
 }
-.btn {
+#settingPageContainer .btn {
   font-family: "roboto", sans-serif;
   text-transform: uppercase;
   font-size: 15px;
@@ -106,6 +106,6 @@ span {
   margin-top: 15px;
 }
 
-.tabShow {
+#settingPageContainer .tabShow {
   display: none;
 }
