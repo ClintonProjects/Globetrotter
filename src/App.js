@@ -21,7 +21,8 @@ import ForgotPass from "./components/ForgotPassword/forgotPass.js";
 import NavBar from "./components/NavBar/NavBar.js";
 import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
 import Footer from "./components/footer/Footer.js";
-import Profile from "./components/Profile/profile.js"
+import Profile from "./components/Profile/profile.js";
+import Settings from "./components/settings/Settings.js";
 // import MapView from "./views/MapView/MapView";
 
 class App extends Component {
@@ -83,9 +84,12 @@ class App extends Component {
   render() {
     return (
       <div>
+        <link rel="icon" href="/favicon-16x16.png"></link>
+        
         <Router>
-          <NavBar/>
+          <NavBar authenticated={this.state.authenticated} />
           <Switch>
+
             <Route path="/" component={Preloginmap} exact/>
             <Route path="/about" component={About}/>
             <Route path="/mapview" component={MapView}/> 
@@ -102,13 +106,13 @@ class App extends Component {
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
-            />)}/>
+            />)} />
           </Switch>
-          <Footer/>
+          <Footer currentUser={this.state.currentUser} />
         </Router>
       </div>
     );
   }
-   
+
 }
 export default App;

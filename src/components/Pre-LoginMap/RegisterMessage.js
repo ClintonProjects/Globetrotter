@@ -20,7 +20,7 @@ export class RegisterMessage extends Component {
 
   render() {
     return (
-        <div class="col-sm-12 loginMessage bg-danger text-white warning-borader">
+      <div class="col-12 loginMessage bg-danger text-white warning-borader text-center">
         <Link to="/login">Login to unlock all featrues, Please Click to login</Link>
       </div>
     );

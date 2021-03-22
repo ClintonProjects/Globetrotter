@@ -1,0 +1,12 @@
+* {
+    padding: 0%;
+    margin: 0%;
+    /* border: green solid 1px;  */
+}
+
+body {
+    /* padding: 0;
+    margin: 0; */
+    height: 100%;
+    width: 100%;
+}

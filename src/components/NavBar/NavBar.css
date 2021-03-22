@@ -1,52 +1,193 @@
-/*start of nav bar styling*/
-/* #bar *{
-    border: white solid 1px;
-} */
-#bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 8vh;
-    padding: 0 2vw;
-    background: #350036; /*Dark Mardi Gras*/
-    color: #FFF;
-    font-size: 1.15rem;
+nav {
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
 }
-.logo {
+#bar {
+    min-height: 7vh;
+    background: #350036; 
+    color: #FFF;
+    margin-top: 0;
+    width: 100%;
+    
+}
+
+#bar .boradercover {
+    margin: 0;
+    padding: 0;
+    /* margin-top: 0.2%; */
+    /* border: white solid 1px; */
+  }
+
+#bar .rightsideLogos {
+    font-size: 25px;
+    margin-top: 0%;
+    margin-left: 100%;
+    display: flex;
+    justify-content: center;
+    height: inherit;
+    width: 5vw;
+    margin-top: 3%;
+
+}
+
+#bar .marginleftright {
+    margin-left: 10%;
+    margin-RIGHT: 10%;
+}
+
+
+#bar .logo {
     font-size: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: inherit;
     width: 5vw;
+    margin-left: 10%;
+    /* margin-top: 5%; */
 }
-.links {
+#bar .links {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: inherit;
-    width: 60vw
+    width: 60vw;
+
 }
-.links span{
+
+#bar button{
+    background-color: #350036; 
+    color: #FFF;
+    outline:  #350036; 
+    border: none;
+    background: none;
     cursor: pointer;
+    margin: 0;
+    padding: 0;
 }
-.settings {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: inherit;
-    width: 10vw;
+
+
+#bar .notbox {
+    background-color: white; 
+    position: absolute;
+    width: 15%;
+    height: 25%;
+    margin-left: 75%;
+    z-index: 1;
+    border: black solid 1px;
+    
+    /* border: yellow solid 1px;  */
 }
-.settings span{
-    cursor: pointer;
+
+#bar .Insidenotbox {
+    width: 100%;
+    position: relative;
+    height: 20%;
+    border-bottom: #350036 solid 1px;
+    /* border-bottom: black solid 1px; */
+    /* background-color: greenyellow;  */
+    /* background-color: yellow;  */
 }
-.burger {
-    cursor: pointer;
+
+#bar .left-top-notbox {
+    margin-top: 1%;
+    margin-left: 7%;
+    width: 50%;
+    position: relative;
+    height: 80%;
+    /* background-color: red;  */
+    float: left;
 }
-.burger div {
-    height: 2px;
-    width: 30px;
-    background: #FFF;
-    margin: 3px;
+
+#bar .xicon {
+    color: #350036; 
+    width: 100%;
+    height: 100%;
 }
-/*end of nav bar styling*/
+
+#bar .green{
+    color: green;
+    margin-bottom: 1%;
+    margin-right: 2%;
+    margin-top: 5%;
+    width: 15%;
+    float: left;
+}
+
+#bar .red{
+    color: red;
+    margin-bottom: 1%;
+    margin-right: 2%;
+    margin-top: 5%;
+    width: 15%;
+    float: left;
+}
+
+#bar .nottext{
+    text-align: center;
+    padding-top: 5%;
+}
+
+#bar .consize{
+    font-size: 11px;
+}
+
+#bar .not1 {
+width: 100%;
+color: black;
+float: left;
+border-bottom: #350036 solid 1px;
+height: 26.7%;
+margin-left: 1%;
+}
+
+
+#bar .not2 {
+    width: 100%;
+    color: black;
+    float: left;
+    border-bottom: #350036 solid 1px;
+    height: 53.4% ;
+    margin-left: 1%;
+    }
+
+
+#bar .not1text {
+    margin-top: 3%;
+    padding-top: 0%;
+    margin-left: 10%;
+    font-size: 12px;
+}
+
+
+#bar .not3 {
+        width: 100%;
+        background-color: green;
+        height: 26.7%;
+        }
+
+
+#bar .right-top-notbox {
+    padding-top: 3%;
+    padding-left: 20%;
+    float: left;
+    width: 20%;
+    position: relative;
+    height: 60%;
+    /* background-color: red;  */
+}
+
+#bar .kirby {
+width: 70%;
+height: 70%;
+margin-left: 15%;
+margin-top: 5%;
+}
+
+
+/* #bar .no-link { */
+    /* color:inherit;
+    text-decoration:none;
+    pointer-events:none; */
+/* } */
