@@ -89,7 +89,6 @@ class App extends Component {
         <Router>
           <NavBar authenticated={this.state.authenticated} />
           <Switch>
-
             <Route path="/" component={Preloginmap} exact/>
             <Route path="/about" component={About}/>
             <Route path="/mapview" component={MapView}/> 
@@ -105,7 +104,6 @@ class App extends Component {
             />)}/>
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
-              currentUser={this.state.currentUser}
             />)} />
           </Switch>
           <Footer currentUser={this.state.currentUser} />

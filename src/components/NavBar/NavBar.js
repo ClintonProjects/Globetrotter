@@ -105,9 +105,9 @@ class NavBar extends Component {
             <div class="rightsideLogos">
               <div class="marginleftright">
                 {authenticated && (
-                  <span> <button onClick={this.notficitonBoxSettings}>
+                  <span> 
                     <Link to="/settings"><span><FaIcons.FaUser /></span></Link>
-                  </button>
+                  
                   </span>)}
               </div>
               <div class="marginleftright">
