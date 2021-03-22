@@ -14,8 +14,10 @@ class Preloginmap extends Component {
     return (
       <div>
         <div className="row text-center">
-          <Map currentUser={this.props.currentUser}/>
-          <TripForm currentUser={this.props.currentUser}/>
+          <Map currentUser={this.props.currentUser} />
+          {this.props.authenticated && (
+            <TripForm currentUser={this.props.currentUser} />
+          )}
         </div>
       </div>
     );

@@ -10,9 +10,6 @@ const firestore = firebase.firestore(); // collection = users & user = evan
 class TripForm extends Component {
   constructor(props) {
     super(props);
-
-    try{
-
     this.state = this.state = {
       // ${this.props.currentUser.uid} passed down from Landing.js file
       docRef: firestore
@@ -27,13 +24,6 @@ class TripForm extends Component {
         .doc(`${this.props.currentUser.uid}`)
         .collection("trips"),
     };
-  }
-
-  catch(e){
-    console.log("the uid thing");
-  }
-
-
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
   }
