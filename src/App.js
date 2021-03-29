@@ -20,6 +20,7 @@ import { createHashHistory } from 'history';
 import ForgotPass from "./components/ForgotPassword/forgotPass.js";
 import NavBar from "./components/NavBar/NavBar.js";
 import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
+import Gallery from "./components/photoGallery/gallery.js";
 import Footer from "./components/footer/Footer.js";
 import Profile from "./components/Profile/profile.js";
 import Settings from "./components/settings/Settings.js";
@@ -102,6 +103,10 @@ class App extends Component {
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
             />)}/>
+            {/* <Route path="/gallery" render={()=>(<Gallery
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}
+            />)}/> */}
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
             />)} />
