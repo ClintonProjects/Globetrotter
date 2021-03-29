@@ -52,6 +52,7 @@ class TripForm extends Component {
       };
       this.state.locationRef.doc(`${docID}`).set(userSeries);
       this.state.tripRef.doc(`${docID}`).set(userTrips);
+      console.log("trip added");
     } catch (error) {
       alert("invalid input");
       console.error(error);

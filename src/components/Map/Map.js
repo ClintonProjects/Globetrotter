@@ -17,29 +17,32 @@ const firestore = firebase.firestore(); // collection = users & user = evan
 class Map extends Component {
   constructor(props) {
     super(props);
-
-    try {
-      this.state = {
-        // ${this.props.currentUser.uid} passed down from Landing.js file
-        docRef: firestore
-          .collection("users")
-          .doc(`${this.props.currentUser.uid}`),
-        locationRef: firestore
-          .collection("users")
-          .doc(`${this.props.currentUser.uid}`)
-          .collection("locations"),
-        tripRef: firestore
-          .collection("users")
-          .doc(`${this.props.currentUser.uid}`)
-          .collection("trips"),
-      };
-    } catch (e) {
-      console.log("uid thing");
-    }
+    this.state = {
+      docRef: null,
+      locationRef: null,
+      tripRef: null,
+    };
   }
 
   componentDidMount() {
-    try {
+    if (this.props.authenticated){ // if user is logged on
+      // set the states
+      this.setState({
+        docRef: firestore
+          .collection("users")
+          .doc(`${this.props.currentUser.uid}`),
+      });
+      this.setState({
+        locationRef: firestore
+          .collection("users")
+          .doc(`${this.props.currentUser.uid}`),
+      });
+      this.setState({
+        tripRef: firestore
+          .collection("users")
+          .doc(`${this.props.currentUser.uid}`),
+      });
+
       // onSnapshot listens for any changes in the document on firebase
       this.state.locationRef.onSnapshot((doc) => {
         if (doc.empty) {
@@ -95,10 +98,9 @@ class Map extends Component {
           this.map = map;
         }
       });
-    } catch (e) {
-      console.log(e);
-      console.log("uid thing");
-    } finally {
+    } else {
+      console.log("else map");
+
       let map = am4core.create("map", am4maps.MapChart);
 
       // provide the map object with a definition (GEOJSON)
