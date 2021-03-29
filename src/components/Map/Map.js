@@ -13,7 +13,7 @@ import guestView from "./img/guestView30x30.png";
 class Map extends Component {
     componentDidMount(){
         // instantiate the map object
-        let map = am4core.create("map", am4maps.MapChart);
+        let map = am4core.create("chartdiv", am4maps.MapChart);
 
         // provide the map object with a definition (GEOJSON)
         map.geodata = geodata;
@@ -109,7 +109,9 @@ class Map extends Component {
   render() {
     return (
         <>
-        <div id="map"></div>
+          <div className="chartwrapper" id="map">
+            <div id="chartdiv" className="chartdiv"></div>
+          </div>
         </>
     );
   }

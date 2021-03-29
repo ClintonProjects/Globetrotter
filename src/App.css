@@ -1,0 +1,6 @@
+.content {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin-top: 60px;
+    max-height: 95vh;
+}
