@@ -88,41 +88,22 @@ class App extends Component {
         <Router>
           <NavBar authenticated={this.state.authenticated} />
           <Switch>
-            <Route path="/" component={Preloginmap} exact />
-            <Route path="/about" component={About} />
-            <Route
-              path="/mapview"
-              render={() => (
-                <MapView
-                  authenticated={this.state.authenticated}
-                  currentUser={this.state.currentUser}
-                />
-              )}
-            />
-            <Route path="/preloginmap" component={Preloginmap} />
-            <Route path="/contactus" component={ContactUs} />
-            <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/rego" component={Rego} />
-            <Route path="/forgotPass" component={ForgotPass} />
-            <Route
-              path="/uploadPhotos"
-              render={() => (
-                <UploadPhotos
-                  authenticated={this.state.authenticated}
-                  currentUser={this.state.currentUser}
-                />
-              )}
-            />
-            <Route
-              path="/profile"
-              render={() => (
-                <Profile
-                  authenticated={this.state.authenticated}
-                  currentUser={this.state.currentUser}
-                />
-              )}
-            />
+            <Route path="/" component={Preloginmap} exact/>
+            <Route path="/about" component={About}/>
+            <Route path="/mapview" component={MapView}/>
+            <Route path="/preloginmap" component={Preloginmap}/>
+            <Route path="/contactus" component={ContactUs}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/logout" component={Logout}/>
+            <Route path="/rego" component={Rego}/>
+            <Route path="/forgotPass" component={ForgotPass}/>
+            <Route path="/uploadPhotos" render={()=>(<UploadPhotos
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}
+            />)}/>
+            <Route path="/profile" render={() => (<Profile
+              authenticated={this.state.authenticated}
+            />)} />
           </Switch>
           <Footer currentUser={this.state.currentUser} />
         </Router>
