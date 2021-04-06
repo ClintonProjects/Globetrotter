@@ -11,8 +11,8 @@ class Preloginmap extends Component {
     super(props);
   }
   render() {
-    console.log(this.props.authenticated);
-    console.log(this.props.currentUser);
+    console.log(`user authenticated: ${this.props.authenticated}`);
+    console.log(`current user:`); console.log(this.props.currentUser)
     return (
       <div>
         <div className="row text-center">
@@ -20,9 +20,10 @@ class Preloginmap extends Component {
             currentUser={this.props.currentUser}
             authenticated={this.props.authenticated}
           />
-          {this.props.authenticated && (
-            <TripForm currentUser={this.props.currentUser} />
-          )}
+          {/* <TripForm
+            currentUser={this.props.currentUser}
+            authenticated={this.props.authenticated}
+          /> */}
         </div>
       </div>
     );

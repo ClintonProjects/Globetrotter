@@ -90,7 +90,10 @@ class App extends Component {
           <Switch>
             <Route path="/" component={Preloginmap} exact/>
             <Route path="/about" component={About}/>
-            <Route path="/mapview" component={MapView}/>
+            <Route path="/mapview" render={()=>(<MapView
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}/>
+              )}/>
             <Route path="/preloginmap" component={Preloginmap}/>
             <Route path="/contactus" component={ContactUs}/>
             <Route path="/login" component={Login}/>
