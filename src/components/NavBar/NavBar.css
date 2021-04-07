@@ -4,12 +4,13 @@ nav {
     margin: 0%;
 }
 #bar {
-    min-height: 7vh;
-    background: #350036; 
+    min-height: 55px;
+    background: black; 
     color: #FFF;
     margin-top: 0;
     width: 100%;
-    
+    position: fixed;
+    top: 0;
 }
 
 #bar .boradercover {
@@ -53,7 +54,23 @@ nav {
     align-items: center;
     height: inherit;
     width: 60vw;
+}
 
+.nav-text .nav-text:hover, .nav-text:visited, .nav-text:active{
+    color: white !important;
+    text-decoration: none;
+  }
+
+.icon {
+/* background: black; */
+margin-left: 3%;
+color: white;
+/* background-color: white; */
+}
+
+.icon:hover {
+color: lightblue;
+size: "2.3em";
 }
 
 #bar button{

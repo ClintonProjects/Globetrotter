@@ -10,6 +10,7 @@ import {
 import Logout from "../Logout/logout";
 import Login from "../Login/login"
 import Logo from './SLEEPY.png';
+import logo from './logo/XS logo.png';
 
 
 
@@ -61,10 +62,10 @@ class NavBar extends Component {
           <div class="col-sm-1 boradercover">
             <div className="logo">
               {!authenticated && (
-                <Link to="/"> <FaIcons.FaGlobeEurope /></Link>
+                <Link to="/"><img src={logo} alt="Logo" className="icon" /></Link>
               )}
               {authenticated && (
-                <Link to="/mapview"> <FaIcons.FaGlobeEurope /></Link>
+                <Link to="/mapview"><img src={logo} alt="Logo" className="icon" /></Link>
               )}
             </div>
           </div>
@@ -72,31 +73,31 @@ class NavBar extends Component {
           <div class="row col-sm-4 boradercover">
             <div className="links">
               {!authenticated && (
-                <Link to="/">Home</Link>
+                <Link className="nav-text" to="/">Home</Link>
               )}
               {authenticated && (
-                <Link to="/mapview" >Home</Link>
+                <Link className="nav-text" to="/mapview" >Home</Link>
               )}
 
               {!authenticated && (
-                <Link to="/">Map</Link>
+                <Link className="nav-text" to="/">Map</Link>
               )}
               {authenticated && (
-                <Link to="/mapview">Map</Link>
+                <Link className="nav-text" to="/mapview">Map</Link>
               )}
 
               {!authenticated && (
-                <Link to="/profile">Photo</Link>
+                <Link className="nav-text" to="/profile">Photo</Link>
               )}
               {authenticated && (
-                <Link to="/uploadPhotos">Photo</Link>
+                <Link  className="nav-text"to="/uploadPhotos">Photo</Link>
               )}
 
               {!authenticated && (
-                <Link to="/profile">About</Link>
+                <Link className="nav-text" to="/profile">About</Link>
               )}
               {authenticated && (
-                <Link to="/about">About</Link>
+                <Link className="nav-text" to="/about">About</Link>
               )}
 
             </div>
@@ -106,20 +107,20 @@ class NavBar extends Component {
               <div class="marginleftright">
                 {authenticated && (
                   <span> 
-                    <Link to="/settings"><span><FaIcons.FaUser /></span></Link>
+                    <Link to="/settings"><span><FaIcons.FaUser className="icon"/></span></Link>
                   
                   </span>)}
               </div>
               <div class="marginleftright">
                 {authenticated && (
                   <span> <button onClick={this.notficitonBoxSettings}>
-                    <FaIcons.FaBell />
+                    <FaIcons.FaBell className="icon"/>
                   </button>
                   </span>)}
               </div>
               <div class="marginleftright">
                 <span>
-                  <Link to="/profile"><span><FaIcons.FaSignOutAlt /></span></Link>
+                  <Link to="/profile"><span><FaIcons.FaSignOutAlt className="icon"/></span></Link>
                 </span>
               </div>
             </div>

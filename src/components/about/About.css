@@ -1,9 +1,15 @@
   
   .About {
+    min-height: 85vh;
+    position: relative;
+    overflow-y: scroll !important;
+  }
+  .body {
     padding-left: 25%;
     padding-right: 25%;
     font-family: Arial, Helvetica, sans-serif !important;
     font-size: .8em;
+    position: absolute;
   }
 
   #aboutTable {

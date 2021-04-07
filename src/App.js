@@ -25,6 +25,7 @@ import Footer from "./components/footer/Footer.js";
 import Profile from "./components/Profile/profile.js";
 import Settings from "./components/settings/Settings.js";
 // import MapView from "./views/MapView/MapView";
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class App extends Component {
         
         <Router>
           <NavBar authenticated={this.state.authenticated} />
+          <div className="content">
           <Switch>
             <Route path="/" component={Preloginmap} exact/>
             <Route path="/about" component={About}/>
@@ -111,6 +113,7 @@ class App extends Component {
               authenticated={this.state.authenticated}
             />)} />
           </Switch>
+          </div>
           <Footer currentUser={this.state.currentUser} />
         </Router>
       </div>
