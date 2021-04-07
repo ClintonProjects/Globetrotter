@@ -21,6 +21,7 @@ import ForgotPass from "./components/ForgotPassword/forgotPass.js";
 import NavBar from "./components/NavBar/NavBar.js";
 import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
 import Gallery from "./components/photoGallery/gallery.js";
+import TripForm from "./components/TripForm/TripForm.js";
 import Footer from "./components/footer/Footer.js";
 import Profile from "./components/Profile/profile.js";
 import Settings from "./components/settings/Settings.js";
@@ -98,6 +99,7 @@ class App extends Component {
             <Route path="/preloginmap" component={Preloginmap}/> 
             <Route path="/contactus" component={ContactUs}/> 
             <Route path="/login" component={Login}/>
+            <Route path="/tripform" component={TripForm}/>
             <Route path="/logout" component={Logout}/>
             <Route path="/rego" component={Rego}/>
             <Route path="/forgotPass" component={ForgotPass}/>
