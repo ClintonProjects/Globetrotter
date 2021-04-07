@@ -11,28 +11,32 @@ class Gallery extends Component{
         super(props);
     
         this.state = {
-          
           docs: []
         };
     }
 
     render(){
-    const authenticated = this.props.authenticated;
-    const currentUser = this.props.currentUser;
     const docs = this.state.docs;
-    let collection = currentUser.uid;
-    
+    const currentGallery = firestore
+                        .collection("users")
+                        .doc(`${this.props.currentUser.uid}`)
+                        .collection("images")                 
+                        
     const showPhotos = () =>{
-        firestore.collection(collection)
-        .orderBy('country', 'desc')
+        console.log(this.props.currentUser.uid);
+        currentGallery
+        //.orderBy('createdAt', 'desc')
         .onSnapshot((snap) =>{
+            if (snap.empty){
+                console.log("no uid - gallery file");
+            }else{
             let documents = [];
             snap.forEach(doc =>{
                 documents.push({...doc.data(), id: doc.id});
             });
             this.setState({docs: documents});
             console.log(docs);
-        })
+        }})
     }
         return(
             
@@ -42,7 +46,7 @@ class Gallery extends Component{
                 
                 {docs && docs.map(doc =>(
                     <div className="img-wrap" key ={doc.id}>
-                        <img src={doc.url} alt="users-travel-pic"/>
+                        <img src={doc.imageURL} alt="users-travel-pic"/>
                     </div>
                 ))}
             </div>

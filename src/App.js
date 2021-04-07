@@ -106,7 +106,7 @@ class App extends Component {
             {/* <Route path="/gallery" render={()=>(<Gallery
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
-            />)}/> */}
+            />)}/>  */}
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
             />)} />

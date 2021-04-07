@@ -32,6 +32,7 @@ class UploadPhotos extends Component {
     render() {
       const authenticated = this.props.authenticated;
       const currentUser = this.props.currentUser;  
+      const country = "Ireland"; //update with trip form
       const image = this.state.image;
       //sets the allowed file types that can be uploaded
       const types = ['image/jpeg', 'image/png'];
@@ -56,9 +57,13 @@ class UploadPhotos extends Component {
             //images is just creating the name of the folder in firebase storage
             //want to change `images` to the country name that user is uploading to 
               const uploadTask = storage.ref(image.name);
-              const firestoreRef = firestore.collection(currentUser.uid);
+              const firestoreRef = firestore
+                                  .collection("users")
+                                  .doc(`${currentUser.uid}`)
+                                  .collection("images");
+                                  
 
-              uploadTask.put(image) //uploads to firebase storage
+              uploadTask.put(image) //uploads image to firebase storage
               .on(
               "state_changed",
               snapshot => {//current progress of upload
@@ -71,9 +76,14 @@ class UploadPhotos extends Component {
               async ()=>{ //if successfully uploaded, get URL
                 const url = await uploadTask.getDownloadURL()
                 this.setURL(url); //update state url
+                console.log(this.state.url);
                 const createdAt = timestamp();
-                const country = "Ireland"; //update with trip form
-                firestoreRef.add({url, createdAt, country });
+                console.log(firestoreRef)
+                firestoreRef.add({ //adding the image url to the users firestore
+                  imageURL: url, 
+                  date: createdAt, 
+                  country: country,
+                  name: image.name }); //should be adding to the 
               }
             )
             }
@@ -89,9 +99,11 @@ class UploadPhotos extends Component {
             
           <button id="uploadphoto-button"onClick={handleSubmission}>Upload</button>
           <div className="albums-container">
-              <Gallery 
-              authenticated={this.props.authenticated}
-              currentUser={this.props.currentUser}/>
+             <Gallery 
+               authenticated = {authenticated}
+               currentUser ={currentUser}
+              
+              />
           </div>
             
         </div>
