@@ -17,7 +17,7 @@ class Gallery extends Component{
 
     render(){
     const docs = this.state.docs;
-    const currentGallery = firestore
+    var currentGallery = firestore
                         .collection("users")
                         .doc(`${this.props.currentUser.uid}`)
                         .collection("images")                 
@@ -46,6 +46,7 @@ class Gallery extends Component{
                 
                 {docs && docs.map(doc =>(
                     <div className="img-wrap" key ={doc.id}>
+                        {console.log(doc.id)} 
                         <img src={doc.imageURL} alt="users-travel-pic"/>
                     </div>
                 ))}
