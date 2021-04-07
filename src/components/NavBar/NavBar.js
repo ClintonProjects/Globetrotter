@@ -5,8 +5,11 @@ import Firebase from "firebase/app";
 import "firebase/auth";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import Logout from "../Logout/logout";
-import Login from "../Login/login";
-import Logo from "./SLEEPY.png";
+import Login from "../Login/login"
+import Logo from './SLEEPY.png';
+import logo from './logo/XS logo.png';
+
+
 
 class NavBar extends Component {
   constructor(props) {
@@ -53,30 +56,43 @@ class NavBar extends Component {
           <div className="col-sm-1 boradercover">
             <div className="logo">
               {!authenticated && (
-                <Link to="/">
-                  {" "}
-                  <FaIcons.FaGlobeEurope />
-                </Link>
+                <Link to="/"><img src={logo} alt="Logo" className="icon" /></Link>
               )}
               {authenticated && (
-                <Link to="/mapview">
-                  {" "}
-                  <FaIcons.FaGlobeEurope />
-                </Link>
+                <Link to="/mapview"><img src={logo} alt="Logo" className="icon" /></Link>
               )}
             </div>
           </div>
           <div className="row col-sm-3" />
           <div className="row col-sm-4 boradercover">
             <div className="links">
-              {!authenticated && <Link to="/">Home</Link>}
-              {authenticated && <Link to="/mapview">Home</Link>}
+              {!authenticated && (
+                <Link className="nav-text" to="/">Map</Link>
+              )}
+              {authenticated && (
+                <Link className="nav-text" to="/mapview" >Map</Link>
+              )}
 
-              {!authenticated && <Link to="/">Map</Link>}
-              {authenticated && <Link to="/mapview">Map</Link>}
+              {!authenticated && (
+                <Link className="nav-text" to="/">Trips</Link>
+              )}
+              {authenticated && (
+                <Link className="nav-text" to="/tripform">Trips</Link>
+              )}
 
-              {!authenticated && <Link to="/profile">Photo</Link>}
-              {authenticated && <Link to="/uploadPhotos">Photo</Link>}
+              {!authenticated && (
+                <Link className="nav-text" to="/profile">Photo</Link>
+              )}
+              {authenticated && (
+                <Link  className="nav-text"to="/uploadPhotos">Photo</Link>
+              )}
+
+              {!authenticated && (
+                <Link className="nav-text" to="/profile">About</Link>
+              )}
+              {authenticated && (
+                <Link className="nav-text" to="/about">About</Link>
+              )}
 
               {!authenticated && <Link to="/profile">About</Link>}
               {authenticated && <Link to="/about">About</Link>}
@@ -87,27 +103,20 @@ class NavBar extends Component {
               <div className="marginleftright">
                 {authenticated && (
                   <span>
-                    <Link to="/settings"><span><FaIcons.FaUser /></span></Link>
+                    <Link to="/settings"><span><FaIcons.FaUser className="icon"/></span></Link>
 
                   </span>)}
               </div>
               <div className="marginleftright">
                 {authenticated && (
-                  <span>
-                    {" "}
-                    <button onClick={this.notficitonBoxSettings}>
-                      <FaIcons.FaBell />
-                    </button>
-                  </span>
-                )}
+                  <span> <button onClick={this.notficitonBoxSettings}>
+                    <FaIcons.FaBell className="icon"/>
+                  </button>
+                  </span>)}
               </div>
               <div className="marginleftright">
                 <span>
-                  <Link to="/profile">
-                    <span>
-                      <FaIcons.FaSignOutAlt />
-                    </span>
-                  </Link>
+                  <Link to="/profile"><span><FaIcons.FaSignOutAlt className="icon"/></span></Link>
                 </span>
               </div>
             </div>
