@@ -73,17 +73,17 @@ class NavBar extends Component {
           <div class="row col-sm-4 boradercover">
             <div className="links">
               {!authenticated && (
-                <Link className="nav-text" to="/">Home</Link>
-              )}
-              {authenticated && (
-                <Link className="nav-text" to="/mapview" >Home</Link>
-              )}
-
-              {!authenticated && (
                 <Link className="nav-text" to="/">Map</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/mapview">Map</Link>
+                <Link className="nav-text" to="/mapview" >Map</Link>
+              )}
+
+              {!authenticated && (
+                <Link className="nav-text" to="/">Trips</Link>
+              )}
+              {authenticated && (
+                <Link className="nav-text" to="/tripform">Trips</Link>
               )}
 
               {!authenticated && (
