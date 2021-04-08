@@ -93,9 +93,6 @@ class NavBar extends Component {
               {authenticated && (
                 <Link className="nav-text" to="/about">About</Link>
               )}
-
-              {!authenticated && <Link to="/profile">About</Link>}
-              {authenticated && <Link to="/about">About</Link>}
             </div>
           </div>
           <div className="col-sm-2">

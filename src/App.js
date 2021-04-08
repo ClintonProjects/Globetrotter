@@ -105,6 +105,7 @@ class App extends Component {
             <Route path="/logout" component={Logout}/>
             <Route path="/rego" component={Rego}/>
             <Route path="/forgotPass" component={ForgotPass}/>
+            <Route path="/settings" component={Settings}/>
             <Route path="/uploadPhotos" render={()=>(<UploadPhotos
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}

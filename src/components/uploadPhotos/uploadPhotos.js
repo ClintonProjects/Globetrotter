@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
 import 'firebase/storage'; //where we hold the photo
@@ -28,7 +29,7 @@ class UploadPhotos extends Component {
     }
     setURL(urlpassed){
       this.setState({ url: urlpassed});
-    }
+    }    
     render() {
       const authenticated = this.props.authenticated;
       const currentUser = this.props.currentUser;  
@@ -90,23 +91,22 @@ class UploadPhotos extends Component {
             
           };
         return (
-        <div className="photo-container">
-          {/* shows photo upload progress to user */}
-          <div className="progress-bar" style={{width: this.state.progress + '%'}}/>
-          
-          <input id="choosefilebutton" type="file" name="file" multiple onChange={changeHandler} />
-          {/* {image && <div>{image.name}</div>} */}
-            
-          <button id="uploadphoto-button"onClick={handleSubmission}>Upload</button>
-          <div className="albums-container">
-             <Gallery 
-               authenticated = {authenticated}
-               currentUser ={currentUser}
+          <Container className="photo-container">
+              {/* shows photo upload progress to user */}
+              <div className="progress-bar" style={{width: this.state.progress + '%'}}/>
               
-              />
-          </div>
-            
-        </div>
+              <input id="choosefilebutton" type="file" name="file" multiple onChange={changeHandler} />
+              {/* {image && <div>{image.name}</div>} */}
+                
+              <button id="uploadphoto-button"onClick={handleSubmission}>Upload</button>
+ 
+                <Gallery 
+                  authenticated = {authenticated}
+                  currentUser ={currentUser}
+                  
+                  />
+          </Container>
+
         );
       }
 }

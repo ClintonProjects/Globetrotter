@@ -8,19 +8,19 @@ class Settings extends Component {
       <div id="settingPageContainer" className="Settings">
         <div className="leftbox">
           <nav>
-            <a onclick="tabs(0)" className="tab active">
+            <a onClick="tabs(0)" className="tab active">
               <FaIcons.FaUserCog />
             </a>
-            <a onclick="tabs(1)" className="tab">
+            <a onClick="tabs(1)" className="tab">
               <FaIcons.FaCreditCard />
             </a>
-            <a onclick="tabs(2)" className="tab">
+            <a onClick="tabs(2)" className="tab">
               <FaIcons.FaLaptop />
             </a>
-            <a onclick="tabs(3)" className="tab">
+            <a onClick="tabs(3)" className="tab">
               <FaIcons.FaRegListAlt />
             </a>
-            <a onclick="tabs(4)" className="tab">
+            <a onClick="tabs(4)" className="tab">
               <i className="fa fa-cog"></i>
             </a>
           </nav>
@@ -29,15 +29,15 @@ class Settings extends Component {
           <div className="profile tabShow">
             <h1>Personal Information</h1>
             <h2>Full name</h2>
-            <input type="text" className="input" value="Cristina Glez" />
+            <input type="text" className="input" placeholder="Cristina Glez" />
             <h2>Birthday</h2>
-            <input type="text" className="input" value="April 7, 1994" />
+            <input type="text" className="input" placeholder="April 7, 1994" />
             <h2>Gender</h2>
-            <input type="text" className="input" value="Female" />
+            <input type="text" className="input" placeholder="Female" />
             <h2>Email</h2>
-            <input type="text" className="input" value="hola@gmail.com" />
+            <input type="text" className="input" placeholder="hola@gmail.com" />
             <h2>Password</h2>
-            <input type="password" className="input" value="brightcode" />
+            <input type="password" className="input" placeholder="brightcode" />
             <button className="btn">Update</button>
           </div>
           <div className="payment tabShow">
@@ -46,20 +46,20 @@ class Settings extends Component {
             <input
               type="text"
               className="input"
-              value="Master Card - 0202 ******** 7336"
+              placeholder="Master Card - 0202 ******** 7336"
             />
             <h2>Billing Address</h2>
             <input
               type="text"
               className="input"
-              value="8, Maynooth, Co.Kildare. Ireland"
+              placeholder="8, Maynooth, Co.Kildare. Ireland"
             />
             <h2>Zip Code</h2>
-            <input type="text" className="input" value="872316" />
+            <input type="text" className="input" placeholder="872316" />
             <h2>Billing Date</h2>
-            <input type="text" className="input" value="17 March, 2021" />
+            <input type="text" className="input" placeholder="17 March, 2021" />
             <h2>Reedem Card</h2>
-            <input type="password" className="input" value="Enter Gift Code" />
+            <input type="password" className="input" placeholder="Enter Gift Code" />
             <button className="btn">Update</button>
           </div>
           <div className="subscription tabShow">

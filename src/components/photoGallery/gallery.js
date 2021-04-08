@@ -1,4 +1,5 @@
 import React, {Component}  from "react";
+import { Container, Carousel } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
 import 'firebase/firestore'; //database to store the photo URLs that we can interat with
@@ -38,18 +39,34 @@ class Gallery extends Component{
             console.log(docs);
         }})
     }
+
+    //Bootstrap carousel inspired from https://react-bootstrap.github.io/components/carousel/   
+    //method that will build carousel items (one item for each picture in doc array)
+    const cItems = (docs && docs.map(doc =>{
+        return <Carousel.Item>
+            <img
+            className="d-block w-100"
+            src={
+                doc.imageURL}
+            alt="users-travel-pic"
+            />
+            <Carousel.Caption>
+            <h3>{doc.name}</h3>
+            </Carousel.Caption>
+        </Carousel.Item>
+    }));
+          
         return(
             
-            <div className="image-grid">
-                
+            <Container>
+
                 <h2 onClick={showPhotos}>See Photos</h2>
                 
-                {docs && docs.map(doc =>(
-                    <div className="img-wrap" key ={doc.id}>
-                        <img src={doc.imageURL} alt="users-travel-pic"/>
-                    </div>
-                ))}
-            </div>
+                <Carousel>
+                  {cItems}
+                </Carousel>
+            </Container>
+                
             
         )
     }
