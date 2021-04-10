@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Container } from 'react-bootstrap';
+import { Container, Button, Row, Col, Form, File } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
 import 'firebase/storage'; //where we hold the photo
 import 'firebase/firestore'; //database to store the photo URLs that we can interat with
 import Gallery from "../photoGallery/gallery.js";
 import "./uploadPhotos.css";
+//need it for file input dialog
+import BsCustomFileInput from 'bs-custom-file-input';
 
 //update rules back to 
 //allow read, write: if request.auth != null; 
@@ -29,7 +31,12 @@ class UploadPhotos extends Component {
     }
     setURL(urlpassed){
       this.setState({ url: urlpassed});
-    }    
+    }  
+    
+    componentDidMount() {
+      //not sure why is this needed but the library instructions ask for it: https://www.npmjs.com/package/bs-custom-file-input#how-to-use-it
+      BsCustomFileInput.init()
+    }
     render() {
       const authenticated = this.props.authenticated;
       const currentUser = this.props.currentUser;  
@@ -89,27 +96,40 @@ class UploadPhotos extends Component {
             
           };
         return (
-          <Container className="photo-container">
+          <Container fluid className="photo-container">
+            <Row>
               {/* shows photo upload progress to user */}
               <div className="progress-bar" style={{width: this.state.progress + '%'}}/>
-              
-              <input 
-                id="choosefilebutton" 
-                type="file" 
-                name="file" 
-                multiple onChange={changeHandler} />
-              {/* {image && <div>{image.name}</div>} */}
-                
-              <button 
-                id="uploadphoto-button"
-                onClick={handleSubmission}>
-                Upload
-              </button>
+
+            </Row>
+            <Row>
+                <Col>
+                  <Gallery authenticated = {authenticated} currentUser ={currentUser}/>
+                </Col>
+                <Col xs={2} className="pr-4">
+                  <Row>
+                    {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
+                    <Form className="pb-2">
+                      <Form.File className="text-left"
+                        id="custom-file"
+                        label="chose file"
+                        custom
+                        multiple onChange={changeHandler}
+                      />
+                    </Form>
+                    {/*<input id="choosefilebutton" type="file" name="file" multiple onChange={changeHandler} />*/}
+                    {/* {image && <div>{image.name}</div>} */}
+                  </Row>
+                  <Row>
+                    <Button class="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
+                  </Row>
+                </Col>
+
+            </Row>
+
+
  
-                 <Gallery 
-                  authenticated = {authenticated}
-                  currentUser ={currentUser}
-                  />  
+
 
           </Container>
 

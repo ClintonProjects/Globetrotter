@@ -1,0 +1,6 @@
+.Gallery {
+    max-height: 82vh;
+    min-height: 25vh;
+    position: relative;
+    overflow-y: auto;
+  }

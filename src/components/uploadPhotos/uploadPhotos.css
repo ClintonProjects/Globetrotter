@@ -2,26 +2,10 @@
     text-align: center;  
 }
 .albums-container{
-    margin: 30px;   
+    margin: 15px;   
 }
 .progress-bar{
     height: 10px;
     background: purple;
 }
-#choosefilebutton{
-    background-color:black;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-#uploadphoto-button{
-    background-color: black;
-    color: white;
-    border-radius: 4px;
-    margin-left: 2px;
-    
-    
-}
+
