@@ -74,7 +74,7 @@ class NavBar extends Component {
               )}
 
               {!authenticated && (
-                <Link className="nav-text" to="/">Trips</Link>
+                <Link className="nav-text" to="/profile">Trips</Link>
               )}
               {authenticated && (
                 <Link className="nav-text" to="/tripform">Trips</Link>

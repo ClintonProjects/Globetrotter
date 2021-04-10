@@ -13,31 +13,38 @@ class Gallery extends Component{
         super(props);
     
         this.state = {
-          docs: []
+          docs: [],
+          //gallery: firestore.collection("users").doc(`${this.props.currentUser.uid}`).collection("images")
         };
     }
 
     render(){
     const docs = this.state.docs;
-    const currentGallery = firestore
+    var currentGallery = firestore
                         .collection("users")
-                        .doc(`${this.props.currentUser.uid}`)
-                        .collection("images")                 
-                        
+                        .doc(localStorage.getItem("uid"))
+                        //.doc(`${this.props.currentUser.uid}`)
+                        .collection("images")
+                    
+    
     const showPhotos = () =>{
+        
         console.log(this.props.currentUser.uid);
+        console.log(typeof this.props.currentUser.uid)//check that this is passed in correctly
+        console.log(localStorage.getItem("uid"))
+        
         currentGallery
-        //.orderBy('createdAt', 'desc')
+        //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
         .onSnapshot((snap) =>{
             if (snap.empty){
                 console.log("no uid - gallery file");
             }else{
             let documents = [];
             snap.forEach(doc =>{
-                documents.push({...doc.data(), id: doc.id});
+                documents.push({...doc.data(), id: doc.id}); //push data and the unique firestore doc id to the array documents
             });
-            this.setState({docs: documents});
-            console.log(docs);
+            this.setState({docs: documents}); //update state with the documents array
+            console.log(docs); //check 
         }})
     }
 
@@ -53,6 +60,7 @@ class Gallery extends Component{
             <Carousel.Caption> <h3>{doc.name}</h3> </Carousel.Caption>
         </Carousel.Item>
     }));
+
     //method that will build thumnails pictures
     const tItems = (docs && docs.map(doc =>{
         return <Col xs={6} md={2} className="col-2" key={doc.id}>
@@ -73,6 +81,7 @@ class Gallery extends Component{
             </Row>
         </Container>
     )
+
     }
 }
 export default Gallery;

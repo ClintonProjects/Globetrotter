@@ -21,7 +21,7 @@ export class RegisterMessage extends Component {
   render() {
     return (
       <div class="col-12 loginMessage text-center">
-        <Link className="logInMsg-nav-text" to="/login">Login to unlock all features, Please Click to login</Link>
+        <Link className="logInMsg-nav-text" to="/profile">Login to unlock all features, Please Click to login</Link>
       </div>
     );
   }

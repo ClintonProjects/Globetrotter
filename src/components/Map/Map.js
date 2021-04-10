@@ -22,14 +22,17 @@ class Map extends Component {
     // var uid = this.props.authenticated ? this.props.currentUser.uid : 1;
     // set below to the demo user uid
     this.state = {
-      docRef: firestore.collection("users").doc(`${this.props.currentUser.uid}`),
+      docRef: firestore.collection("users").doc(localStorage.getItem("uid")),
+      //.doc(`${this.props.currentUser.uid}`),
       locationRef: firestore
         .collection("users")
-        .doc(`${this.props.currentUser.uid}`)
+        .doc(localStorage.getItem("uid"))
+        //.doc(`${this.props.currentUser.uid}`)
         .collection("locations"),
       tripRef: firestore
         .collection("users")
-        .doc(`${this.props.currentUser.uid}`)
+        .doc(localStorage.getItem("uid"))
+        //.doc(`${this.props.currentUser.uid}`)
         .collection("trips"),
     };
   }
