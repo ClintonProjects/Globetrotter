@@ -4,3 +4,8 @@
     position: relative;
     overflow-y: auto;
   }
+
+.galery-thumbnail {
+  border-color: #5cb1f6 !important;
+  box-shadow: 50 50 50px #1f98fa !important;
+}

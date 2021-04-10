@@ -1,5 +1,5 @@
 import React, {Component}  from "react";
-import { Container, Carousel, Button, Row, Col, Image } from 'react-bootstrap';
+import { Container, Carousel, Button, Row, Col, Image, Form } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
 import 'firebase/firestore';
@@ -13,8 +13,15 @@ class Gallery extends Component{
         super(props);
     
         this.state = {
-          docs: []
+          docs: [],
+          selectedThumbnail: -1 //use this state to keep track which thumbail is selected
         };
+    }
+    
+    //method to handle thumbnail clicks
+    thumbnailClick = (event) => {
+        //set selected thumbnail pic id to state
+        this.setState({selectedThumbnail: event.currentTarget.getAttribute('docID')});
     }
 
     render(){
@@ -56,7 +63,10 @@ class Gallery extends Component{
     //method that will build thumnails pictures
     const tItems = (docs && docs.map(doc =>{
         return <Col xs={6} md={2} className="col-2" key={doc.id}>
-            <Image src={doc.imageURL} alt="users-travel-pic" rounded className="img-thumbnail"/>
+            <Image src={doc.imageURL} alt="users-travel-pic" rounded
+            docID={doc.id} 
+            onClick={this.thumbnailClick}
+            className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"}/>
         </Col>
     }));
     return(
@@ -69,7 +79,7 @@ class Gallery extends Component{
                 <Carousel> {cItems} </Carousel>
             </Row>
             <Row className="no-gutters">
-                {tItems} 
+                {tItems}                 
             </Row>
         </Container>
     )
