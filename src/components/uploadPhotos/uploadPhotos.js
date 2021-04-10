@@ -99,7 +99,7 @@ class UploadPhotos extends Component {
           <Container fluid className="photo-container">
             <Row>
               {/* shows photo upload progress to user */}
-              <div className="progress-bar" style={{width: this.state.progress + '%'}}/>
+              {/* <div className="progress-bar" style={{width: this.state.progress + '%'}}/> */}
 
             </Row>
             <Row>
