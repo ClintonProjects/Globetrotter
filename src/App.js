@@ -101,7 +101,10 @@ class App extends Component {
             <Route path="/preloginmap" component={Preloginmap}/>
             <Route path="/contactus" component={ContactUs}/>
             <Route path="/login" component={Login}/>
-            <Route path="/tripform" component={TripForm}/>
+            <Route path="/tripform" render={()=>(<TripForm
+              authenticated={this.state.authenticated}
+              currentUser={this.state.currentUser}/>
+              )}/>
             <Route path="/logout" component={Logout}/>
             <Route path="/rego" component={Rego}/>
             <Route path="/forgotPass" component={ForgotPass}/>

@@ -1,21 +1,26 @@
 /* * {
   border: solid 1px white;
 } */
-body {
+/* body {
   background-color: ghostwhite;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 .trip-form {
-  height: 350px;
-  width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 500px;
+  width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 15px;
-  background-color: #474a59;
+  background-color: #1c1c1c;
+  color: ghostwhite;
   border-radius: 20px;
 }
 /* default for all elements inside form */

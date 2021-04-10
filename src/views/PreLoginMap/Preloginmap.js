@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RegisterMessage from '../../components/Pre-LoginMap/RegisterMessage';
-import Map from '../../components/Map/Map.js';
+// import Map from '../../components/Map/Map.js';
 import { Route } from 'react-router';
 import Footer from '../../components/footer/Footer.js';
 import NavBar from '../../components/NavBar/NavBar.js';
@@ -20,7 +20,7 @@ class Preloginmap extends Component {
                     <RegisterMessage />
                 {/* )} */}
                 {/* {!authenticated && ( */}
-                    <Link to="/login"><Map /></Link>
+                    {/* <Link to="/login"><Map /></Link> */}
                 {/* )} */}
             </div>
         );
