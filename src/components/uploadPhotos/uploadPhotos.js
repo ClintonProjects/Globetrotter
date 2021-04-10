@@ -51,16 +51,14 @@ class UploadPhotos extends Component {
       };
       
       const handleSubmission = () => {
-            // console.log(image);//checking if image is held in state
-            // console.log(currentUser.uid);//confirming what user is currently logged in
 
             if (image != null){ //stops errors if user tries to upload non-image file type
             //images is just creating the name of the folder in firebase storage
             //want to change `images` to the country name that user is uploading to 
               const uploadTask = storage.ref(image.name);
-              const firestoreRef = firestore
+              const imageRef = firestore
                                   .collection("users")
-                                  .doc(`${currentUser.uid}`)
+                                  .doc(localStorage.getItem("uid"))
                                   .collection("images");
                                   
 
@@ -79,8 +77,8 @@ class UploadPhotos extends Component {
                 this.setURL(url); //update state url
                 console.log(this.state.url);
                 const createdAt = timestamp();
-                console.log(firestoreRef)
-                firestoreRef.add({ //adding the image url to the users firestore
+                console.log(imageRef)
+                imageRef.add({ //adding the image url to the users firestore
                   imageURL: url, 
                   date: createdAt, 
                   country: country,
@@ -95,16 +93,24 @@ class UploadPhotos extends Component {
               {/* shows photo upload progress to user */}
               <div className="progress-bar" style={{width: this.state.progress + '%'}}/>
               
-              <input id="choosefilebutton" type="file" name="file" multiple onChange={changeHandler} />
+              <input 
+                id="choosefilebutton" 
+                type="file" 
+                name="file" 
+                multiple onChange={changeHandler} />
               {/* {image && <div>{image.name}</div>} */}
                 
-              <button id="uploadphoto-button"onClick={handleSubmission}>Upload</button>
+              <button 
+                id="uploadphoto-button"
+                onClick={handleSubmission}>
+                Upload
+              </button>
  
-                <Gallery 
+                 <Gallery 
                   authenticated = {authenticated}
                   currentUser ={currentUser}
-                  
-                  />
+                  />  
+
           </Container>
 
         );

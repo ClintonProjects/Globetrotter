@@ -9,8 +9,8 @@
     background: purple;
 }
 #choosefilebutton{
-    background-color: white;
-    color: black;
+    background-color:black;
+    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -18,7 +18,10 @@
     cursor: pointer;
 }
 #uploadphoto-button{
-    background-color: white;
-    border-radius: 50%;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    margin-left: 2px;
+    
     
 }

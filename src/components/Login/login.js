@@ -34,7 +34,7 @@ class Login extends Component {
         // once successfully authenticated set state in the Parent
         // for the authenticated variable.
         console.log("User logged on");
-        this.props.history.push("/mapview");//redirect logged in user to correct path
+        //this.props.history.push("/mapview");//redirect logged in user to correct path
       })
       .catch((error) => {
         //if error occurs, push to error state
@@ -78,6 +78,7 @@ class Login extends Component {
           <button className="login-button"> Login </button>
           
         </form>
+        {/* route to rego or forgot password pages  */}
         <Link to= "/rego" id="regoLink"><u>Don't have an account? Register</u></Link>
         <Link to="/forgotPass" id="passLink"><u>Forgot Password?</u></Link>
       </div>

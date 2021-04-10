@@ -35,6 +35,7 @@ class App extends Component {
     this.state = {
       authenticated: false,
       currentUser: null,
+      
     };
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
   }
@@ -75,15 +76,21 @@ class App extends Component {
         ? this.setState(() => ({
             authenticated: true,
             currentUser: user,
-          }))
+          })) 
+          
         : this.setState(() => ({
             authenticated: false,
             currentUser: null,
           }));
-    });
+    }
+    );
+    
+
   }
 
   render() {
+    if(this.state.authenticated)
+    localStorage.setItem("uid", this.state.currentUser.uid)
     return (
       <div>
         <link rel="icon" href="/favicon-16x16.png"></link>
@@ -113,10 +120,10 @@ class App extends Component {
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
             />)}/>
-            {/* <Route path="/gallery" render={()=>(<Gallery
+            <Route path="/gallery" render={()=>(<Gallery
               authenticated={this.state.authenticated}
               currentUser={this.state.currentUser}
-            />)}/>  */}
+            />)}/>  
             <Route path="/profile" render={() => (<Profile
               authenticated={this.state.authenticated}
             />)} />
