@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
 import ISO from "./names.json";
-// import "./TripForm.css";
+import "./TripForm.css";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore(); // collection = users & user = evan
