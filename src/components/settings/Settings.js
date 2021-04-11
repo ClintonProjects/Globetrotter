@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import * as FaIcons from "react-icons/fa";
-import "./Settings.css";
+//import "./Settings.css";
 
 class Settings extends Component {
   render() {
     return (
       <div id="settingPageContainer" className="Settings">
         <div className="leftbox">
-          <nav>
+          {/* <nav>
             <a onClick="tabs(0)" className="tab active">
               <FaIcons.FaUserCog />
             </a>
@@ -23,24 +23,25 @@ class Settings extends Component {
             <a onClick="tabs(4)" className="tab">
               <i className="fa fa-cog"></i>
             </a>
-          </nav>
+          </nav> */}
         </div>
         <div className="rightbox">
           <div className="profile tabShow">
             <h1>Personal Information</h1>
+            <div></div>
             <h2>Full name</h2>
-            <input type="text" className="input" placeholder="Cristina Glez" />
+            <input type="text" className="input" placeholder="Name" />
             <h2>Birthday</h2>
-            <input type="text" className="input" placeholder="April 7, 1994" />
+            <input type="text" className="input" placeholder="DOB" />
             <h2>Gender</h2>
-            <input type="text" className="input" placeholder="Female" />
-            <h2>Email</h2>
-            <input type="text" className="input" placeholder="hola@gmail.com" />
+            <input type="text" className="input" placeholder="Gender" />
+            {/*<h2>Email</h2>
+             <input type="text" className="input" placeholder="Email" />
             <h2>Password</h2>
             <input type="password" className="input" placeholder="brightcode" />
-            <button className="btn">Update</button>
+            <button className="btn">Update</button> */}
           </div>
-          <div className="payment tabShow">
+          {/* <div className="payment tabShow">
             <h1>Payment Information</h1>
             <h2>Payment Method</h2>
             <input
@@ -61,8 +62,8 @@ class Settings extends Component {
             <h2>Reedem Card</h2>
             <input type="password" className="input" placeholder="Enter Gift Code" />
             <button className="btn">Update</button>
-          </div>
-          <div className="subscription tabShow">
+          </div> */}
+          {/* <div className="subscription tabShow">
             <h1>Subscription Information</h1>
             <h2>Payment Date</h2>
             <p>17 March, 2021</p>
@@ -75,8 +76,8 @@ class Settings extends Component {
             <h2>Monthly</h2>
             <p>€108.5/Month</p>
             <button className="btn">Update</button>
-          </div>
-          <div className="privacy tabShow">
+          </div> */}
+          {/* <div className="privacy tabShow">
             <h1>Privacy Settings</h1>
             <h2>Manage Email Notifications</h2>
             <h2>Manage Privacy Settings</h2>
@@ -84,8 +85,8 @@ class Settings extends Component {
             <h2>Personalized Ad Experience</h2>
             <h2>Protect Account</h2>
             <button className="btn">Update</button>
-          </div>
-          <div className="settings tabShow">
+          </div> */}
+          {/* <div className="settings tabShow">
             <h1>Account Settings</h1>
             <h2>Sync WatchList</h2>
             <h2>Hold Subscription</h2>
@@ -93,7 +94,7 @@ class Settings extends Component {
             <h2>Your Devices</h2>
             <h2>Referrals</h2>
             <button className="btn">Update</button>
-          </div>
+          </div> */}
         </div>
       </div>
     );

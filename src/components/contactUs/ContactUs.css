@@ -1,5 +1,5 @@
 .content1{
-  position: absolute;
+  position: relative;
   left: 50%;
   width: 700px;
   /* bring your own prefixes */

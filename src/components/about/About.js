@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import "./About.css";
 import logo from '../../images/avatarblack100px.png';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams,
+} from "react-router-dom";
 
 class About extends Component {
   render() {
@@ -25,7 +33,7 @@ class About extends Component {
             <p>Phone: +353 1 708 6000 <br/>
                  Fax: +353 1 628 9063<br/>
             Email address:  <a href="mailto:info@globetrotterpoint.com">info@globetrotterpoint.com </a><br/>
-            <a href="Will do this later">Contact form</a> <br/></p>
+            <Link to="/contactus">Contact form</Link> <br/></p>
 
             <h5>Managing Directors:</h5>
             Kevin Casey<br/>

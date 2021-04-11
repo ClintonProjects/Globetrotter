@@ -141,7 +141,7 @@ class NavBar extends Component {
               <div className="not1">
                 <FaIcons.FaRegTimesCircle div className="red" />
                 <h6 className="not1text">
-                  <b>You have no Notficiton avaiable </b>
+                  <b>You have no notifications available </b>
                 </h6>
                 {/* <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6> */}
               </div>

@@ -8,7 +8,7 @@ import {
   useParams,
 } from "react-router-dom";
 import Rego from "./components/rego/rego";
-import ContactUs from "./views/ContactUs/ContactUs";
+import ContactUs from "./components/contactUs/ContactUs";
 import firebase from "./components/myFirebaseConfig";
 import Firebase from "firebase/app";
 import About from "./components/about/About";
