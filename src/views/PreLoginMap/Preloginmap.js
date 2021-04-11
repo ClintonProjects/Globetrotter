@@ -4,6 +4,7 @@ import RegisterMessage from '../../components/Pre-LoginMap/RegisterMessage';
 import { Route } from 'react-router';
 import Footer from '../../components/footer/Footer.js';
 import NavBar from '../../components/NavBar/NavBar.js';
+import DemoMap from './demo_map.png';
 
 import {
     BrowserRouter as Router,
@@ -20,7 +21,7 @@ class Preloginmap extends Component {
                     <RegisterMessage />
                 {/* )} */}
                 {/* {!authenticated && ( */}
-                    {/* <Link to="/login"><Map /></Link> */}
+                    <Link to="/login"><img src={DemoMap} alt="" /></Link>
                 {/* )} */}
             </div>
         );
