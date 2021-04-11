@@ -21,6 +21,7 @@ class Rego extends Component {
     this.handleInput = this.handleInput.bind(this);
     
     }
+    //used to update any of the states
     handleInput(e){
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -28,10 +29,12 @@ class Rego extends Component {
     registerUser(e) {
         e.preventDefault();
         const { email, password } = this.state;
-        Firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((user) => {
-        console.log(email);
-        this.props.history.push("/mapview")
+        //used from Firebase authentication documentation 
+        Firebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((user) => {
+            console.log(email);
+            //this.props.history.push("/mapview") //opens the map upon successful registration
     })
     .catch((error) => {
         //if error occurs, push to error state
@@ -46,6 +49,7 @@ class Rego extends Component {
         return(
             <div className="rego">
                 <h3>Register</h3>
+                {/* //display the error message to the user if they enter an invalid email or password */}
                 {error && (<p>
                 <strong>ERROR: {error.message} </strong>
                 </p>
@@ -75,6 +79,7 @@ class Rego extends Component {
                         <button className="rego-button">Register</button>
                     </div>
                 </form>
+                {/* route to login page  */}
                 <Link to="/login" id="loginLink"><u>Already have an account? Login</u></Link>
             </div>
         );

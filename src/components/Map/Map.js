@@ -22,14 +22,17 @@ class Map extends Component {
     // var uid = this.props.authenticated ? this.props.currentUser.uid : 1;
     // set below to the demo user uid
     this.state = {
-      docRef: firestore.collection("users").doc("K26KJF569YU6gNaIZOySCG6uoGB2"),
+      docRef: firestore.collection("users").doc(localStorage.getItem("uid")),
+      //.doc(`${this.props.currentUser.uid}`),
       locationRef: firestore
         .collection("users")
-        .doc("K26KJF569YU6gNaIZOySCG6uoGB2")
+        .doc(localStorage.getItem("uid"))
+        //.doc(`${this.props.currentUser.uid}`)
         .collection("locations"),
       tripRef: firestore
         .collection("users")
-        .doc("K26KJF569YU6gNaIZOySCG6uoGB2")
+        .doc(localStorage.getItem("uid"))
+        //.doc(`${this.props.currentUser.uid}`)
         .collection("trips"),
     };
   }
@@ -91,25 +94,25 @@ class Map extends Component {
       }
     });
   }
-  componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate");
-    if (this.props.currentUser !== prevProps.currentUser) {
-      this.state = {
-        docRef: firestore
-          .collection("users")
-          .doc(`${this.props.currentUser.uid}`),
-        locationRef: firestore
-          .collection("users")
-          .doc(`${this.props.currentUser.uid}`)
-          .collection("locations"),
-        tripRef: firestore
-          .collection("users")
-          .doc(`${this.props.currentUser.uid}`)
-          .collection("trips"),
-      };
-      this.componentDidMount();
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   console.log("componentDidUpdate");
+  //   if (this.props.currentUser !== prevProps.currentUser) {
+  //     this.state = {
+  //       docRef: firestore
+  //         .collection("users")
+  //         .doc(`${this.props.currentUser.uid}`),
+  //       locationRef: firestore
+  //         .collection("users")
+  //         .doc(`${this.props.currentUser.uid}`)
+  //         .collection("locations"),
+  //       tripRef: firestore
+  //         .collection("users")
+  //         .doc(`${this.props.currentUser.uid}`)
+  //         .collection("trips"),
+  //     };
+  //     this.componentDidMount();
+  //   }
+  // }
   componentWillUnmount() {
     if (this.map) {
       this.map.dispose();

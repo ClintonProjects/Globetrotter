@@ -26,7 +26,7 @@ import Footer from "./components/footer/Footer.js";
 import Profile from "./components/Profile/profile.js";
 import Settings from "./components/settings/Settings.js";
 // import MapView from "./views/MapView/MapView";
-import './App.css';
+import "./App.css";
 
 class App extends Component {
   constructor(props) {
@@ -84,6 +84,9 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.authenticated) localStorage.setItem("uid", this.state.currentUser.uid);
+    else localStorage.setItem("uid", "K26KJF569YU6gNaIZOySCG6uoGB2");
+    // prevents error when /mapview is directly typed into the url
     return (
       <div>
         <link rel="icon" href="/favicon-16x16.png"></link>
@@ -91,33 +94,59 @@ class App extends Component {
         <Router>
           <NavBar authenticated={this.state.authenticated} />
           <div className="content">
-          <Switch>
-            <Route path="/" component={Preloginmap} exact/>
-            <Route path="/about" component={About}/>
-            <Route path="/mapview" render={()=>(<MapView
-              authenticated={this.state.authenticated}
-              currentUser={this.state.currentUser}/>
-              )}/>
-            <Route path="/preloginmap" component={Preloginmap}/>
-            <Route path="/contactus" component={ContactUs}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/tripform" component={TripForm}/>
-            <Route path="/logout" component={Logout}/>
-            <Route path="/rego" component={Rego}/>
-            <Route path="/forgotPass" component={ForgotPass}/>
-            <Route path="/settings" component={Settings}/>
-            <Route path="/uploadPhotos" render={()=>(<UploadPhotos
-              authenticated={this.state.authenticated}
-              currentUser={this.state.currentUser}
-            />)}/>
-            {/* <Route path="/gallery" render={()=>(<Gallery
-              authenticated={this.state.authenticated}
-              currentUser={this.state.currentUser}
-            />)}/>  */}
-            <Route path="/profile" render={() => (<Profile
-              authenticated={this.state.authenticated}
-            />)} />
-          </Switch>
+            <Switch>
+              <Route path="/" component={Preloginmap} exact />
+              <Route path="/about" component={About} />
+              <Route
+                path="/mapview"
+                render={() => (
+                  <MapView
+                    authenticated={this.state.authenticated}
+                    currentUser={this.state.currentUser}
+                  />
+                )}
+              />
+              <Route path="/preloginmap" component={Preloginmap} />
+              <Route path="/contactus" component={ContactUs} />
+              <Route path="/login" component={Login} />
+              <Route
+                path="/tripform"
+                render={() => (
+                  <TripForm
+                    authenticated={this.state.authenticated}
+                    currentUser={this.state.currentUser}
+                  />
+                )}
+              />
+              <Route path="/logout" component={Logout} />
+              <Route path="/rego" component={Rego} />
+              <Route path="/forgotPass" component={ForgotPass} />
+              <Route path="/settings" component={Settings} />
+              <Route
+                path="/uploadPhotos"
+                render={() => (
+                  <UploadPhotos
+                    authenticated={this.state.authenticated}
+                    currentUser={this.state.currentUser}
+                  />
+                )}
+              />
+              <Route
+                path="/gallery"
+                render={() => (
+                  <Gallery
+                    authenticated={this.state.authenticated}
+                    currentUser={this.state.currentUser}
+                  />
+                )}
+              />
+              <Route
+                path="/profile"
+                render={() => (
+                  <Profile authenticated={this.state.authenticated} />
+                )}
+              />
+            </Switch>
           </div>
           <Footer currentUser={this.state.currentUser} />
         </Router>

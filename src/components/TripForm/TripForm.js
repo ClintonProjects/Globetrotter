@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
 import ISO from "./names.json";
-// import "./TripForm.css";
+import "./TripForm.css";
+import UploadPhotos from "../uploadPhotos/uploadPhotos.js";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore(); // collection = users & user = evan
@@ -14,14 +15,17 @@ class TripForm extends Component {
       // ${this.props.currentUser.uid} passed down from Landing.js file
       docRef: firestore
         .collection("users")
-        .doc(`${this.props.currentUser.uid}`),
+        .doc(localStorage.getItem("uid")),
+        //.doc(`${this.props.currentUser.uid}`),
       locationRef: firestore
         .collection("users")
-        .doc(`${this.props.currentUser.uid}`)
+        .doc(localStorage.getItem("uid"))
+        //.doc(`${this.props.currentUser.uid}`)
         .collection("locations"),
       tripRef: firestore
         .collection("users")
-        .doc(`${this.props.currentUser.uid}`)
+        .doc(localStorage.getItem("uid"))
+        //.doc(`${this.props.currentUser.uid}`)
         .collection("trips"),
     };
     this.addData = this.addData.bind(this);
@@ -68,6 +72,7 @@ class TripForm extends Component {
     return (
       <>
         <form className="trip-form" onSubmit={this.addData}>
+          {/* onSubmit={()=> {this.addData; this.handleSubmission;} } */}
           <h1>Your Trip</h1>
           <div id="inputContainer">
             <input
@@ -93,7 +98,10 @@ class TripForm extends Component {
             <input type="submit" id="submit" value="Submit" />
           </div>
         </form>
+        
+        
       </>
+      
     );
   }
 }

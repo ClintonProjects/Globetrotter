@@ -59,8 +59,6 @@ class UploadPhotos extends Component {
       };
       
       const handleSubmission = () => {
-            // console.log(image);//checking if image is held in state
-            // console.log(currentUser.uid);//confirming what user is currently logged in
 
             if (image != null){ //stops errors if user tries to upload non-image file type
             //show progress bar
@@ -68,9 +66,9 @@ class UploadPhotos extends Component {
             //images is just creating the name of the folder in firebase storage
             //want to change `images` to the country name that user is uploading to 
               const uploadTask = storage.ref(image.name);
-              const firestoreRef = firestore
+              const imageRef = firestore
                                   .collection("users")
-                                  .doc(`${currentUser.uid}`)
+                                  .doc(localStorage.getItem("uid"))
                                   .collection("images");
               uploadTask.put(image) //uploads image to firebase storage
               .on(
@@ -90,8 +88,8 @@ class UploadPhotos extends Component {
                 this.setURL(url); //update state url
                 console.log(this.state.url);
                 const createdAt = timestamp();
-                console.log(firestoreRef)
-                firestoreRef.add({ //adding the image url to the users firestore
+                console.log(imageRef)
+                imageRef.add({ //adding the image url to the users firestore
                   imageURL: url, 
                   date: createdAt, 
                   country: country,
@@ -110,6 +108,8 @@ class UploadPhotos extends Component {
               <ProgressBar animated now={this.state.progress} label={this.state.progress+'%'}
               className={this.state.showProgressBar == true ? "d-inline-flex" : "d-none"}
               variant="dark"/>
+              {/* <div className="progress-bar" style={{width: this.state.progress + '%'}}/> */}
+
             </Row>
             <Row>
                 <Col>
@@ -138,6 +138,7 @@ class UploadPhotos extends Component {
 
 
  
+
 
           </Container>
 

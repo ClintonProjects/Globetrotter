@@ -25,8 +25,7 @@ class Gallery extends Component{
           showPicMenuTooltip: false, //determine if pic tooltip menu should be displayed
           picMenuTimeoutID: [], //store the menu hide timeout id so that it can ce cancelled when needed
           carouselStartTimeoutID: [] //store the carousel restart timeout id so that it can ce cancelled when needed
-
-
+          //gallery: firestore.collection("users").doc(`${this.props.currentUser.uid}`).collection("images")
         };
     }
     
@@ -93,25 +92,31 @@ class Gallery extends Component{
     }
     render(){
     const docs = this.state.docs;
-    const currentGallery = firestore
+    var currentGallery = firestore
                         .collection("users")
-                        .doc(`${this.props.currentUser.uid}`)
-                        .collection("images")                 
-                        
+                        .doc(localStorage.getItem("uid"))
+                        //.doc(`${this.props.currentUser.uid}`)
+                        .collection("images")
+                    
+    
     const showPhotos = () =>{
+        
         console.log(this.props.currentUser.uid);
+        console.log(typeof this.props.currentUser.uid)//check that this is passed in correctly
+        console.log(localStorage.getItem("uid"))
+        
         currentGallery
-        //.orderBy('createdAt', 'desc')
+        //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
         .onSnapshot((snap) =>{
             if (snap.empty){
                 console.log("no uid - gallery file");
             }else{
             let documents = [];
             snap.forEach(doc =>{
-                documents.push({...doc.data(), id: doc.id});
+                documents.push({...doc.data(), id: doc.id}); //push data and the unique firestore doc id to the array documents
             });
-            this.setState({docs: documents});
-            console.log(docs);
+            this.setState({docs: documents}); //update state with the documents array
+            console.log(docs); //check 
         }})
     }
 
@@ -209,6 +214,7 @@ class Gallery extends Component{
             </Row>
         </Container>
     )
+
     }
 }
 export default Gallery;
