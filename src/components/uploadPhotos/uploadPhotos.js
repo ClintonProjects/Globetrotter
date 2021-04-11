@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Button, Row, Col, Form, File } from 'react-bootstrap';
+import { Container, Button, Row, Col, Form, ProgressBar } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
 import 'firebase/storage'; //where we hold the photo
@@ -25,7 +25,8 @@ class UploadPhotos extends Component {
         this.state = {
           image: null,
           url: null,
-          progress: 0
+          progress: 0,
+          showProgressBar: false
         };
       this.setURL = this.setURL.bind(this);
     }
@@ -62,6 +63,8 @@ class UploadPhotos extends Component {
             // console.log(currentUser.uid);//confirming what user is currently logged in
 
             if (image != null){ //stops errors if user tries to upload non-image file type
+            //show progress bar
+            this.setState({showProgressBar: true});
             //images is just creating the name of the folder in firebase storage
             //want to change `images` to the country name that user is uploading to 
               const uploadTask = storage.ref(image.name);
@@ -69,8 +72,6 @@ class UploadPhotos extends Component {
                                   .collection("users")
                                   .doc(`${currentUser.uid}`)
                                   .collection("images");
-                                  
-
               uploadTask.put(image) //uploads image to firebase storage
               .on(
               "state_changed",
@@ -80,8 +81,11 @@ class UploadPhotos extends Component {
               }, 
               error => { //if error
                 console.log(error);
+                //hide progress bar after 2 sec
+                setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
               },
-              async ()=>{ //if successfully uploaded, get URL
+              async ()=>{ 
+                //if successfully uploaded, get URL
                 const url = await uploadTask.getDownloadURL()
                 this.setURL(url); //update state url
                 console.log(this.state.url);
@@ -92,6 +96,8 @@ class UploadPhotos extends Component {
                   date: createdAt, 
                   country: country,
                   name: image.name }); //should be adding to the 
+                //hide progress bar after 2 sec
+                setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
               }
             )
             }
@@ -101,7 +107,9 @@ class UploadPhotos extends Component {
           <Container fluid className="photo-container">
             <Row>
               {/* shows photo upload progress to user */}
-              <div className="progress-bar" style={{width: this.state.progress + '%'}}/>
+              <ProgressBar animated now={this.state.progress} label={this.state.progress+'%'}
+              className={this.state.showProgressBar == true ? "d-inline-flex" : "d-none"}
+              variant="dark"/>
             </Row>
             <Row>
                 <Col>
@@ -122,7 +130,7 @@ class UploadPhotos extends Component {
                     {/* {image && <div>{image.name}</div>} */}
                   </Row>
                   <Row>
-                    <Button class="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
+                    <Button className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
                   </Row>
                 </Col>
 

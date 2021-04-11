@@ -50,13 +50,13 @@ export class Footer extends Component {
           <Row className="footer-borader justify-content-md-center">
             <Col/>
             <Col  xs={6}>
-              <small class="text-light">
+              <small className="text-light">
                 Copyright @ Globetrotter 2021-2021. All Rights Reserved.
               </small>
             </Col>
             <Col>
             {currentUser !== null && (
-            <small class="col-sm-2 text-right text-light">
+            <small className="col-sm-2 text-right text-light">
               Logged on as {this.props.currentUser.email}
             </small>
           )}
