@@ -10,7 +10,7 @@ class Preloginmap extends Component {
     return (
       <div>
         <RegisterMessage />
-        <Link to="/login">
+        <Link to="/profile">
           <img src={DemoMap} alt="" />
         </Link>
       </div>

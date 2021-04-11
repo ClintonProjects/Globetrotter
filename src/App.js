@@ -119,7 +119,7 @@ class App extends Component {
                 )}
               />
               <Route path="/logout" component={Logout} />
-              <Route path="/rego" component={Rego} />
+              <Route path="/register" component={Rego} />
               <Route path="/forgotPass" component={ForgotPass} />
               <Route path="/settings" component={Settings} />
               <Route

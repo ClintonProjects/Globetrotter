@@ -34,7 +34,7 @@ class Rego extends Component {
             .createUserWithEmailAndPassword(email, password)
             .then((user) => {
             console.log(email);
-            //this.props.history.push("/mapview") //opens the map upon successful registration
+            this.props.history.push("/tripform") //opens the map upon successful registration
     })
     .catch((error) => {
         //if error occurs, push to error state
@@ -80,6 +80,7 @@ class Rego extends Component {
                     </div>
                 </form>
                 {/* route to login page  */}
+
                 <Link to="/login" id="loginLink"><u>Already have an account? Login</u></Link>
             </div>
         );

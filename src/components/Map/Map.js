@@ -70,7 +70,10 @@ class Map extends Component {
         // polygonTemplate.fill = am4core.color("#98FB98");
 
         // array retrieved from firestore gets assigned to data here
-        polygonSeries.data = array;
+        if (array.length > 0) polygonSeries.data = array;
+        else {
+          
+        }
 
         polygonSeries.calculateVisualCenter = true;
         polygonSeries.tooltip.label.interactionsEnabled = true;

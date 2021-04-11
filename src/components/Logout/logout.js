@@ -25,7 +25,7 @@ class Logout extends Component {
   render() {
     return (
       <div className="Logout">
-        <Link to="/tripForm" ><u>Add a Trip</u></Link>
+        {/* <Link to="/tripForm" ><u>Add a Trip</u></Link> */}
         <button onClick={this.logOutUser} className="logout-button">Logout</button>
       </div>
     ); // end of return statement

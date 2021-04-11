@@ -121,7 +121,7 @@ class UploadPhotos extends Component {
                     <Form className="pb-2">
                       <Form.File className="text-left"
                         id="custom-file"
-                        label="chose file"
+                        label="choose file"
                         custom
                         multiple onChange={changeHandler}
                       />
