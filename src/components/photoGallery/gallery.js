@@ -3,7 +3,7 @@ import { Container, Carousel, Button, Row, Col, Image, OverlayTrigger, Popover, 
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
 import 'firebase/firestore';
-import "./Gallery.css"; //database to store the photo URLs that we can interat with
+import "./Gallery.css"; 
 
 //so we can interact easily with firestore in this component
 const firestore = firebase.firestore();
@@ -25,8 +25,11 @@ class Gallery extends Component{
           showPicMenuTooltip: false, //determine if pic tooltip menu should be displayed
           picMenuTimeoutID: [], //store the menu hide timeout id so that it can ce cancelled when needed
           carouselStartTimeoutID: [] //store the carousel restart timeout id so that it can ce cancelled when needed
-          //gallery: firestore.collection("users").doc(`${this.props.currentUser.uid}`).collection("images")
+          
         };
+        this.deletePicHandler = this.deletePicHandler.bind(this);
+        this.commentPicHandler = this.commentPicHandler.bind(this);
+        this.sharePicHandler = this.sharePicHandler.bind(this);
     }
     
     //method to handle thumbnail clicks
@@ -41,7 +44,6 @@ class Gallery extends Component{
             //set the carousel active index to the one of selected thumbnail 
             this.setState({carouselIndex: idx});
         }
-        
     }
 
     //method the carousel will use on each transition
@@ -80,30 +82,61 @@ class Gallery extends Component{
     }
 
     commentPicHandler = () => {
-        alert("Comment pressed for picture at index "+this.state.carouselIndex +" with value "+this.state.picComment);
+        //get the firestore document ID for the selected image
+        var getDocID = this.state.docs[this.state.carouselIndex].id;
+        //use firestore update method to add a field to that document(image) in firestore with the users comments
+        var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
+        docPath.update({comments: this.state.picComment})
+        //advise if successfully added comment field or not
+        .then (() => {
+            alert("Successfully saved your comments for this picture: "+this.state.picComment);
+        }).catch((error) => {
+            alert("Error saving comments"+ error);
+        })
     }
 
     sharePicHandler = () => {
-        alert("Share pressed for picture at index "+this.state.carouselIndex);
+        //get the firestore document ID for the selected image
+        var getDocID = this.state.docs[this.state.carouselIndex].id;
+        //use firestore delete method (call on full path collection-> document to be deleted)
+        var docPath =firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
+        docPath.get()
+        .then((doc) => {
+            var url = doc.data().imageURL;
+            alert("Share your image using: "+url);
+        }).catch((error) => {
+            alert("Error getting image URL "+error);
+        });
+        
+        
     }
 
     deletePicHandler = () => {
-        alert("Delete pressed for picture at index "+this.state.carouselIndex);
+        //get the firestore document ID for the selected image
+        var getDocID = this.state.docs[this.state.carouselIndex].id;
+        //console.log(getDocID);
+        //use firestore delete method (call on full path collection-> document to be deleted)
+        var docPath =firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
+        docPath.delete()
+        //advise if successful or unsuccessful delete
+        .then(() =>{
+            alert("Successfully deleted image");
+        }).catch((error) => {
+            alert("Error deleting photo "+ error);
+        });
+        
     }
     render(){
     const docs = this.state.docs;
     var currentGallery = firestore
                         .collection("users")
                         .doc(localStorage.getItem("uid"))
-                        //.doc(`${this.props.currentUser.uid}`)
                         .collection("images")
                     
     
     const showPhotos = () =>{
         
-        console.log(this.props.currentUser.uid);
-        console.log(typeof this.props.currentUser.uid)//check that this is passed in correctly
-        console.log(localStorage.getItem("uid"))
+        // console.log(localStorage.getItem("uid"))
         
         currentGallery
         //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed

@@ -118,7 +118,11 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/logout" component={Logout} />
+              <Route path="/logout" 
+                render={() => ( 
+                <Logout 
+                  currentUser={this.state.currentUser}/>
+                )} />
               <Route path="/register" component={Rego} />
               <Route path="/forgotPass" component={ForgotPass} />
               <Route path="/settings" component={Settings} />

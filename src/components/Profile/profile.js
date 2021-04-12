@@ -12,6 +12,7 @@ import Login from "../Login/login"
 class Profile extends Component {
 render(){
     const authenticated = this.props.authenticated;
+    
     return(
         <div> 
             {authenticated && <Logout/>}
