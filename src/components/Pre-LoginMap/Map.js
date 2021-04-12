@@ -37,7 +37,10 @@ class Map extends Component {
   }
   render() {
     return (
-      <Link to="/login"><div id="map" className="w-100"></div></Link>
+      <Link to="/login">
+        <div id="map" className="w-100">
+        </div>
+      </Link>
     );
   }
 }
