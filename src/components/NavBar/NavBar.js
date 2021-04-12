@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import Logout from "../Logout/logout";
 import Login from "../Login/login"
 import Logo from './SLEEPY.png';
-import logo from './logo/XS logo.png';
+import logo from './logo/full logo XS.png';
 
 
 

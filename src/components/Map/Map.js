@@ -89,7 +89,7 @@ class Map extends Component {
 
         // Create hover state and set alternative fill color
         let hs = polygonTemplate.states.create("hover");
-        hs.properties.fill = am4core.color("#616b61");
+        hs.properties.fill = am4core.color("#17a2b8");
 
         polygonTemplate.propertyFields.fill = "fill"; // fill in countries
 
