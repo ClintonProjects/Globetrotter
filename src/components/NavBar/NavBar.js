@@ -8,7 +8,8 @@ import Logout from "../Logout/logout";
 import Login from "../Login/login"
 import Logo from './SLEEPY.png';
 import logo from './logo/XS logo.png';
-
+import firebase from "firebase/app";
+import 'firebase/firestore';
 
 
 class NavBar extends Component {
@@ -28,6 +29,44 @@ class NavBar extends Component {
   not() {
     return this.state.notficitonBox;
   }
+
+  getUserId() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user != null) {
+        let String = user.uid;
+        this.setState({ userId: String });
+      } else
+        console.log("empty");
+    });
+  }
+
+  getUserNotifications = () => {
+    const firestore = firebase.firestore().collection('users').doc(this.state.userId);
+    let jsonSplit;
+
+    firestore.onSnapshot((data) => {
+      let json = JSON.stringify(data.data());
+      jsonSplit = JSON.parse(json);
+      this.setState({ notList: jsonSplit.notList });
+      // this.setState({ timelist: jsonSplit.notificationsTime });
+    });
+    // this.removeUserNotifications();
+  }
+
+  removeUserNotifications() {
+    let newList = this.state.notList;
+    console.log(newList);
+    // if (newList.includes("not1")) {
+    let id = newList.includes("not1");
+    console.log(id);
+    // let returnlist = [];
+    // returnlist.push(newList.splice(0, id), newList.splice(1, this.state.notList.length));
+    // console.log("return list: " + returnlist);
+    //}
+  }
+
+
+
 
   notficitonBoxSettings() {
     if (this.state.notficitonBox == false)
@@ -52,7 +91,7 @@ class NavBar extends Component {
 
     return (
       <div id="bar" className="container-fluid">
-        <div className="row" onClick={this.not}>
+        <div className="row">
           <div className="col-sm-1 boradercover">
             <div className="logo">
               {!authenticated && (
@@ -65,7 +104,7 @@ class NavBar extends Component {
           </div>
           <div className="row col-sm-3" />
           <div className="row col-sm-4 boradercover">
-            <div className="links">
+            <div className="links" onClick="notfalse()">
               {!authenticated && (
                 <Link className="nav-text" to="/">Map</Link>
               )}
@@ -84,7 +123,7 @@ class NavBar extends Component {
                 <Link className="nav-text" to="/profile">Photo</Link>
               )}
               {authenticated && (
-                <Link  className="nav-text"to="/uploadPhotos">Photo</Link>
+                <Link className="nav-text" to="/uploadPhotos">Photo</Link>
               )}
 
               {!authenticated && (
@@ -100,7 +139,7 @@ class NavBar extends Component {
               <div className="marginleftright">
                 {authenticated && (
                   <span>
-                    <Link to="/settings"><span><FaIcons.FaUser className="icon"/></span></Link>
+                    <Link to="/settings"><span><FaIcons.FaUser className="icon" /></span></Link>
 
                   </span>)}
               </div>
@@ -113,7 +152,7 @@ class NavBar extends Component {
               </div>
               <div className="marginleftright">
                 <span>
-                  <Link to="/profile"><span><FaIcons.FaSignOutAlt className="icon"/></span></Link>
+                  <Link to="/profile"><span><FaIcons.FaSignOutAlt className="icon" /></span></Link>
                 </span>
               </div>
             </div>
