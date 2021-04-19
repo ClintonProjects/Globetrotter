@@ -73,13 +73,13 @@ class App extends Component {
     Firebase.auth().onAuthStateChanged((user) => {
       user
         ? this.setState(() => ({
-            authenticated: true,
-            currentUser: user,
-          }))
+          authenticated: true,
+          currentUser: user,
+        }))
         : this.setState(() => ({
-            authenticated: false,
-            currentUser: null,
-          }));
+          authenticated: false,
+          currentUser: null,
+        }));
     });
   }
 
@@ -89,8 +89,6 @@ class App extends Component {
     // prevents error when /mapview is directly typed into the url
     return (
       <div>
-        <link rel="icon" href="/favicon-16x16.png"></link>
-
         <Router>
           <NavBar authenticated={this.state.authenticated} />
           <div className="content">
@@ -118,10 +116,10 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/logout" 
-                render={() => ( 
-                <Logout 
-                  currentUser={this.state.currentUser}/>
+              <Route path="/logout"
+                render={() => (
+                  <Logout
+                    currentUser={this.state.currentUser} />
                 )} />
               <Route path="/register" component={Rego} />
               <Route path="/forgotPass" component={ForgotPass} />

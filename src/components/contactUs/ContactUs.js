@@ -28,8 +28,7 @@ class ContactUs extends Component {
   }
 
   handleSubmit(event) {
-    alert('An email was submitted: ' + this.state.email + ' with subject: ' + this.state.subject + 
-    ' with description: ' + this.state.description);
+    alert('Your request has been successful');
     event.preventDefault();
   }
 

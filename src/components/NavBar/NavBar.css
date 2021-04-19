@@ -89,11 +89,10 @@ size: "2.3em";
 #bar .notbox {
     background-color: white; 
     position: absolute;
-    width: 15%;
-   
-    margin-left: 75%;
+    width: 10%;
+    margin-left: 78%;
     z-index: 999;
-    border: black solid 1px;
+    border: peru solid 1px;
     
     /* border: yellow solid 1px;  */
 }
@@ -109,7 +108,7 @@ size: "2.3em";
 }
 
 #bar .left-top-notbox {
-    margin-top: 1%;
+    margin-top: 0%;
     margin-left: 7%;
     width: 50%;
     position: relative;
@@ -126,11 +125,16 @@ size: "2.3em";
 
 #bar .green{
     color: green;
-    margin-bottom: 1%;
+    /* margin-bottom: 1%;
     margin-right: 2%;
-    margin-top: 5%;
-    width: 15%;
+    margin-top: 5%; */
+    /* margin-left: 10%; */
+    width: 1%;
     float: left;
+}
+
+#bar .space{
+    margin-left: 10%;
 }
 
 #bar .red{
