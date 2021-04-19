@@ -1,15 +1,20 @@
   
   .About {
-    min-height: 85vh;
-    position: relative;
-    overflow-y: scroll !important;
+    min-height: calc(100vh - 200px);
+    /* IMPORTANT for this to match footer and nav bar heights (which need to be fixed!) */
+    max-height: calc(100vh - 130px);
+
+    overflow: auto;
+
   }
-  .body {
-    padding-left: 25%;
-    padding-right: 25%;
+
+  .AboutContent {
+    position: relative;
     font-family: Arial, Helvetica, sans-serif !important;
-    font-size: .8em;
-    position: absolute;
+    font-size: .7em;
+    border-style: solid;
+    border-radius: 5%;
+    border-color: #18a9c0 !important;
   }
 
   #aboutTable {
@@ -19,15 +24,3 @@
     width: 100%;
   }
   
-  #aboutTable td, #aboutTable th {
-    padding: 8px;
-  }
-
-  
-  #aboutTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }

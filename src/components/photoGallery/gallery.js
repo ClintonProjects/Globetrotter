@@ -214,7 +214,10 @@ class Gallery extends Component{
     }));
     return(
         <Container className="Gallery">
-            <Row className="pb-2">
+            <Row>
+                <Col xs={1}/>
+                <Col>
+                <Row className="pb-2">
                 <Button variant="info" size="lg" onClick={showPhotos}> 
                 Load Photos </Button>
             </Row>
@@ -245,6 +248,11 @@ class Gallery extends Component{
             <Row className="no-gutters">
                 {tItems}                 
             </Row>
+                </Col>
+                <Col xs={1}>
+                </Col>
+            </Row>
+            
         </Container>
     )
 

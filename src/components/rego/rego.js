@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Container, Form, Button, Row, Col, Image, OverlayTrigger, Popover, InputGroup, FormControl } from 'react-bootstrap';
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./rego.css";
+import logo from "../NavBar/logo/fullLogoNew.png";
 import {
     BrowserRouter as Router,
     Link,
@@ -47,42 +49,40 @@ class Rego extends Component {
         const handleInput = this.handleInput;
         
         return(
-            <div className="rego">
-                <h3>Register</h3>
-                {/* //display the error message to the user if they enter an invalid email or password */}
-                {error && (<p>
-                <strong>ERROR: {error.message} </strong>
-                </p>
-                )}
-                <form onSubmit={this.registerUser} className="rego-form"> 
-                    <div>
-                        <label>Email: </label>
-                        <input 
-                            type="email"
-                            onChange={handleInput}
-                            name="email"
-                            value={email}
-                            className="rego-email">
-                        </input>
-                    </div>
-                    <div>
-                        <label>Password</label>
-                        <input 
-                            type="password" 
-                            onChange={handleInput}
-                            name="password"
-                            value={password}
-                            className="rego-password">    
-                        </input>
-                    </div>
-                    <div>
-                        <button className="rego-button">Register</button>
-                    </div>
-                </form>
-                {/* route to login page  */}
+        <Container >
+        <Row className="pt-5">
+          <Col/>
+          <Col className="col-4 register p-4">
+              <span><img src={logo} alt="Logo" /></span>
+          
+        <p className="h1 textColour text-center">Get on board!</p>
+        <p className="h6 textColour text-center pb-2">Please register an account here!</p>
+        {/* //display the error message to the user if they enter an invalid email or password */}
+        {error && (
+          <p> <strong className="text-danger">ERROR: {error.message} </strong> </p>
+        )}
+      <Form onSubmit={this.registerUser}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label className="formTextColour">Email address</Form.Label>
+          <Form.Control id="Email"  name="email" type="email" placeholder="Enter email" value={email} onChange={handleInput}/>
+        </Form.Group>
 
-                <Link to="/login" id="loginLink"><u>Already have an account? Login</u></Link>
-            </div>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label className="formTextColour">Password</Form.Label>
+          <Form.Control id="Password" name="password" type="password" value={password} onChange={handleInput} placeholder="Password" />
+        </Form.Group>
+        <Button className="buttonStyle" variant="primary" type="submit" block>
+        REGISTER
+        </Button>
+      </Form>
+        {/* route to login page  */}
+        <Link className="float-left pt-1" id="LoginLink" to="/login"><u>Already have an account? Login</u></Link>
+        </Col>
+        <Col/>
+        </Row>
+        
+            
+        </Container>
         );
     }
 }

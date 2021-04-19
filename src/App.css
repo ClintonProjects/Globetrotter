@@ -2,6 +2,42 @@
     /* overflow-y: hidden;
     overflow-x: hidden; */
     margin-top: 60px;
-    height: 110vh;
-    /* max-height: 95vh; */
+    /*height: 100vh;*/
+    /* IMPORTANT for this to match footer and nav bar heights (which need to be fixed!) */
+    min-height: calc(100vh - 130px);
+}
+
+.pictureBackground{
+    background-image: url(./images/background.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.whiteBackground{
+    background-color: white;
+}
+
+/*the webkit related style is needed to override cromes auto fill colour scheme*/
+/*https://stackoverflow.com/a/14205976*/
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+    box-shadow:0 0 0 30px black inset !important;
+ -webkit-box-shadow: 0 0 0 30px black inset !important;
+ -webkit-text-fill-color: white !important;
+}
+
+
+/*Change text in autofill textbox*/
+/* #Email, #Password > input:-webkit-autofill
+{
+ -webkit-text-fill-color: white !important;
+} */
+
+#Email, #Password {
+    background-color: black !important;
+    color: white !important;
 }

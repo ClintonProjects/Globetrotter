@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Row} from 'react-bootstrap';
 import {
   BrowserRouter as Router,
   Switch,
@@ -87,13 +88,19 @@ class App extends Component {
     if (this.state.authenticated) localStorage.setItem("uid", this.state.currentUser.uid);
     //else localStorage.setItem("uid", "K26KJF569YU6gNaIZOySCG6uoGB2");
     // prevents error when /mapview is directly typed into the url
-    return (
-      <div>
-        <link rel="icon" href="/favicon-16x16.png"></link>
 
+    //extract url information from browser (https://stackoverflow.com/a/52732656)
+    let location = window.location.pathname;
+    return (
+      /*change the css class based on browser location*/
+      <Container fluid className={
+        location !== "/" && location !== "/mapview" && location !== "/preloginmap"
+        ? "content pictureBackground" : "content "}>
         <Router>
-          <NavBar authenticated={this.state.authenticated} />
-          <div className="content">
+          <Row>
+            <NavBar authenticated={this.state.authenticated} />
+          </Row>
+          <Row>
             <Switch>
               <Route path="/" component={Preloginmap} exact />
               <Route path="/about" component={About} />
@@ -151,10 +158,12 @@ class App extends Component {
                 )}
               />
             </Switch>
-          </div>
-          <Footer currentUser={this.state.currentUser} />
+          </Row>
+          <Row>
+            <Footer currentUser={this.state.currentUser} />
+          </Row>
         </Router>
-      </div>
+        </Container>
     );
   }
 }

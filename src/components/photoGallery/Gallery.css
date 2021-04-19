@@ -1,8 +1,11 @@
 .Gallery {
-    max-height: 82vh;
-    min-height: 25vh;
+
+    min-height: calc(100vh - 200px);
+    /* IMPORTANT for this to match footer and nav bar heights (which need to be fixed!) */
+    max-height: calc(100vh - 130px);
+    overflow: auto;
+
     position: relative;
-    overflow-y: auto;
   }
 
 .galery-thumbnail {

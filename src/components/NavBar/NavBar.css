@@ -4,6 +4,8 @@ nav {
     margin: 0%;
 }
 #bar {
+    /*IMPORTANT to keep 60px*/
+    max-height: 60px !important;
     min-height: 55px;
     background: black; 
     color: #FFF;

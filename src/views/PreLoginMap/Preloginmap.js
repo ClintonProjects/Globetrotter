@@ -5,18 +5,19 @@ import DemoMap from "./demo_map.png";
 import "./Preloginmap.css";
 
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Container } from 'react-bootstrap';
 
 class Preloginmap extends Component {
   render() {
     return (
-      <div>
-        <RegisterMessage />
-        <Link to="/profile">
-          <div class="prelogmap"> 
+      <Container id="PreloginMap" fluid>
+        <RegisterMessage className="preloginMessage"/>
+        {/*<Link to="/profile">
+           <div class="prelogmap"> 
           <img src={DemoMap} class="img" />
-          </div>
-        </Link>
-      </div>
+          </div> 
+        </Link> */}
+      </Container>
     );
   }
 }

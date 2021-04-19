@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./forgotPass.css";
+import logo from "../NavBar/logo/fullLogoNew.png";
 import {
   BrowserRouter as Router,
   Link,
 } from "react-router-dom";
+import { Container, Form, Button, Row, Col} from 'react-bootstrap';
 
 class ForgotPass extends Component {
     constructor(props) {
@@ -46,25 +48,32 @@ class ForgotPass extends Component {
       const handleInput = this.handleInputChange;
       const handleSubmit = this.handleSubmit;
         return (
-          <div id = "forgotpasswordcon" className="forgotPassword">
-            <h3>Forgot Password</h3>
-            {error && (<p><strong>ERROR: {error.message} </strong></p>)}
+          <Container>
+            <Row className="pt-5">
+            <Col/>
+            <Col className="col-4 register p-4">
+            <img src={logo} alt="Logo" />
+            <p className="h2 textColour text-center">Forgot password?</p>
+            <p className="h6 textColour text-center pb-2">Enter the email associated with your account. We'll send you a reset link.</p>
+            {/* //display the error message to the user if they enter an invalid email or password */}
+            {error && (<p> <strong className="text-danger">ERROR: {error.message} </strong> </p>)}
             {this.state.message ? "Check your email inbox for further instructions" : null}
-            <form onSubmit={handleSubmit} id="passForm">
-              <input 
-                type="email"
-                name="email" 
-                className="passEmail" 
-                placeholder="Enter email address" 
-                value={email}
-                onChange={handleInput}
-              ></input>
-              <button>Submit</button>
-            </form>
-            
-            <br></br>
-            <Link to="/login" id="backtologin"><u>Back to login page</u></Link>
-          </div>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label className="formTextColour">Email address</Form.Label>
+                <Form.Control id="Email"  name="email" type="email" placeholder="Enter email" value={email} onChange={handleInput}/>
+              </Form.Group>
+
+              <Button className="buttonStyle" variant="primary" type="submit" block>
+              SUBMIT
+              </Button>
+            </Form>
+            {/* route to login page  */}
+            <Link className="float-left pt-1" id="RegLink" to= "/login" ><u>Back to login page</u></Link>
+            </Col>
+            <Col/>
+            </Row>
+          </Container>
         )}
 }
 export default ForgotPass;

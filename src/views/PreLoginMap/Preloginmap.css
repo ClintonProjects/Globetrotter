@@ -1,4 +1,15 @@
-.prelogmap .img {
-    height: 100%;
-    width: 100%;
+#PreloginMap{
+    position: relative;
+    background-image: url(./demo_map.png);
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 70px !important;
+    height: 80vh;
+}
+
+
+
+.preloginMessage{
+    position: relative !important;
 }
