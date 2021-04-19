@@ -119,6 +119,7 @@ class UploadPhotos extends Component {
                   name: image.name }); //should be adding to the 
                 //hide progress bar after 2 sec
                 setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
+                this.setState({country: null});
               }
             )
             }
