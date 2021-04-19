@@ -34,7 +34,7 @@ class Login extends Component {
         // once successfully authenticated set state in the Parent
         // for the authenticated variable.
         console.log("User logged on");
-        this.props.history.push("/mapview");//redirect logged in user to correct path
+        //this.props.history.push("/mapview");//redirect logged in user to correct path
       })
       .catch((error) => {
         //if error occurs, push to error state
@@ -48,7 +48,8 @@ class Login extends Component {
     const handleInput = this.handleInputChange;
     return (
       <div className="login" >
-        <h3>Sign In</h3>
+        <h2>Welcome back</h2>
+        <h3>Sign In to log your most recent trip</h3>
         {error && (
           <p>
             <strong>ERROR: {error.message} </strong>

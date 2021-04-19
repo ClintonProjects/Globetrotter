@@ -19,6 +19,10 @@ class Gallery extends Component {
         super(props);
 
         this.state = {
+
+
+            countryList: [],
+            countryView: null,
             docs: [],
             picComment: '',
             selectedThumbnail: -1, //use this state to keep track which thumbail is selected
@@ -29,11 +33,16 @@ class Gallery extends Component {
             carouselStartTimeoutID: [], //store the carousel restart timeout id so that it can ce cancelled when needed
             imageLink: "",
             imageAvaiable: false, //This for the image upload page.
-
         };
+
         this.deletePicHandler = this.deletePicHandler.bind(this);
         this.commentPicHandler = this.commentPicHandler.bind(this);
         this.sharePicHandler = this.sharePicHandler.bind(this);
+        this.setCountry = this.setCountry.bind(this);
+
+    }
+    setCountry(countryPassed) {
+        this.setState({ countryView: countryPassed });
     }
 
 
@@ -99,6 +108,19 @@ class Gallery extends Component {
                 alert("Error saving comments" + error);
             })
     }
+    addToFavouritesHandler = () => {
+        //get the firestore document ID for the selected image
+        var getDocID = this.state.docs[this.state.carouselIndex].id;
+        //use firestore update method to add a field to that document(image) in firestore with the users comments
+        var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
+        docPath.update({ favourites: true })
+            //advise if successfully added comment field or not
+            .then(() => {
+                alert("Successfully saved your photo to Favourites");
+            }).catch((error) => {
+                alert("Error saving photo" + error);
+            })
+    }
 
     sharePicHandler = () => {
         //get the firestore document ID for the selected image
@@ -106,6 +128,7 @@ class Gallery extends Component {
         //use firestore delete method (call on full path collection-> document to be deleted)
         var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
         docPath.get()
+
             .then((doc) => {
                 var url = doc.data().imageURL;
                 // alert("Share your image using: "+url);
@@ -121,18 +144,32 @@ class Gallery extends Component {
     deletePicHandler = () => {
         //get the firestore document ID for the selected image
         var getDocID = this.state.docs[this.state.carouselIndex].id;
-        //console.log(getDocID);
         //use firestore delete method (call on full path collection-> document to be deleted)
         var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
         docPath.delete()
+
             //advise if successful or unsuccessful delete
             .then(() => {
                 alert("Successfully deleted image");
             }).catch((error) => {
                 alert("Error deleting photo " + error);
             });
-
     }
+
+    downloadPicture = () => {
+        //get the firestore document ID for the selected image
+        var getDocID = this.state.docs[this.state.carouselIndex].id;
+        //use firestore delete method (call on full path collection-> document to be deleted)
+        var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
+        //    docPath.download() ** anna to download
+        //    //advise if successful or unsuccessful delete
+        //    .then(() =>{
+        //     alert("Successfully downloaded image");
+        //     }).catch((error) => {
+        //     alert("Error downloading photo "+ error);
+        // }); 
+    }
+
     render() {
         const docs = this.state.docs;
         var currentGallery = firestore
@@ -140,16 +177,13 @@ class Gallery extends Component {
             .doc(localStorage.getItem("uid"))
             .collection("images")
 
-
         const showPhotos = () => {
-
-            // console.log(localStorage.getItem("uid"))
-
+            this.setState({ docs: null });
             currentGallery
                 //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
                 .onSnapshot((snap) => {
                     if (snap.empty) {
-                        console.log("no uid - gallery file");
+                        console.log("error");
                     } else {
                         let documents = [];
                         snap.forEach(doc => {
@@ -157,10 +191,65 @@ class Gallery extends Component {
                         });
                         this.setState({ docs: documents }); //update state with the documents array
                         console.log(docs); //check 
+
                     }
                 })
         }
+        const showFavourites = () => {
+            this.setState({ docs: null });
+            currentGallery
+                //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
+                .onSnapshot((snap) => {
+                    if (snap.empty) {
+                        console.log("error");
+                    } else {
+                        let documents = [];
+                        snap.forEach(doc => {
+                            if (doc.data().favourites)
+                                documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
+                        });
+                        this.setState({ docs: documents }); //update state with the documents array
+                        console.log(docs); //check 
 
+                    }
+                })
+        }
+        const showCountry = (id) => {
+            let countryName = id.toLowerCase();
+            console.log(countryName);
+            this.setState({ docs: null });
+            currentGallery
+                //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
+                .onSnapshot((snap) => {
+                    if (snap.empty) {
+                        console.log("error");
+                    } else {
+                        let documents = [];
+                        snap.forEach(doc => {
+                            if (doc.data().country.toLowerCase() === countryName)
+                                documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
+                        });
+                        this.setState({ docs: documents }); //update state with the documents array
+                        console.log(docs); //check 
+
+                    }
+                })
+        }
+        const getCountryList = () => {
+            let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
+            docPath.onSnapshot((snap) => {
+                if (snap.empty) {
+                    console.log("error");
+                } else {
+                    let countryListArray = [];
+                    snap.forEach(doc => {
+                        countryListArray.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
+                    });
+                    this.setState({ countryList: countryListArray })
+                    //console.log(this.state.countryList);
+                }
+            })
+        }
 
         //method that will build carousel items (one item for each picture in doc array)
         const cItems = (docs && docs.map(doc => {
@@ -171,10 +260,8 @@ class Gallery extends Component {
                     src={doc.imageURL}
                     alt="users-travel-pic"
                 />
-                <Carousel.Caption> <h3>{doc.name}</h3> </Carousel.Caption>
+                <Carousel.Caption> <h3>{doc.comments}</h3> </Carousel.Caption>
             </Carousel.Item>
-
-
         }));
 
         //Picture menu react element
@@ -203,7 +290,13 @@ class Gallery extends Component {
                         </InputGroup>
                     </Row>
                     <Row className="pb-3">
-                        <Button variant="outline-info" onClick={() => this.sharePicHandler()}>Share</Button>
+                        <Button variant="outline-info" onClick={this.sharePicHandler}>Share</Button>
+                    </Row>
+                    <Row className="pb-3">
+                        <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
+                    </Row>
+                    <Row className="pb-3">
+                        <Button variant="outline-dark" onClick={this.downloadPicture}> Download photo</Button>
                     </Row>
                     <Row className="pb-3">
                         <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button>
@@ -223,8 +316,17 @@ class Gallery extends Component {
         return (
             <Container className="Gallery">
                 <Row className="pb-2">
-                    <Button variant="info" size="lg" onClick={showPhotos}>
-                        Load Photos </Button>
+                    <Button variant="info" size="sm" onClick={showPhotos} > Photos </Button>
+                    <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
+                    <div className="country-dropdown">
+                        <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>
+                            Country </Button>
+                        <div className="country-dropdown-content">
+                            {this.state.countryList.map((c) => (
+                                <a key={c.id} onClick={() => showCountry(c.id)}>{c.id} </a>
+                            ))}
+                        </div>
+                    </div>
                 </Row>
                 <Row className="pb-2">
 
@@ -246,7 +348,9 @@ class Gallery extends Component {
                                     carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout(() => this.startSliding(), 3000)]
                                 })
                             }>
-                            {cItems} </Carousel>
+                            {cItems}
+
+                        </Carousel>
                     </OverlayTrigger>
 
 
@@ -269,24 +373,24 @@ class Gallery extends Component {
                 {/* Same as */}
                 <ToastContainer />
 
+                {/* {this.state.imageAvaiable = false}
+                {toast.info('😾 Image added to your clipboard!', {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                })} */}
 
-                {this.state.imageAvaiable ?
-                    <Row>
-                        {this.state.imageAvaiable = false}
-                        {toast.info('😾 Image added to your clipboard!', {
-                            position: "bottom-center",
-                            autoClose: 2500,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined,
-                        })}
-                    </Row>
-                    : ""}
+
+
+
 
             </Container>
         )
+
 
     }
 }

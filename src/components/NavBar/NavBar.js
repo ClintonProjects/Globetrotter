@@ -36,6 +36,8 @@ class NavBar extends Component {
     return this.state.notficitonBox;
   }
 
+  //can use localStorage.getItem("uid") for the uid
+  //works on every page after the user logs in
   getUserId() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
@@ -174,6 +176,11 @@ class NavBar extends Component {
                   <Link to="/profile"><span><FaIcons.FaSignOutAlt className="icon" /></span></Link>
                 </span>
               </div>
+              {/* <div className="marginleftright">
+              {currentUser !== null && (
+              <small>
+                Logged on as {localStorage.getItem("email")}</small> )}
+              </div> */}
             </div>
           </div>
         </div>
