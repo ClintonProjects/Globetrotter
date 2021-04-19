@@ -48,7 +48,8 @@ class Login extends Component {
     const handleInput = this.handleInputChange;
     return (
       <div className="login" >
-        <h3>Sign In</h3>
+        <h2>Welcome back</h2>
+        <h3>Sign In to log your most recent trip</h3>
         {error && (
           <p>
             <strong>ERROR: {error.message} </strong>

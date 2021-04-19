@@ -23,16 +23,26 @@ class UploadPhotos extends Component {
         super(props);
     
         this.state = {
+          countryList: [],
           image: null,
           url: null,
           progress: 0,
-          showProgressBar: false
+          showProgressBar: false,
+          country: null
         };
       this.setURL = this.setURL.bind(this);
+      this.addCountry = this.addCountry.bind(this);
     }
+    
     setURL(urlpassed){
       this.setState({ url: urlpassed});
-    }  
+    } 
+    addCountry = (id) =>{
+      let countryName = id;
+      console.log(countryName);
+      this.setState({country: countryName});
+      console.log(this.state.country);
+    } 
     
     componentDidMount() {
       //not sure why is this needed but the library instructions ask for it: https://www.npmjs.com/package/bs-custom-file-input#how-to-use-it
@@ -41,7 +51,7 @@ class UploadPhotos extends Component {
     render() {
       const authenticated = this.props.authenticated;
       const currentUser = this.props.currentUser;  
-      const country = "Ireland"; //update with trip form
+      //const country = "ireland"; //update with trip form
       const image = this.state.image;
       //sets the allowed file types that can be uploaded
       const types = ['image/jpeg', 'image/png'];
@@ -57,6 +67,19 @@ class UploadPhotos extends Component {
           alert("Please upload an image file (jpeg or png)");
         }  
       };
+      const getCountryList =() =>{
+        let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
+        docPath.onSnapshot((snap) =>{
+            if (snap.empty){
+                console.log("error");
+            }else{
+            let countryListArray = [];
+            snap.forEach(doc =>{
+                countryListArray.push({...doc.data(), id: doc.id}); //push data and the unique firestore doc id to the array documents
+            });
+            this.setState({countryList: countryListArray})
+        //console.log(this.state.countryList);
+    }})}
       
       const handleSubmission = () => {
 
@@ -92,7 +115,7 @@ class UploadPhotos extends Component {
                 imageRef.add({ //adding the image url to the users firestore
                   imageURL: url, 
                   date: createdAt, 
-                  country: country,
+                  country: this.state.country,
                   name: image.name }); //should be adding to the 
                 //hide progress bar after 2 sec
                 setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
@@ -108,17 +131,25 @@ class UploadPhotos extends Component {
               <ProgressBar animated now={this.state.progress} label={this.state.progress+'%'}
               className={this.state.showProgressBar == true ? "d-inline-flex" : "d-none"}
               variant="dark"/>
-              {/* <div className="progress-bar" style={{width: this.state.progress + '%'}}/> */}
-
             </Row>
             <Row>
                 <Col>
                   <Gallery authenticated = {authenticated} currentUser ={currentUser}/>
                 </Col>
                 <Col xs={2} className="pr-4">
+                <div className="country-dropdown">
+                <button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>Choose country</button>
+                  <div className="country-dropdown-content">
+                        {this.state.countryList.map((c) => ( 
+                            <a key={c.id} onClick={() =>this.addCountry(c.id)}>{c.id} </a>
+                        ))}  
+                    </div>
+                 </div>
+                 {this.state.country !== null && <div>Uploading to {this.state.country} album</div>}
                   <Row>
                     {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
                     <Form className="pb-2">
+                      
                       <Form.File className="text-left"
                         id="custom-file"
                         label="Choose file"
@@ -126,8 +157,6 @@ class UploadPhotos extends Component {
                         multiple onChange={changeHandler}
                       />
                     </Form>
-                    {/*<input id="choosefilebutton" type="file" name="file" multiple onChange={changeHandler} />*/}
-                    {/* {image && <div>{image.name}</div>} */}
                   </Row>
                   <Row>
                     <Button className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
