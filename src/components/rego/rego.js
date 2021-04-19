@@ -54,7 +54,7 @@ class Rego extends Component {
           <Col/>
           <Col className="col-4 register p-4">
               <span><img src={logo} alt="Logo" /></span>
-          
+
         <p className="h1 textColour text-center">Get on board!</p>
         <p className="h6 textColour text-center pb-2">Please register an account here!</p>
         {/* //display the error message to the user if they enter an invalid email or password */}
@@ -80,8 +80,8 @@ class Rego extends Component {
         </Col>
         <Col/>
         </Row>
-        
-            
+
+
         </Container>
         );
     }

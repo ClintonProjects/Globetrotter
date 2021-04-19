@@ -21,8 +21,8 @@
 /*https://stackoverflow.com/a/14205976*/
 /* Change the white to any color */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active
 {
     box-shadow:0 0 0 30px black inset !important;

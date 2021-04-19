@@ -74,18 +74,21 @@ class App extends Component {
     Firebase.auth().onAuthStateChanged((user) => {
       user
         ? this.setState(() => ({
-            authenticated: true,
-            currentUser: user,
-          }))
+          authenticated: true,
+          currentUser: user,
+        }))
         : this.setState(() => ({
-            authenticated: false,
-            currentUser: null,
-          }));
+          authenticated: false,
+          currentUser: null,
+        }));
     });
   }
 
   render() {
-    if (this.state.authenticated) localStorage.setItem("uid", this.state.currentUser.uid);
+    if (this.state.authenticated) {
+      localStorage.setItem("uid", this.state.currentUser.uid);
+      localStorage.setItem("email", this.state.currentUser.email);
+    }
     //else localStorage.setItem("uid", "K26KJF569YU6gNaIZOySCG6uoGB2");
     // prevents error when /mapview is directly typed into the url
 
@@ -125,10 +128,10 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/logout" 
-                render={() => ( 
-                <Logout 
-                  currentUser={this.state.currentUser}/>
+              <Route path="/logout"
+                render={() => (
+                  <Logout
+                    currentUser={this.state.currentUser} />
                 )} />
               <Route path="/register" component={Rego} />
               <Route path="/forgotPass" component={ForgotPass} />
