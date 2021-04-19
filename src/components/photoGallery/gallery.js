@@ -378,16 +378,20 @@ class Gallery extends Component {
             {/* Same as */}
             <ToastContainer />
 
-            {/* {this.state.imageAvaiable = false}
-            {toast.info('😾 Image added to your clipboard!', {
-                position: "bottom-center",
-                autoClose: 2500,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            })} */}
+            {this.state.imageAvaiable ?
+                    <Row>
+                        {this.state.imageAvaiable = false}
+                        {toast.info('😾 Image added to your clipboard!', {
+                            position: "bottom-center",
+                            autoClose: 2500,
+                            hideProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                        })}
+                    </Row>
+                    : ""}
         </Container>
     )
 
