@@ -48,7 +48,8 @@ class Rego extends Component {
         
         return(
             <div className="rego">
-                <h3>Register</h3>
+                <h2>Welcome</h2>
+                <h3>Register to unlock all features</h3>
                 {/* //display the error message to the user if they enter an invalid email or password */}
                 {error && (<p>
                 <strong>ERROR: {error.message} </strong>
