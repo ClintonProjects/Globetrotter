@@ -143,7 +143,19 @@ class Gallery extends Component{
             alert("Error deleting photo "+ error);
         }); 
     }
-    
+    downloadPicture =() =>{
+       //get the firestore document ID for the selected image
+       var getDocID = this.state.docs[this.state.carouselIndex].id;
+       //use firestore delete method (call on full path collection-> document to be deleted)
+       var docPath =firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
+    //    docPath.download() ** anna to download
+    //    //advise if successful or unsuccessful delete
+    //    .then(() =>{
+    //     alert("Successfully downloaded image");
+    //     }).catch((error) => {
+    //     alert("Error downloading photo "+ error);
+    // }); 
+    }
 
     render(){
     const docs = this.state.docs;
@@ -266,6 +278,9 @@ class Gallery extends Component{
                 <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
             </Row>
             <Row className="pb-3">
+                <Button variant="outline-dark" onClick={this.downloadPicture}> Download photo</Button>
+            </Row>
+            <Row className="pb-3">
                 <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button>
             </Row>
         </Container>
@@ -287,7 +302,7 @@ class Gallery extends Component{
                 <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
                 <div className="country-dropdown">
                     <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}> 
-                        Country Albums </Button>
+                        Country </Button>
                     <div className="country-dropdown-content">
                         {this.state.countryList.map((c) => ( 
                             <a key={c.id} onClick={() =>showCountry(c.id)}>{c.id} </a>
