@@ -1,11 +1,29 @@
 import React, { Component } from "react";
+import firebase from "../myFirebaseConfig.js"; // import the firebase app
+import "firebase/firestore"; // attach firestore
 import * as FaIcons from "react-icons/fa";
 //import "./Settings.css";
 
+const firestore = firebase.firestore(); // create fs instance
+
 class Settings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      settingsRef: firestore
+        .collection("users")
+        .doc(localStorage.getItem("uid"))
+        .collection("settings"),
+    };
+  }
   render() {
     return (
       <div id="settingPageContainer" className="Settings">
+
+      <form>
+      {/* to be filled in*/ }
+      </form>
+
         <div className="leftbox">
           {/* <nav>
             <a onClick="tabs(0)" className="tab active">
@@ -30,7 +48,7 @@ class Settings extends Component {
             <h1>Personal Information</h1>
             <div></div>
             <h2>Full name</h2>
-            <input type="text" className="input" placeholder="Name" />
+            <input id="fullname" type="text" className="input" placeholder="Name" />
             <h2>Birthday</h2>
             <input type="text" className="input" placeholder="DOB" />
             <h2>Gender</h2>
@@ -39,7 +57,8 @@ class Settings extends Component {
              <input type="text" className="input" placeholder="Email" />
             <h2>Password</h2>
             <input type="password" className="input" placeholder="brightcode" />
-            <button className="btn">Update</button> */}
+            <button className="btn">Update
+            </button> */}
           </div>
           {/* <div className="payment tabShow">
             <h1>Payment Information</h1>
