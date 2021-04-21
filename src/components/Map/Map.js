@@ -72,7 +72,6 @@ class Map extends Component {
         // array retrieved from firestore gets assigned to data here
         if (array.length > 0) polygonSeries.data = array;
         else {
-          
         }
 
         polygonSeries.calculateVisualCenter = true;
@@ -97,25 +96,7 @@ class Map extends Component {
       }
     });
   }
-  // componentDidUpdate(prevProps) {
-  //   console.log("componentDidUpdate");
-  //   if (this.props.currentUser !== prevProps.currentUser) {
-  //     this.state = {
-  //       docRef: firestore
-  //         .collection("users")
-  //         .doc(`${this.props.currentUser.uid}`),
-  //       locationRef: firestore
-  //         .collection("users")
-  //         .doc(`${this.props.currentUser.uid}`)
-  //         .collection("locations"),
-  //       tripRef: firestore
-  //         .collection("users")
-  //         .doc(`${this.props.currentUser.uid}`)
-  //         .collection("trips"),
-  //     };
-  //     this.componentDidMount();
-  //   }
-  // }
+
   componentWillUnmount() {
     if (this.map) {
       this.map.dispose();
@@ -175,11 +156,11 @@ class Map extends Component {
 
   render() {
     return (
-        <>
-          <div className="chartwrapper" id="map">
-            <div id="chartdiv" className="chartdiv"></div>
-          </div>
-        </>
+      <>
+        <div className="chartwrapper" id="map">
+          <div id="chartdiv" className="chartdiv"></div>
+        </div>
+      </>
     );
   }
 }
