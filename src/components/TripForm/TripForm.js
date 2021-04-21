@@ -13,10 +13,8 @@ class TripForm extends Component {
     super(props);
     this.state = {
       // ${this.props.currentUser.uid} passed down from Landing.js file
-      docRef: firestore
-        .collection("users")
-        .doc(localStorage.getItem("uid")),
-        //.doc(`${this.props.currentUser.uid}`),
+      docRef: firestore.collection("users").doc(localStorage.getItem("uid")),
+      //.doc(`${this.props.currentUser.uid}`),
       locationRef: firestore
         .collection("users")
         .doc(localStorage.getItem("uid"))
@@ -27,6 +25,7 @@ class TripForm extends Component {
         .doc(localStorage.getItem("uid"))
         //.doc(`${this.props.currentUser.uid}`)
         .collection("trips"),
+      trips: [],
     };
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
@@ -68,7 +67,24 @@ class TripForm extends Component {
       (key) => object[key].toLowerCase() === value.toLowerCase()
     );
   }
+
+  componentDidMount() {
+    this.state.tripRef.onSnapshot((doc) => {
+      if (doc.empty) {
+        console.log("no data");
+      } else {
+        let tripArray = [];
+        doc.forEach((data) => {
+          const trip = data.data();
+          tripArray.push( { id : data.id, trip } );
+        });
+        this.setState({ trips: tripArray });
+      }
+    });
+  }
+
   render() {
+    console.log(this.state.trips);
     return (
       <>
         <form className="trip-form" onSubmit={this.addData}>
@@ -99,9 +115,18 @@ class TripForm extends Component {
           </div>
         </form>
 
+        <div className="tripList">
+          <h4>list the trips here</h4>
 
+          <ul>
+            {this.state.trips.map((trip) => (
+              <li key={trip.id}>
+                {trip.id}
+              </li>
+            ))}
+          </ul>
+        </div>
       </>
-
     );
   }
 }
