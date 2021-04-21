@@ -18,7 +18,7 @@ export class Footer extends Component {
 
     return (
 
-        <Container fluid className=" footer footer-margin-bottom">
+        <Container fluid className="footer">
           <Row className="justify-content-md-center">
             <Col/>
             <Col  xs={6}>
@@ -50,15 +50,15 @@ export class Footer extends Component {
           <Row className="footer-borader justify-content-md-center">
             <Col/>
             <Col  xs={6}>
-              <small className="text-light">
+              <p className="text-light footerText font-weight-light">
                 Copyright @ Globetrotter 2021-2021. All Rights Reserved.
-              </small>
+              </p>
             </Col>
-            <Col>
+            <Col xs={3}>
             {currentUser !== null && (
-            <small className="col-sm-2 text-right text-light">
+            <p className="text-light footerText font-weight-light text-right">
               Logged on as {this.props.currentUser.email}
-            </small>
+            </p>
           )}
             </Col>
           </Row>

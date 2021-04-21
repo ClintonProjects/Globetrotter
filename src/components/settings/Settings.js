@@ -18,6 +18,51 @@ class Settings extends Component {
   }
   render() {
     return (
+      <Container>
+      <Row>
+      <Col/>
+      <Col className="col-8 contactUs p-4">
+      <p className="h2 ">Personal Information</p>
+      <hr className="textColour"/>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Group controlId="formFullName">
+          <Form.Label>Full Name:</Form.Label>
+          <Form.Control id="NameSettings"  name="Name" type="input" value={""}/>
+        </Form.Group>
+        <Form.Group controlId="formBirthday">
+          <Form.Label>Birthday (DD/MM/YYYY):</Form.Label>
+          <Form.Control id="BirthdaySettings"  name="birthday" type="input" value={""}/>
+        </Form.Group>
+        <Form.Group controlId="formGender">
+          <Form.Label>Gender (F/M):</Form.Label>
+          <Form.Control id="GenderSettings"  name="gender" type="input" value={""}/>
+        </Form.Group>
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email Address:</Form.Label>
+          <Form.Control id="EmailSettings" className="whiteBackground" name="email" type="email" value={""}/>
+        </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password:</Form.Label>
+          <Form.Row className="pb-3">
+              <Col>
+                <Form.Control id="PasswordSettings" className="whiteBackground" name="password" type="password" value={""}/>
+              </Col>
+              <Col>
+                <Button variant="outline-info" type="submit" block>
+                CHANGE PASSWORD
+                </Button>
+              </Col>
+          </Form.Row>
+        </Form.Group>
+
+        <Button className="buttonStyle" variant="primary" type="submit" block>
+        UPDATE
+        </Button>
+      </Form>
+      </Col>
+      <Col/>
+      </Row>
+
       <div id="settingPageContainer" className="Settings">
 
       <form>
@@ -116,6 +161,7 @@ class Settings extends Component {
           </div> */}
         </div>
       </div>
+      </Container>
     );
   }
 }

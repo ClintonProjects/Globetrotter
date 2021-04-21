@@ -1,58 +1,35 @@
 .login{
-    position: relative;
-    width: 400px;
-    height: 400px;
-    border-radius: 90%;
+    background-color: black;
+    max-width: 400px;
+    border-radius: 5%;
     border-color: black;
     border-width: 2px;
     margin: 2em;
 }
-#regoLink:hover{
-    color: blue;
+
+.textColour {
+    color: #18a9c0 !important;
 }
-#passLink:hover{
-    color: blue;
+
+.buttonStyle {
+    background-color: #18a9c0 !important;
+    border-color: #18a9c0 !important;
 }
-#passLink{
-    margin-left: 1em;
+
+.buttonStyle:hover {
+    background-color: #18aac0c5 !important;
 }
-.notRego{
-    font-size: small;
-    margin-left: 1em;
+
+#RegLink, #ForgotPassLink {
+    color: #18a9c0 !important;
+    font-size: small !important;
 }
-.login-form{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
+
+#RegLink:hover, #ForgotPassLink:hover {
+    color: #18aac0c5 !important;
 }
-.login-email{
-    width: 500px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+
+.formTextColour {
+    color: white !important;
 }
-.login-password{
-    width: 500px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-.login-button{
-    background-color: black;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.login-button:hover{
-    background-color: rgb(54, 53, 53);
-}
+

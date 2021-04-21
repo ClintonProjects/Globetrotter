@@ -167,7 +167,7 @@ class Gallery extends Component {
         //     alert("Successfully downloaded image");
         //     }).catch((error) => {
         //     alert("Error downloading photo "+ error);
-        // }); 
+        // });
     }
 
     render() {
@@ -190,7 +190,7 @@ class Gallery extends Component {
                             documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
                         });
                         this.setState({ docs: documents }); //update state with the documents array
-                        console.log(docs); //check 
+                        console.log(docs); //check
 
                     }
                 })
@@ -209,7 +209,7 @@ class Gallery extends Component {
                                 documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
                         });
                         this.setState({ docs: documents }); //update state with the documents array
-                        console.log(docs); //check 
+                        console.log(docs); //check
 
                     }
                 })
@@ -230,7 +230,7 @@ class Gallery extends Component {
                                 documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
                         });
                         this.setState({ docs: documents }); //update state with the documents array
-                        console.log(docs); //check 
+                        console.log(docs); //check
 
                     }
                 })
@@ -274,122 +274,126 @@ class Gallery extends Component {
                 onMouseLeave={() => this.setState(
                     { picMenuTimeoutID: [...this.state.picMenuTimeoutID, setTimeout(() => this.startSliding(), 3000)] })}
             >
-                <Container>
-                    <Row className="pb-4">
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                placeholder="Picture Comment"
-                                aria-label="Picture Comment"
-                                onChange={event => {
-                                    this.setState({ picComment: event.target.value });
-                                }}
-                            />
-                            <InputGroup.Append>
-                                <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </Row>
-                    <Row className="pb-3">
-                        <Button variant="outline-info" onClick={this.sharePicHandler}>Share</Button>
-                    </Row>
-                    <Row className="pb-3">
-                        <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
-                    </Row>
-                    <Row className="pb-3">
-                        <Button variant="outline-dark" onClick={this.downloadPicture}> Download photo</Button>
-                    </Row>
-                    <Row className="pb-3">
-                        <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button>
-                    </Row>
-                </Container>
-            </Popover.Content>
-        </Popover>
-        //method that will build thumnails pictures
-        const tItems = (docs && docs.map(doc => {
-            return <Col xs={6} md={2} className="col-2" key={doc.id}>
-                <Image src={doc.imageURL} alt="users-travel-pic" rounded
-                    doc_id={doc.id}
-                    onClick={this.thumbnailClick}
-                    className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"} />
-            </Col>
-        }));
-        return (
-            <Container className="Gallery">
-                <Row className="pb-2">
-                    <Button variant="info" size="sm" onClick={showPhotos} > Photos </Button>
-                    <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
-                    <div className="country-dropdown">
-                        <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>
-                            Country </Button>
-                        <div className="country-dropdown-content">
-                            {this.state.countryList.map((c) => (
-                                <a key={c.id} onClick={() => showCountry(c.id)}>{c.id} </a>
-                            ))}
-                        </div>
+        <Container>
+            <Row className="pb-4">
+                <InputGroup className="mb-3">
+                        <FormControl
+                        placeholder="Picture Comment"
+                        aria-label="Picture Comment"
+                        onChange={event => { 
+                            this.setState({ picComment : event.target.value });
+                        }} 
+                        />
+                        <InputGroup.Append>
+                        <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
+                        </InputGroup.Append>
+                </InputGroup>
+            </Row>
+            <Row className="pb-3">
+                <Button variant="outline-info" onClick={this.sharePicHandler}>Share</Button>
+            </Row>
+            <Row className="pb-3">
+                <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
+            </Row>
+            <Row className="pb-3">
+                <Button variant="outline-dark" onClick={this.downloadPicture}> Download photo</Button>
+            </Row>
+            <Row className="pb-3">
+                <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button></Row>
+        </Container>
+        </Popover.Content>                        
+    </Popover>
+    //method that will build thumnails pictures
+    const tItems = (docs && docs.map(doc =>{
+        return <Col xs={6} md={2} className="col-2" key={doc.id}>
+            <Image src={doc.imageURL} alt="users-travel-pic" rounded
+            doc_id={doc.id} 
+            onClick={this.thumbnailClick}
+            className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"}/>
+        </Col>
+    }));
+    return(
+        <Container className="Gallery">
+            <Row>
+                <Col xs={1}/>
+                <Col>
+            <Row className="pb-2">
+                <Button variant="info" size="lg" onClick={showPhotos}> 
+                Load Photos </Button>
+                <Button variant="info" size="sm" onClick={showPhotos} > Photos </Button>
+                <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
+                <div className="country-dropdown">
+                    <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>
+                        Country </Button>
+                    <div className="country-dropdown-content">
+                        {this.state.countryList.map((c) => (
+                            <a key={c.id} onClick={() => showCountry(c.id)}>{c.id} </a>
+                        ))}
                     </div>
-                </Row>
-                <Row className="pb-2">
+                </div>
+            </Row>
+            <Row className="pb-2">
+            
+                <OverlayTrigger
+                    //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
+                    trigger={['hover', 'focus']}
+                    key="right"
+                    placement="right-start"
+                    show={this.state.showPicMenuTooltip}
+                    delay={{ show: 0, hide: 10 }}
+                    overlay={picMenu}
+                >
+                    <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
+                    onFocus={() => { this.stopSliding(); }}
+                    onMouseMove={() => { this.stopSliding(); }}
+                    onMouseLeave={() => 
+                    //start sliding with timemout method to to give mouse a chance to enter pic menu
+                    this.setState( {
+                        carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout( () => this.startSliding(), 3000 )]})
+                    }> 
+                    {cItems} </Carousel>
+                </OverlayTrigger>
+            
+                
+            </Row>
+            <Row className="no-gutters">
+                {tItems}                 
+            </Row>
+                </Col>
+                <Col xs={1}>
+                </Col>
+            </Row>
 
-                    <OverlayTrigger
-                        //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
-                        trigger={['hover', 'focus']}
-                        key="right"
-                        placement="right-start"
-                        show={this.state.showPicMenuTooltip}
-                        delay={{ show: 0, hide: 10 }}
-                        overlay={picMenu}
-                    >
-                        <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
-                            onFocus={() => { this.stopSliding(); }}
-                            onMouseMove={() => { this.stopSliding(); }}
-                            onMouseLeave={() =>
-                                //start sliding with timemout method to to give mouse a chance to enter pic menu
-                                this.setState({
-                                    carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout(() => this.startSliding(), 3000)]
-                                })
-                            }>
-                            {cItems}
+            <ToastContainer
+                position="bottom-center"
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            {/* Same as */}
+            <ToastContainer />
 
-                        </Carousel>
-                    </OverlayTrigger>
-
-
-                </Row>
-                <Row className="no-gutters">
-                    {tItems}
-                </Row>
-
-                <ToastContainer
-                    position="bottom-center"
-                    autoClose={2500}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                />
-                {/* Same as */}
-                <ToastContainer />
-
-                {/* {this.state.imageAvaiable = false}
-                {toast.info('😾 Image added to your clipboard!', {
-                    position: "bottom-center",
-                    autoClose: 2500,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                })} */}
-
-
-
-
-
-            </Container>
-        )
+            {this.state.imageAvaiable ?
+                    <Row>
+                        {this.state.imageAvaiable = false}
+                        {toast.info('😾 Image added to your clipboard!', {
+                            position: "bottom-center",
+                            autoClose: 2500,
+                            hideProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                        })}
+                    </Row>
+                    : ""}
+        </Container>
+    )
 
 
     }
