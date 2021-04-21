@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
+import { Container, Form, Button, Row, Col} from 'react-bootstrap';
 import * as FaIcons from "react-icons/fa";
 //import "./Settings.css";
 
