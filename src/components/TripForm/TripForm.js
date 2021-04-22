@@ -106,18 +106,21 @@ class TripForm extends Component {
   }
 
   componentDidMount() {
-    this.state.tripRef.onSnapshot((doc) => {
-      if (doc.empty) {
-        console.log("no data");
-      } else {
-        let tripArray = [];
-        doc.forEach((data) => {
-          const trip = data.data();
-          tripArray.push( { id : data.id, trip } );
-        });
-        this.setState({ trips: tripArray });
-      }
-    });
+    this.state.tripRef
+      .withConverter(tripConverter)
+      .get()
+      .then((docs) => {
+        if (!docs.empty) {
+          var arr = [];
+          docs.forEach((doc) => {
+            var trip = doc.data();
+            arr.push(trip.toObject());
+          });
+          this.setState({ trips: arr });
+        } else {
+          console.log("No document");
+        }
+      });
   }
 
   render() {
