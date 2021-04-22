@@ -3,10 +3,9 @@ import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
 import ISO from "./names.json";
 import "./TripForm.css";
-import UploadPhotos from "../uploadPhotos/uploadPhotos.js";
 
 // declare global variable for use in componentDidMount & addData
-const firestore = firebase.firestore(); // collection = users & user = evan
+const firestore = firebase.firestore();
 
 // create a trip class to store custom object in firestore
 class Trip {
@@ -46,18 +45,14 @@ class TripForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // ${this.props.currentUser.uid} passed down from Landing.js file
       docRef: firestore.collection("users").doc(localStorage.getItem("uid")),
-      //.doc(`${this.props.currentUser.uid}`),
       locationRef: firestore
         .collection("users")
         .doc(localStorage.getItem("uid"))
-        //.doc(`${this.props.currentUser.uid}`)
         .collection("locations"),
       tripRef: firestore
         .collection("users")
         .doc(localStorage.getItem("uid"))
-        //.doc(`${this.props.currentUser.uid}`)
         .collection("trips"),
       trips: [],
     };
@@ -78,13 +73,6 @@ class TripForm extends Component {
           id: this.getKeyByValue(ISO, country.value),
           name: country.value,
           fill: `amd4color("#000")`,
-        },
-      };
-      const userTrips = {
-        tripInfo: {
-          name: country.value,
-          startDate: startDate.value,
-          endDate: endDate.value,
         },
       };
       this.state.locationRef.doc(`${docID}`).set(userSeries);
@@ -121,11 +109,9 @@ class TripForm extends Component {
   }
 
   render() {
-    console.log(this.state.trips);
     return (
       <>
         <form className="trip-form" onSubmit={this.addData}>
-          {/* onSubmit={()=> {this.addData; this.handleSubmission;} } */}
           <h1>Your Trip</h1>
           <div id="inputContainer">
             <input
