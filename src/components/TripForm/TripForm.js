@@ -8,6 +8,24 @@ import UploadPhotos from "../uploadPhotos/uploadPhotos.js";
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore(); // collection = users & user = evan
 
+// create a trip class to store custom object in firestore
+class Trip {
+  constructor(country, startDate, endDate) {
+    this.country = country;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+  // will transform data to an object for adding to array
+  // and in mapping to trip list
+  toObject() {
+    return {
+      country: this.country,
+      startDate: this.startDate,
+      endDate: this.endDate,
+    };
+  }
+}
+
 class TripForm extends Component {
   constructor(props) {
     super(props);
