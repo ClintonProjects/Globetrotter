@@ -26,6 +26,22 @@ class Trip {
   }
 }
 
+// implenting firestore documentation code here for the
+// transfer of custom objects
+var tripConverter = {
+  toFirestore: function (trip) {
+    return {
+      country: trip.country,
+      startDate: trip.startDate,
+      endDate: trip.endDate,
+    };
+  },
+  fromFirestore: function (snapshot, options) {
+    const trip = snapshot.data(options);
+    return new Trip(trip.country, trip.startDate, trip.endDate);
+  },
+};
+
 class TripForm extends Component {
   constructor(props) {
     super(props);
