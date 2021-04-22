@@ -88,7 +88,10 @@ class TripForm extends Component {
         },
       };
       this.state.locationRef.doc(`${docID}`).set(userSeries);
-      this.state.tripRef.doc(`${docID}`).set(userTrips);
+      this.state.tripRef
+        .doc(`${docID}`)
+        .withConverter(tripConverter)
+        .set(new Trip(country.value, startDate.value, endDate.value));
       console.log("trip added");
     } catch (error) {
       alert("invalid input");
