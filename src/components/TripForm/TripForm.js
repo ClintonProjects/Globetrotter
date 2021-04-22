@@ -157,14 +157,13 @@ class TripForm extends Component {
 
         <div className="tripList">
           <h4>list the trips here</h4>
-
-          <ul>
-            {this.state.trips.map((trip) => (
-              <li key={trip.id}>
-                {trip.id}
-              </li>
-            ))}
-          </ul>
+          {this.state.trips.map((trip, index) => (
+            <div key={index}>
+              {trip.country}
+              <div>from : {trip.startDate}</div>
+              <div>to : {trip.endDate}</div>
+            </div>
+          ))}
         </div>
       </>
     );
