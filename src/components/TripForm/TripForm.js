@@ -3,10 +3,13 @@ import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
 import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
-import "./TripForm.css";
+// import "./TripForm.css";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
+
+const options = Object.values(ISO);
+
 
 class TripForm extends Component {
   constructor(props) {
@@ -81,12 +84,11 @@ class TripForm extends Component {
         <form className="trip-form" onSubmit={this.addData}>
           <h1>Your Trip</h1>
           <div id="inputContainer">
-            <input
-              type="text"
-              id="country"
-              name="country"
-              placeholder="Enter Country"
-            />
+            <select id="country" name="country">
+              {options.map((option, index) => (
+                <option key={index}>{option}</option>
+              ))}
+            </select>
             <input
               type="text"
               id="startdate"
