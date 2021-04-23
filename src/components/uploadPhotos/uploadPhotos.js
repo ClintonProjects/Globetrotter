@@ -71,7 +71,8 @@ class UploadPhotos extends Component {
         let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
         docPath.onSnapshot((snap) =>{
             if (snap.empty){
-                console.log("error");
+              alert("No trips added yet. Please add in the trips tab!");
+              console.log("Firestore trips collection empty");
             }else{
             let countryListArray = [];
             snap.forEach(doc =>{

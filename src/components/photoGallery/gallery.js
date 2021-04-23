@@ -25,6 +25,7 @@ class Gallery extends Component {
             countryView: null,
             docs: [],
             picComment: '',
+            settingCountry: '',
             selectedThumbnail: -1, //use this state to keep track which thumbail is selected
             carouselIndex: 0, //store the active carousel index in the state so that it can be programaticaly changed
             carouselInterval: carouselOn, //slide interval
@@ -71,6 +72,7 @@ class Gallery extends Component {
             //set the selected thumbnail id to the newly retrieved doc
             this.setState({ selectedThumbnail: carouselDocId });
         }
+        
 
     }
 
@@ -131,7 +133,7 @@ class Gallery extends Component {
 
             .then((doc) => {
                 var url = doc.data().imageURL;
-                // alert("Share your image using: "+url);
+                alert("Share your image using: "+url);
                 this.state.imageLink = url;
                 this.state.imageAvaiable = true;
                 navigator.clipboard.writeText(url);
@@ -147,7 +149,6 @@ class Gallery extends Component {
         //use firestore delete method (call on full path collection-> document to be deleted)
         var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
         docPath.delete()
-
             //advise if successful or unsuccessful delete
             .then(() => {
                 alert("Successfully deleted image");
@@ -155,20 +156,20 @@ class Gallery extends Component {
                 alert("Error deleting photo " + error);
             });
     }
-
-    downloadPicture = () => {
+    setCountry = () => {
         //get the firestore document ID for the selected image
         var getDocID = this.state.docs[this.state.carouselIndex].id;
         //use firestore delete method (call on full path collection-> document to be deleted)
         var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
-        //    docPath.download() ** anna to download
-        //    //advise if successful or unsuccessful delete
-        //    .then(() =>{
-        //     alert("Successfully downloaded image");
-        //     }).catch((error) => {
-        //     alert("Error downloading photo "+ error);
-        // });
+        docPath.update({ country: this.state.settingCountry })
+            //advise if successful or unsuccessful delete
+            .then(() => {
+                alert("Successfully updated country for this image: "+ this.state.settingCountry);
+            }).catch((error) => {
+                alert("Error updating country for this image " + error);
+            });
     }
+
 
     render() {
         const docs = this.state.docs;
@@ -178,12 +179,12 @@ class Gallery extends Component {
             .collection("images")
 
         const showPhotos = () => {
-            this.setState({ docs: null });
+            this.setState({ docs: [] });
             currentGallery
                 //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
                 .onSnapshot((snap) => {
                     if (snap.empty) {
-                        console.log("error");
+                        console.log("Docs is empty");
                     } else {
                         let documents = [];
                         snap.forEach(doc => {
@@ -196,12 +197,12 @@ class Gallery extends Component {
                 })
         }
         const showFavourites = () => {
-            this.setState({ docs: null });
+            this.setState({ docs: [] });
             currentGallery
                 //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
                 .onSnapshot((snap) => {
                     if (snap.empty) {
-                        console.log("error");
+                        console.log("Docs is empty");
                     } else {
                         let documents = [];
                         snap.forEach(doc => {
@@ -217,12 +218,12 @@ class Gallery extends Component {
         const showCountry = (id) => {
             let countryName = id.toLowerCase();
             console.log(countryName);
-            this.setState({ docs: null });
+            this.setState({ docs: [] });
             currentGallery
                 //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
                 .onSnapshot((snap) => {
                     if (snap.empty) {
-                        console.log("error");
+                        console.log("Docs is empty");
                     } else {
                         let documents = [];
                         snap.forEach(doc => {
@@ -239,14 +240,15 @@ class Gallery extends Component {
             let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
             docPath.onSnapshot((snap) => {
                 if (snap.empty) {
-                    console.log("error");
+                    alert("No trips added yet. Please add in the trips tab!");
+                    console.log("Trips is empty");
                 } else {
                     let countryListArray = [];
                     snap.forEach(doc => {
                         countryListArray.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
                     });
                     this.setState({ countryList: countryListArray })
-                    //console.log(this.state.countryList);
+                    console.log(this.state.countryList);
                 }
             })
         }
@@ -285,7 +287,7 @@ class Gallery extends Component {
                         }} 
                         />
                         <InputGroup.Append>
-                        <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
+                            <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
                         </InputGroup.Append>
                 </InputGroup>
             </Row>
@@ -295,8 +297,19 @@ class Gallery extends Component {
             <Row className="pb-3">
                 <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
             </Row>
-            <Row className="pb-3">
-                <Button variant="outline-dark" onClick={this.downloadPicture}> Download photo</Button>
+            <Row className="pb-4">
+                <InputGroup className="mb-3">
+                        <FormControl
+                        placeholder="Country"
+                        aria-label="Country"
+                        onChange={event => { 
+                            this.setState({ settingCountry : event.target.value });
+                        }} 
+                        />
+                        <InputGroup.Append>
+                            <Button variant="outline-dark" onClick={this.setCountry}> Set Country </Button>
+                        </InputGroup.Append>
+                </InputGroup>
             </Row>
             <Row className="pb-3">
                 <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button></Row>

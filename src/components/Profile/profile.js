@@ -7,8 +7,7 @@ import {
   Link,
 } from "react-router-dom";
 import Logout from "../Logout/logout";
-import Login from "../Login/login"
-;
+import Login from "../Login/login";
 class Profile extends Component {
 render(){
     const authenticated = this.props.authenticated;

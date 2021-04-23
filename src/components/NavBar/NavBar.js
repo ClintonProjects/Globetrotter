@@ -127,21 +127,21 @@ class NavBar extends Component {
           <div className="row col-sm-4 boradercover">
             <div className="links" onClick="notfalse()">
               {!authenticated && (
-                <Link className="nav-text" to="/">Map</Link>
+                <Link className="nav-text" to="/login">Map</Link>
               )}
               {authenticated && (
                 <Link className="nav-text" to="/mapview" >Map</Link>
               )}
 
               {!authenticated && (
-                <Link className="nav-text" to="/profile">Trips</Link>
+                <Link className="nav-text" to="/login">Trips</Link>
               )}
               {authenticated && (
                 <Link className="nav-text" to="/tripform">Trips</Link>
               )}
 
               {!authenticated && (
-                <Link className="nav-text" to="/profile">Photo</Link>
+                <Link className="nav-text" to="/login">Photo</Link>
               )}
               {authenticated && (
                 <Link className="nav-text" to="/uploadPhotos">Photo</Link>
@@ -172,15 +172,17 @@ class NavBar extends Component {
                   </span>)}
               </div>
               <div className="marginleftright">
+              {authenticated && (
                 <span>
-                  <Link to="/profile"><span><FaIcons.FaSignOutAlt className="icon" /></span></Link>
-                </span>
+                  <Link to="/logout"><span><FaIcons.FaSignOutAlt className="icon" /></span></Link>
+                </span>)}
               </div>
               {/* <div className="marginleftright">
-              {currentUser !== null && (
+              {authenticated && (
               <small>
-                Logged on as {localStorage.getItem("email")}</small> )}
-              </div> */}
+                Logged on as {localStorage.getItem("email")}
+              </small> )}
+              </div>  */}
             </div>
           </div>
         </div>
