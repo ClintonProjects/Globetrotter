@@ -3,7 +3,7 @@ import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
 import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
-// import "./TripForm.css";
+import "./TripForm.css";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
