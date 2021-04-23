@@ -37,36 +37,36 @@ class App extends Component {
       authenticated: false,
       currentUser: null,
     };
-    this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
+    // this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
   }
-  async componentDidMount() {
-    try {
-      this.getMessagesFromDatabase();
-    } catch (error) {
-      console.log(error);
-      this.setState({ errorMsg: error });
-    } // end of try catch
-  } // end of componentDidMount()
-  getMessagesFromDatabase() {
-    //for importing data from our FIREBASE database
-    let ref = Firebase.database().ref("");
+  // async componentDidMount() {
+  //   try {
+  //     this.getMessagesFromDatabase();
+  //   } catch (error) {
+  //     console.log(error);
+  //     this.setState({ errorMsg: error });
+  //   } // end of try catch
+  // } // end of componentDidMount()
+  // getMessagesFromDatabase() {
+  //   //for importing data from our FIREBASE database
+  //   let ref = Firebase.database().ref("");
 
-    ref.on("value", (snapshot) => {
-      // json array
-      let msgData = snapshot.val();
-      let newMessagesFromDB1 = [];
-      for (let m in msgData) {
-        // create a JSON object version of our object.
-        let currObject = {
-          id: msgData[m].id,
-        };
-        // add it to our newStateMessages array.
-        newMessagesFromDB1.push(currObject);
-      } // end for loop
-      // set state
-      this.setState({ users: newMessagesFromDB1 });
-    });
-  }
+  //   ref.on("value", (snapshot) => {
+  //     // json array
+  //     let msgData = snapshot.val();
+  //     let newMessagesFromDB1 = [];
+  //     for (let m in msgData) {
+  //       // create a JSON object version of our object.
+  //       let currObject = {
+  //         id: msgData[m].id,
+  //       };
+  //       // add it to our newStateMessages array.
+  //       newMessagesFromDB1.push(currObject);
+  //     } // end for loop
+  //     // set state
+  //     this.setState({ users: newMessagesFromDB1 });
+  //   });
+  // }
   //check if user is authenticated,
   // if they are set to true, otherwise false
   // currentUser holds the user object (if logged on)
@@ -118,7 +118,11 @@ class App extends Component {
               />
               <Route path="/preloginmap" component={Preloginmap} />
               <Route path="/contactus" component={ContactUs} />
-              <Route path="/login" component={Login} />
+              <Route path="/login" render={() => (
+                <Login
+                  authenticated={this.state.authenticated}
+                />
+              )} />
               <Route
                 path="/tripform"
                 render={() => (
@@ -131,9 +135,15 @@ class App extends Component {
               <Route path="/logout"
                 render={() => (
                   <Logout
+                    authenticated={this.state.authenticated}
                     currentUser={this.state.currentUser} />
                 )} />
-              <Route path="/register" component={Rego} />
+              <Route path="/register" 
+                render={() => (
+                  <Rego
+                    authenticated={this.state.authenticated}
+                    currentUser={this.state.currentUser} />
+                )} />
               <Route path="/forgotPass" component={ForgotPass} />
               <Route path="/settings" component={Settings} />
               <Route

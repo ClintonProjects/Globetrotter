@@ -36,6 +36,8 @@ class Rego extends Component {
             .createUserWithEmailAndPassword(email, password)
             .then((user) => {
             console.log(email);
+            //alert("Successfully registered!");
+            
             //this.props.history.push("/tripform") //opens the map upon successful registration
     })
     .catch((error) => {
@@ -47,7 +49,8 @@ class Rego extends Component {
     render(){
         const {email, password, error} = this.state;
         const handleInput = this.handleInput;
-        
+        const authenticated = this.props.authenticated;
+
         return(
         <Container >
         <Row className="pt-5">
@@ -56,12 +59,16 @@ class Rego extends Component {
               <span><img src={logo} alt="Logo" /></span>
 
         <p className="h1 textColour text-center">Get on board!</p>
-        <p className="h6 textColour text-center pb-2">Please register an account here!</p>
+        {authenticated && <p className="h6 textColour text-center pb-2">Successfully registered</p>}
+        {authenticated && <Link to="/settings">
+          <Button className="buttonStyle" variant="primary" block>Finish setting up your account here</Button>
+          </Link>}
+        {!authenticated && <p className="h6 textColour text-center pb-2">Please register an account here!</p>}
         {/* //display the error message to the user if they enter an invalid email or password */}
         {error && (
           <p> <strong className="text-danger">ERROR: {error.message} </strong> </p>
         )}
-      <Form onSubmit={this.registerUser}>
+      {!authenticated && <Form onSubmit={this.registerUser}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label className="formTextColour">Email address</Form.Label>
           <Form.Control id="Email"  name="email" type="email" placeholder="Enter email" value={email} onChange={handleInput}/>
@@ -74,14 +81,12 @@ class Rego extends Component {
         <Button className="buttonStyle" variant="primary" type="submit" block>
         REGISTER
         </Button>
-      </Form>
+      </Form>}
         {/* route to login page  */}
         <Link className="float-left pt-1" id="LoginLink" to="/login"><u>Already have an account? Login</u></Link>
         </Col>
         <Col/>
         </Row>
-
-
         </Container>
         );
     }

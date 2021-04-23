@@ -36,7 +36,8 @@ class Login extends Component {
         // once successfully authenticated set state in the Parent
         // for the authenticated variable.
         console.log("User logged on");
-        //this.props.history.push("/mapview");//redirect logged in user to correct path
+        //alert("Successfully logged in!");
+        //this.props.history.push("/");//redirect logged in user to correct path
       })
       .catch((error) => {
         //if error occurs, push to error state
@@ -48,6 +49,7 @@ class Login extends Component {
   render() {
     const { email, password, error } = this.state;
     const handleInput = this.handleInputChange;
+    const authenticated = this.props.authenticated;
     return (
       <Container >
        <Row className="pt-5">
@@ -55,12 +57,17 @@ class Login extends Component {
           <Col className="col-4 register p-4">
           <img src={logo} alt="Logo" />
           <p className="h2 textColour text-center">Welcome back!</p>
-          <p className="h6 textColour text-center pb-2">Please login to your account</p>
+          {authenticated && <p className="h6 textColour text-center pb-2">Successfully logged in</p>}
+          {authenticated && <Link to="/mapview">
+          <Button className="buttonStyle" variant="primary" block>Go to Map</Button>
+          </Link>}
+          {!authenticated && <p className="h6 textColour text-center pb-2">Please login to your account</p>}
           {/* //display the error message to the user if they enter an invalid email or password */}
           {error && (
             <p> <strong className="text-danger">ERROR: {error.message} </strong> </p>
           )}
-          <Form onSubmit={this.handleSubmit}>
+          
+          {!authenticated && <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label className="formTextColour">Email address</Form.Label>
               <Form.Control id="Email" name="email" type="email" placeholder="Enter email" value={email} onChange={handleInput}/>
@@ -73,14 +80,15 @@ class Login extends Component {
             <Button className="buttonStyle" variant="primary" type="submit" block>
             LOGIN
             </Button>
-          </Form>
-          {/* route to login page  */}
+          </Form>}
+          
           <Link className="float-left pt-1" id="RegLink" to= "/register" ><u>Register new account.</u></Link>
           <Link className="float-right pt-1" id="ForgotPassLink" to="/forgotPass" ><u>Forgot Password?</u></Link>
           </Col>
           <Col/>
         </Row>
       </Container>
+      
     );
   }
 }

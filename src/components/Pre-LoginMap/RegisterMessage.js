@@ -34,7 +34,7 @@ export class RegisterMessage extends Component {
          <Row className="no-gutters">
            <Col>
            {/* <Link to="/tripForm" ><u>Add a Trip</u></Link> */}
-           <a className="nounderline" href="/profile">
+           <a className="nounderline" href="/login">
            <Button className="buttonStyle" variant="primary" type="submit" block>LOGIN</Button>
            </a>
            </Col>

@@ -3,6 +3,7 @@ import { Container, Form, Button, Row, Col, Image, OverlayTrigger, Popover, Inpu
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./logout.css";
+import Login from "../Login/login";
 import logo from "../NavBar/logo/fullLogoNew.png";
 import {
   BrowserRouter as Router,
@@ -15,7 +16,6 @@ class Logout extends Component {
     super(props);
 
     this.logOutUser = this.logOutUser.bind(this);
-    this.kepUserLogedIn = this.kepUserLogedIn.bind(this);
   } // end constructor
 
   logOutUser() {
@@ -25,30 +25,32 @@ class Logout extends Component {
     localStorage.clear("uid");
   }
 
-  kepUserLogedIn() {
-    // Keep the user logged in
-    // Redirect to map view? 
-  }
-
   render() {
+    const authenticated = this.props.authenticated;
     return (
+      
       <Container >
+        
        <Row className="pt-5">
           <Col/>
           <Col className="col-4 register p-4">
           <img src={logo} alt="Logo" />
         <p className="h2 textColour text-center">Come back soon!</p>
-        <p className="h6 textColour text-center pb-3">Are you sure you want to log out?</p>
-        
-          <Row>
+        {authenticated && <p className="h6 textColour text-center pb-3">Are you sure you want to log out?</p>}
+        {!authenticated && <p className="h6 textColour text-center pb-3">Successfully logged out </p>}
+        {!authenticated && <Link to="/login">
+          <Button className="buttonStyle" variant="primary" block>Go to Login</Button>
+          </Link>}
+          {authenticated &&<Row>
             <Col>
-            {/* <Link to="/tripForm" ><u>Add a Trip</u></Link> */}
             <Button onClick={this.logOutUser} className="buttonStyle" variant="primary" type="submit" block>LOGOUT</Button>
             </Col>
             <Col>
-            <Button onClick={this.kepUserLogedIn} className="buttonStyle" variant="primary" type="submit" block>STAY</Button>
+              <Link to="/mapview" >
+                <Button className="buttonStyle" variant="primary" block>STAY</Button>
+              </Link>
             </Col>
-          </Row>
+          </Row>}
         </Col>
         <Col/>
         </Row>
