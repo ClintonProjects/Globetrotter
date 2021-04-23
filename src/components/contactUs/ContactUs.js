@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./ContactUs.css";
+import { Container, Form, Button, Row, Col} from 'react-bootstrap';
 
 class ContactUs extends Component {
 
@@ -28,44 +29,41 @@ class ContactUs extends Component {
   }
 
   handleSubmit(event) {
-    alert('An email was submitted: ' + this.state.email + ' with subject: ' + this.state.subject + 
-    ' with description: ' + this.state.description);
+    alert('Your request has been successful');
     event.preventDefault();
   }
 
   render() {
+    const { email, subject, description } = this.state;
     return (
-        
-      <div className="content1">
-        <h3> Contact us </h3>
-        <br/><br/>
-        <h5> Submit a request: </h5>
-        <form onSubmit={this.handleSubmit} className="form1">
-          <label>
-          Your email address:
-            <br/>
-            <input type="text" className="input1" value={this.state.email} onChange={this.handleChangeEmail} />
-          </label>
-          <br/>
-          <label>
-          Subject:
-            <br/>
-            <input type="text" value={this.state.subject} onChange={this.handleChangeSubject} />
-          </label>
-          <br/>
-          <label>
-          Description:
-            <br/>
-            <textarea value={this.state.description} onChange={this.handleChangeDescription} />
-          </label>
-
-
-          <br/><br/>
-          <input type="submit" value="Submit" />
-        </form>
-            
-            
-      </div>
+      <Container>
+            <Row className="pt-5">
+            <Col/>
+            <Col className="col-8 contactUs p-4">
+            <p className="h2 ">Contact us</p>
+            <hr className="textColour"/>
+            <p className="h5 pb-2">Submit a request:</p>
+           <Form onSubmit={this.handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Your email address:</Form.Label>
+                <Form.Control id="EmailContact"  name="email" type="email" value={email} onChange={this.handleChangeEmail}/>
+              </Form.Group>
+              <Form.Group controlId="formSubject">
+                <Form.Label>Subject:</Form.Label>
+                <Form.Control id="SubjectContact"  name="subject" type="input" value={subject} onChange={this.handleChangeSubject}/>
+              </Form.Group>
+              <Form.Group controlId="formDescription">
+                <Form.Label>Description:</Form.Label>
+                <Form.Control as="textarea" rows={5} id="DescriptionContact"  name="description" value={description} onChange={this.handleChangeDescription} />
+              </Form.Group>
+              <Button className="buttonStyle" variant="primary" type="submit" block>
+              SUBMIT
+              </Button>
+            </Form>
+            </Col>
+            <Col/>
+            </Row>
+      </Container>
     );
   }
 }

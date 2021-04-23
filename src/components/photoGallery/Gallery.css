@@ -1,0 +1,44 @@
+.Gallery {
+
+    min-height: calc(100vh - 200px);
+    /* IMPORTANT for this to match footer and nav bar heights (which need to be fixed!) */
+    max-height: calc(100vh - 130px);
+    overflow: auto;
+
+    position: relative;
+  }
+
+.galery-thumbnail {
+  border-color: #020202 !important;
+  box-shadow: 100 100 100px #030303 !important;
+}
+.country-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) - taken from w3schools-Kim*/
+.country-dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown - taken from w3schools-Kim*/
+.country-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover - taken from w3schools-Kim*/
+.country-dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover - taken from w3schools-Kim*/
+.country-dropdown:hover .country-dropdown-content {
+  display: block;
+}

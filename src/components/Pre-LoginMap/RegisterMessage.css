@@ -1,9 +1,7 @@
-.loginMessage {
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
+.registerMessageBody {
+    padding-top: 15vh;
 }
 
-.warning-borader {
-    /* border-top: 0.1em solid black;  */
-    /* border-bottom: 0.1em solid white;  */
-   }
+.nounderline {
+    text-decoration: none !important
+  }

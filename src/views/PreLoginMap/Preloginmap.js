@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import NavBar from '../../components/NavBar/NavBar.js';
-import RegisterMessage from '../../components/Pre-LoginMap/RegisterMessage';
-import Map from '../../components/Pre-LoginMap/Map.js';
-import Foorter from '../../components/footer/Footer';
+import React, { Component } from "react";
+import RegisterMessage from "../../components/Pre-LoginMap/RegisterMessage";
+import { Route } from "react-router";
+import DemoMap from "./demo_map.png";
+import "./Preloginmap.css";
+
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Container } from 'react-bootstrap';
 
 class Preloginmap extends Component {
-    render() {
-        return (
-            <div>
-                {/* <div class="col-sm-12"> */}
-                    <NavBar />
-                    <RegisterMessage />
-                    <Map />
-                    <Foorter />
-                {/* </div> */}
-            </div>
-        );
-    }
+  render() {
+    return (
+      <Container id="PreloginMap" fluid>
+        <RegisterMessage className="preloginMessage"/>
+        {/*<Link to="/profile">
+           <div class="prelogmap"> 
+          <img src={DemoMap} class="img" />
+          </div> 
+        </Link> */}
+      </Container>
+    );
+  }
 }
 
 export default Preloginmap;

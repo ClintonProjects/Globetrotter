@@ -1,0 +1,35 @@
+.login{
+    background-color: black;
+    max-width: 400px;
+    border-radius: 5%;
+    border-color: black;
+    border-width: 2px;
+    margin: 2em;
+}
+
+.textColour {
+    color: #18a9c0 !important;
+}
+
+.buttonStyle {
+    background-color: #18a9c0 !important;
+    border-color: #18a9c0 !important;
+}
+
+.buttonStyle:hover {
+    background-color: #18aac0c5 !important;
+}
+
+#RegLink, #ForgotPassLink {
+    color: #18a9c0 !important;
+    font-size: small !important;
+}
+
+#RegLink:hover, #ForgotPassLink:hover {
+    color: #18aac0c5 !important;
+}
+
+.formTextColour {
+    color: white !important;
+}
+
