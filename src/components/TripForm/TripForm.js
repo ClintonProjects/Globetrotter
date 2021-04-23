@@ -1,45 +1,12 @@
 import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
+import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
 import "./TripForm.css";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
-
-// create a trip class to store custom object in firestore
-class Trip {
-  constructor(country, startDate, endDate) {
-    this.country = country;
-    this.startDate = startDate;
-    this.endDate = endDate;
-  }
-  // will transform data to an object for adding to array
-  // and in mapping to trip list
-  toObject() {
-    return {
-      country: this.country,
-      startDate: this.startDate,
-      endDate: this.endDate,
-    };
-  }
-}
-
-// implenting firestore documentation code here for the
-// transfer of custom objects
-var tripConverter = {
-  toFirestore: function (trip) {
-    return {
-      country: trip.country,
-      startDate: trip.startDate,
-      endDate: trip.endDate,
-    };
-  },
-  fromFirestore: function (snapshot, options) {
-    const trip = snapshot.data(options);
-    return new Trip(trip.country, trip.startDate, trip.endDate);
-  },
-};
 
 class TripForm extends Component {
   constructor(props) {
