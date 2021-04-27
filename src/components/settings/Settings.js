@@ -17,6 +17,10 @@ class Settings extends Component {
         .collection("settings"),
     };
   }
+  addData(event) {
+    // to add user settings to firestore
+
+  }
   render() {
     return (
       <Container>
