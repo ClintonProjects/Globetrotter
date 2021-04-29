@@ -1,14 +1,23 @@
 import React, { Component } from "react";
-import { Container, Carousel, Button, Row, Col, Image, OverlayTrigger, Popover, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Carousel, Button, Row, Col, Image, OverlayTrigger, Popover, InputGroup, FormControl, ProgressBar, Form, Accordion, Card, Dropdown } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
+import 'firebase/storage'; 
 import 'firebase/firestore';
 import "./Gallery.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+//need it for file input dialog
+import BsCustomFileInput from 'bs-custom-file-input';
+
+//update rules back to 
+//allow read, write: if request.auth != null; 
+//after correcting logged in user issue
 
 //so we can interact easily with firestore in this component
 const firestore = firebase.firestore();
+const storage = firebase.storage();
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 //carousel interval values for slides on and off
 const carouselOn = 4000;
@@ -19,7 +28,11 @@ class Gallery extends Component {
         super(props);
 
         this.state = {
-
+            image: null,
+            url: null,
+            progress: 0,
+            showProgressBar: false,
+            country: null,
 
             countryList: [],
             countryView: null,
@@ -40,8 +53,26 @@ class Gallery extends Component {
         this.commentPicHandler = this.commentPicHandler.bind(this);
         this.sharePicHandler = this.sharePicHandler.bind(this);
         this.setCountry = this.setCountry.bind(this);
-
+        this.setURL = this.setURL.bind(this);
+        this.addCountry = this.addCountry.bind(this);
     }
+
+    setURL(urlpassed){
+        this.setState({ url: urlpassed});
+      } 
+      addCountry = (event) =>{
+        let countryName = event.target.value;
+        console.log(countryName);
+        this.setState({country: countryName});
+        console.log(this.state.country);
+      }
+
+      componentDidMount() {
+        //not sure why is this needed but the library instructions ask for it: https://www.npmjs.com/package/bs-custom-file-input#how-to-use-it
+        BsCustomFileInput.init()
+        this.getCountryList();
+      } 
+
     setCountry(countryPassed) {
         this.setState({ countryView: countryPassed });
     }
@@ -170,13 +201,93 @@ class Gallery extends Component {
             });
     }
 
+    getCountryList = () => {
+        let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
+        docPath.onSnapshot((snap) => {
+            if (snap.empty) {
+                alert("No trips added yet. Please add in the trips tab!");
+                console.log("Firestore trips collection empty");
+            } else {
+                let countryListArray = [];
+                snap.forEach(doc => {
+                    countryListArray.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
+                });
+                this.setState({ countryList: countryListArray })
+                console.log(this.state.countryList);
+            }
+        })
+    }
+
 
     render() {
+        const authenticated = this.props.authenticated;
+        const currentUser = this.props.currentUser;  
+        //const country = "ireland"; //update with trip form
+        const image = this.state.image;
+        //sets the allowed file types that can be uploaded
+        const types = ['image/jpeg', 'image/png'];
         const docs = this.state.docs;
         var currentGallery = firestore
             .collection("users")
             .doc(localStorage.getItem("uid"))
             .collection("images")
+
+        const changeHandler = (event) => {
+            let photo = event.target.files[0];
+            //confirms that the correct file types have been uploaded
+            if (types.includes(photo.type)){
+            this.setState({image: photo});
+            }else{
+            //if error
+            photo =null; //removes file from photo variable if not image
+            alert("Please upload an image file (jpeg or png)");
+            }  
+        };
+
+        const handleSubmission = () => {
+
+            if (image != null){ //stops errors if user tries to upload non-image file type
+            //show progress bar
+            this.setState({showProgressBar: true});
+            //images is just creating the name of the folder in firebase storage
+            //want to change `images` to the country name that user is uploading to 
+              const uploadTask = storage.ref(image.name);
+              const imageRef = firestore
+                                  .collection("users")
+                                  .doc(localStorage.getItem("uid"))
+                                  .collection("images");
+              uploadTask.put(image) //uploads image to firebase storage
+              .on(
+              "state_changed",
+              snapshot => {//current progress of upload
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                this.setState({progress: percentage}); //update state progress
+              }, 
+              error => { //if error
+                console.log(error);
+                //hide progress bar after 2 sec
+                setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
+              },
+              async ()=>{ 
+                //if successfully uploaded, get URL
+                const url = await uploadTask.getDownloadURL()
+                this.setURL(url); //update state url
+                console.log(this.state.url);
+                const createdAt = timestamp();
+                console.log(imageRef)
+                imageRef.add({ //adding the image url to the users firestore
+                  imageURL: url, 
+                  date: createdAt, 
+                  country: this.state.country,
+                  name: image.name }); //should be adding to the 
+                //hide progress bar after 2 sec
+                setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
+                this.setState({country: null});
+              }
+            )
+            }
+            
+        };
 
         const showPhotos = () => {
             this.setState({ docs: [] });
@@ -236,22 +347,6 @@ class Gallery extends Component {
                     }
                 })
         }
-        const getCountryList = () => {
-            let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
-            docPath.onSnapshot((snap) => {
-                if (snap.empty) {
-                    alert("No trips added yet. Please add in the trips tab!");
-                    console.log("Trips is empty");
-                } else {
-                    let countryListArray = [];
-                    snap.forEach(doc => {
-                        countryListArray.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
-                    });
-                    this.setState({ countryList: countryListArray })
-                    console.log(this.state.countryList);
-                }
-            })
-        }
 
         //method that will build carousel items (one item for each picture in doc array)
         const cItems = (docs && docs.map(doc => {
@@ -268,7 +363,7 @@ class Gallery extends Component {
 
         //Picture menu react element
         const picMenu = <Popover id={'popover-positioned-right-start'}>
-            <Popover.Title as="h1" className="text-center">Picture Menu</Popover.Title>
+            <Popover.Title as="h1" className="text-center buttonStyle white-text">Picture Menu</Popover.Title>
             <Popover.Content
                 onFocus={() => this.stopSliding()}
                 onMouseMove={() => this.stopSliding()}
@@ -326,56 +421,119 @@ class Gallery extends Component {
         </Col>
     }));
     return(
-        <Container className="Gallery">
+        <Container fluid className="Gallery pl-2">
             <Row>
-                <Col xs={1}/>
-                <Col>
-            <Row className="pb-2">
-                <Button variant="info" size="lg" onClick={showPhotos}> 
-                Load Photos </Button>
-                <Button variant="info" size="sm" onClick={showPhotos} > Photos </Button>
-                <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
-                <div className="country-dropdown">
-                    <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>
-                        Country </Button>
-                    <div className="country-dropdown-content">
+              {/* shows photo upload progress to user */}
+              <ProgressBar animated now={this.state.progress} label={this.state.progress+'%'}
+              className={this.state.showProgressBar == true ? "d-inline-flex" : "d-none"}
+              variant="dark"/>
+            </Row>
+            <Row>
+            <Col xs={2} className="pl-4">
+            <Row>
+                <p className="h5 pt-5">Add Picture</p>
+                {/*Acordion inspired from https://react-bootstrap.netlify.app/components/accordion/#accordion */}
+                <Accordion className="w-100">
+                <Card className="w-100">
+                    <Accordion.Toggle as={Card.Header} eventKey="0" className="text-center buttonStyle white-text">
+                    UPLOAD MENU
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                        <Form>
+                        <Form.Group>
+                        <Form.Control as="select" id="country" className="galery_small_text select_center_align" onChange={this.addCountry}>
+
+                        <option key='blankChoice' hidden value className="galery_small_text" >Choose Country</option>
                         {this.state.countryList.map((c) => (
-                            <a key={c.id} onClick={() => showCountry(c.id)}>{c.id} </a>
+                            <option  block key={c.id}>{c.id}</option>
                         ))}
-                    </div>
-                </div>
+
+                        </Form.Control> 
+                        </Form.Group> 
+
+                        {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
+                        <Form.Group>
+                            <Form.File className="text-left galery_small_text"
+                                id="custom-file"
+                                label="Choose file"
+                                custom
+                                multiple onChange={changeHandler}
+                            />
+                        </Form.Group>
+                        <Row>
+                            <Button className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
+                        </Row>
+        
+                        </Form>
+
+                    </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                </Accordion>
             </Row>
-            <Row className="pb-2">
-            
-                <OverlayTrigger
-                    //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
-                    trigger={['hover', 'focus']}
-                    key="right"
-                    placement="right-start"
-                    show={this.state.showPicMenuTooltip}
-                    delay={{ show: 0, hide: 10 }}
-                    overlay={picMenu}
-                >
-                    <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
-                    onFocus={() => { this.stopSliding(); }}
-                    onMouseMove={() => { this.stopSliding(); }}
-                    onMouseLeave={() => 
-                    //start sliding with timemout method to to give mouse a chance to enter pic menu
-                    this.setState( {
-                        carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout( () => this.startSliding(), 3000 )]})
-                    }> 
-                    {cItems} </Carousel>
-                </OverlayTrigger>
-            
+            <Row>
+                <p className="h5 pt-5">PHOTO LIBRARY</p>
+                <Row >
+                <Button variant="info" className="ml-3" size="m" onClick={showPhotos} > PHOTOS </Button>
+                <Button variant="info" className="ml-3" size="m" onClick={showFavourites} > FAVOURITES </Button>
+                </Row>
+                <Dropdown id="galeryCountry" title="Select Trip Country">
+                <Dropdown.Toggle  className="w-100 buttonStyle">
+                  COUNTRY
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="w-100" >
+                  {this.state.countryList.map((country, index) => (
+                      <Dropdown.Item key={index}>{
+                        <Container className="p-1">
+                          <Row>
+                            <Col className="col-6 text-left galery_small_text">
+                            {country.id}
+                            </Col>
+                            <Col/>
+                          </Row>
+                          </Container>
+                      }
+                      </Dropdown.Item>
+                  ))
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+            </Row>
+            </Col>
+            <Col xs={7} className="pl-4">
+            <Row className={this.state.docs.length===0? "d-none":"contactUs p-3"}>
+                <Row className="pb-2">
+                    <OverlayTrigger
+                        //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
+                        trigger={['hover', 'focus']}
+                        key="right"
+                        placement="right-start"
+                        show={this.state.showPicMenuTooltip}
+                        delay={{ show: 0, hide: 10 }}
+                        overlay={picMenu}
+                    >
+                        <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
+                        onFocus={() => { this.stopSliding(); }}
+                        onMouseMove={() => { this.stopSliding(); }}
+                        onMouseLeave={() => 
+                        //start sliding with timemout method to to give mouse a chance to enter pic menu
+                        this.setState( {
+                            carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout( () => this.startSliding(), 3000 )]})
+                        }> 
+                        {cItems} </Carousel>
+                    </OverlayTrigger>
                 
+                    
+                </Row>
+                <Row className="no-gutters galery-thumbnail-row">
+                    {tItems}                 
+                </Row>
             </Row>
-            <Row className="no-gutters">
-                {tItems}                 
+            </Col>
+            <Col xs={2}/>
             </Row>
-                </Col>
-                <Col xs={1}>
-                </Col>
-            </Row>
+
 
             <ToastContainer
                 position="bottom-center"
