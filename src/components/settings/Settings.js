@@ -7,6 +7,7 @@ import * as FaIcons from "react-icons/fa";
 //import "./Settings.css";
 
 const firestore = firebase.firestore(); // create fs instance
+var user = firebase.auth().currentUser;
 
 class Settings extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Settings extends Component {
   addData(event) {
     // adding user settings to firestore
     try {
-      event.preventDefault(); 
+      event.preventDefault();
       var fullname = document.getElementById("fullname");
       var birthday = document.getElementById("birthday");
       var gender = document.getElementById("gender");
@@ -32,7 +33,7 @@ class Settings extends Component {
       //   .doc(`${docID}`)
       //   .withConverter(tripConverter)
       //   .set(new Trip(country.value, startDate.value, endDate.value));
-      
+
       this.state.personRef
         .doc(localStorage.getItem("uid"))
         .withConverter(settingsConverter)
@@ -56,10 +57,11 @@ class Settings extends Component {
       } else {
         console.log("It's empty");
       }
-    }); 
+    });
 
   } */
   render() {
+    console.log("evan => ", user);
     return (
       <Container>
         <Row>
