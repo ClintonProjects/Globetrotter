@@ -19,8 +19,7 @@ class Gallery extends Component {
         super(props);
 
         this.state = {
-
-
+            notList: [],
             countryList: [],
             countryView: null,
             docs: [],
@@ -40,10 +39,29 @@ class Gallery extends Component {
         this.commentPicHandler = this.commentPicHandler.bind(this);
         this.sharePicHandler = this.sharePicHandler.bind(this);
         this.setCountry = this.setCountry.bind(this);
-
+        this.setUserNotifications = this.setUserNotifications.bind(this);
     }
     setCountry(countryPassed) {
         this.setState({ countryView: countryPassed });
+    }
+
+    setUserNotifications = (not) => {
+        const firestore = firebase.firestore().collection('users').doc(localStorage.getItem("uid"));
+        let jsonSplit;
+        var list = [];
+        firestore.onSnapshot((data) => {
+            let json = JSON.stringify(data.data());
+            jsonSplit = JSON.parse(json);
+            if (!jsonSplit.notifications.includes(not) && !this.state.notList.includes(not)) {
+                this.setState({ notList: jsonSplit.notifications });
+                list = this.state.notList;
+                list.push(not);
+                console.log("notfication added to db: " + not);
+                this.setState({ notList: list });
+                firebase.firestore().collection('users').doc(localStorage.getItem("uid")).set({ notifications: list });
+            }
+        });
+        return;
     }
 
 
@@ -72,7 +90,7 @@ class Gallery extends Component {
             //set the selected thumbnail id to the newly retrieved doc
             this.setState({ selectedThumbnail: carouselDocId });
         }
-        
+
 
     }
 
@@ -105,9 +123,29 @@ class Gallery extends Component {
         docPath.update({ comments: this.state.picComment })
             //advise if successfully added comment field or not
             .then(() => {
-                alert("Successfully saved your comments for this picture: " + this.state.picComment);
+                {
+                    toast.info('😾 Successfully saved your comments for this picture: ' + this.state.picComment, {
+                        position: "bottom-center",
+                        autoClose: 2500,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
             }).catch((error) => {
-                alert("Error saving comments" + error);
+                {
+                    toast.info('😾 Error saving comments: ' + error, {
+                        position: "bottom-center",
+                        autoClose: 2500,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
             })
     }
     addToFavouritesHandler = () => {
@@ -118,9 +156,29 @@ class Gallery extends Component {
         docPath.update({ favourites: true })
             //advise if successfully added comment field or not
             .then(() => {
-                alert("Successfully saved your photo to Favourites");
+                {
+                    toast.info('😾 Successfully saved your photo to Favourites', {
+                        position: "bottom-center",
+                        autoClose: 2500,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
             }).catch((error) => {
-                alert("Error saving photo" + error);
+                {
+                    toast.info('😾 Error saving photo: ' + error, {
+                        position: "bottom-center",
+                        autoClose: 2500,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
             })
     }
 
@@ -129,18 +187,34 @@ class Gallery extends Component {
         var getDocID = this.state.docs[this.state.carouselIndex].id;
         //use firestore delete method (call on full path collection-> document to be deleted)
         var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
-        docPath.get()
-
-            .then((doc) => {
-                var url = doc.data().imageURL;
-                alert("Share your image using: "+url);
-                this.state.imageLink = url;
-                this.state.imageAvaiable = true;
-                navigator.clipboard.writeText(url);
-                firebase.firestore().collection('users').doc(localStorage.getItem("uid")).update({ notifications: ["Congratulations, you have shared an image"] });
-            }).catch((error) => {
-                alert("Error getting image URL " + error);
+        docPath.get().then((doc) => {
+            var url = doc.data().imageURL;
+            //alert("Share your image using: " + url);
+            this.state.imageLink = url;
+            this.state.imageAvaiable = true;
+            navigator.clipboard.writeText(url);
+            {
+                toast.info('😾 Image added to your clipboard!', {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                })
+            }
+        }).catch((error) => {
+            toast.info('😾 Error getting image URL: ' + error, {
+                position: "bottom-center",
+                autoClose: 2500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
             });
+        });
     }
 
     deletePicHandler = () => {
@@ -151,9 +225,26 @@ class Gallery extends Component {
         docPath.delete()
             //advise if successful or unsuccessful delete
             .then(() => {
-                alert("Successfully deleted image");
+                // alert("Successfully deleted image"); 
+                toast.info('😾 Successfully deleted image', {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             }).catch((error) => {
-                alert("Error deleting photo " + error);
+                toast.info('😾 Error deleting photo : ' + error, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
     }
     setCountry = () => {
@@ -164,9 +255,25 @@ class Gallery extends Component {
         docPath.update({ country: this.state.settingCountry })
             //advise if successful or unsuccessful delete
             .then(() => {
-                alert("Successfully updated country for this image: "+ this.state.settingCountry);
+                toast.info('😾 Successfully updated country for this image: ' + this.state.settingCountry, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             }).catch((error) => {
-                alert("Error updating country for this image " + error);
+                toast.info('😾 Error updating country for this image ' + error, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
     }
 
@@ -276,137 +383,123 @@ class Gallery extends Component {
                 onMouseLeave={() => this.setState(
                     { picMenuTimeoutID: [...this.state.picMenuTimeoutID, setTimeout(() => this.startSliding(), 3000)] })}
             >
-        <Container>
-            <Row className="pb-4">
-                <InputGroup className="mb-3">
-                        <FormControl
-                        placeholder="Picture Comment"
-                        aria-label="Picture Comment"
-                        onChange={event => { 
-                            this.setState({ picComment : event.target.value });
-                        }} 
-                        />
-                        <InputGroup.Append>
-                            <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
-                        </InputGroup.Append>
-                </InputGroup>
-            </Row>
-            <Row className="pb-3">
-                <Button variant="outline-info" onClick={this.sharePicHandler}>Share</Button>
-            </Row>
-            <Row className="pb-3">
-                <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
-            </Row>
-            <Row className="pb-4">
-                <InputGroup className="mb-3">
-                        <FormControl
-                        placeholder="Country"
-                        aria-label="Country"
-                        onChange={event => { 
-                            this.setState({ settingCountry : event.target.value });
-                        }} 
-                        />
-                        <InputGroup.Append>
-                            <Button variant="outline-dark" onClick={this.setCountry}> Set Country </Button>
-                        </InputGroup.Append>
-                </InputGroup>
-            </Row>
-            <Row className="pb-3">
-                <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button></Row>
-        </Container>
-        </Popover.Content>                        
-    </Popover>
-    //method that will build thumnails pictures
-    const tItems = (docs && docs.map(doc =>{
-        return <Col xs={6} md={2} className="col-2" key={doc.id}>
-            <Image src={doc.imageURL} alt="users-travel-pic" rounded
-            doc_id={doc.id} 
-            onClick={this.thumbnailClick}
-            className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"}/>
-        </Col>
-    }));
-    return(
-        <Container className="Gallery">
-            <Row>
-                <Col xs={1}/>
-                <Col>
-            <Row className="pb-2">
-                <Button variant="info" size="lg" onClick={showPhotos}> 
-                Load Photos </Button>
-                <Button variant="info" size="sm" onClick={showPhotos} > Photos </Button>
-                <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
-                <div className="country-dropdown">
-                    <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>
-                        Country </Button>
-                    <div className="country-dropdown-content">
-                        {this.state.countryList.map((c) => (
-                            <a key={c.id} onClick={() => showCountry(c.id)}>{c.id} </a>
-                        ))}
-                    </div>
-                </div>
-            </Row>
-            <Row className="pb-2">
-            
-                <OverlayTrigger
-                    //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
-                    trigger={['hover', 'focus']}
-                    key="right"
-                    placement="right-start"
-                    show={this.state.showPicMenuTooltip}
-                    delay={{ show: 0, hide: 10 }}
-                    overlay={picMenu}
-                >
-                    <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
-                    onFocus={() => { this.stopSliding(); }}
-                    onMouseMove={() => { this.stopSliding(); }}
-                    onMouseLeave={() => 
-                    //start sliding with timemout method to to give mouse a chance to enter pic menu
-                    this.setState( {
-                        carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout( () => this.startSliding(), 3000 )]})
-                    }> 
-                    {cItems} </Carousel>
-                </OverlayTrigger>
-            
-                
-            </Row>
-            <Row className="no-gutters">
-                {tItems}                 
-            </Row>
-                </Col>
-                <Col xs={1}>
-                </Col>
-            </Row>
-
-            <ToastContainer
-                position="bottom-center"
-                autoClose={2500}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
-            {/* Same as */}
-            <ToastContainer />
-
-            {this.state.imageAvaiable ?
-                    <Row>
-                        {this.state.imageAvaiable = false}
-                        {toast.info('😾 Image added to your clipboard!', {
-                            position: "bottom-center",
-                            autoClose: 2500,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined,
-                        })}
+                <Container>
+                    <Row className="pb-4">
+                        <InputGroup className="mb-3">
+                            <FormControl
+                                placeholder="Picture Comment"
+                                aria-label="Picture Comment"
+                                onChange={event => {
+                                    this.setState({ picComment: event.target.value });
+                                }}
+                            />
+                            <InputGroup.Append onClick={() => this.setUserNotifications("You have added a comment to an image!")}>
+                                <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
+                            </InputGroup.Append>
+                        </InputGroup>
                     </Row>
-                    : ""}
-        </Container>
-    )
+                    <Row className="pb-3" onClick={() => this.setUserNotifications("Congratulations you have added an image!")}>
+                        <Button variant="outline-info" onClick={this.sharePicHandler}>Share</Button>
+                    </Row>
+                    <Row className="pb-3" onClick={() => this.setUserNotifications("Congratulations you have added an image to your favourites!")}>
+                        <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
+                    </Row>
+                    <Row className="pb-4">
+                        <InputGroup className="mb-3">
+                            <FormControl
+                                placeholder="Country"
+                                aria-label="Country"
+                                onChange={event => {
+                                    this.setState({ settingCountry: event.target.value });
+                                }}
+                            />
+                            <InputGroup.Append>
+                                <Button variant="outline-dark" onClick={this.setCountry}> Set Country </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </Row>
+                    <Row className="pb-3" onClick={() => this.setUserNotifications("You have deleted an image!")}>
+                        <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button></Row>
+                </Container>
+            </Popover.Content>
+        </Popover>
+        //method that will build thumnails pictures
+        const tItems = (docs && docs.map(doc => {
+            return <Col xs={6} md={2} className="col-2" key={doc.id}>
+                <Image src={doc.imageURL} alt="users-travel-pic" rounded
+                    doc_id={doc.id}
+                    onClick={this.thumbnailClick}
+                    className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"} />
+            </Col>
+        }));
+        return (
+            <Container className="Gallery">
+                <Row>
+                    <Col xs={1} />
+                    <Col>
+                        <Row className="pb-2">
+                            <Button variant="info" size="lg" onClick={showPhotos}>
+                                Load Photos </Button>
+                            <Button variant="info" size="sm" onClick={showPhotos} > Photos </Button>
+                            <Button variant="info" size="sm" onClick={showFavourites} > Favourites </Button>
+                            <div className="country-dropdown">
+                                <Button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>
+                                    Country </Button>
+                                <div className="country-dropdown-content">
+                                    {this.state.countryList.map((c) => (
+                                        <a key={c.id} onClick={() => showCountry(c.id)}>{c.id} </a>
+                                    ))}
+                                </div>
+                            </div>
+                        </Row>
+                        <Row className="pb-2">
+
+                            <OverlayTrigger
+                                //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
+                                trigger={['hover', 'focus']}
+                                key="right"
+                                placement="right-start"
+                                show={this.state.showPicMenuTooltip}
+                                delay={{ show: 0, hide: 10 }}
+                                overlay={picMenu}
+                            >
+                                <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
+                                    onFocus={() => { this.stopSliding(); }}
+                                    onMouseMove={() => { this.stopSliding(); }}
+                                    onMouseLeave={() =>
+                                        //start sliding with timemout method to to give mouse a chance to enter pic menu
+                                        this.setState({
+                                            carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout(() => this.startSliding(), 3000)]
+                                        })
+                                    }>
+                                    {cItems} </Carousel>
+                            </OverlayTrigger>
+
+
+                        </Row>
+                        <Row className="no-gutters">
+                            {tItems}
+                        </Row>
+                    </Col>
+                    <Col xs={1}>
+                    </Col>
+                </Row>
+
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={2500}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                {/* Same as */}
+                <ToastContainer />
+            </Container>
+        )
 
 
     }

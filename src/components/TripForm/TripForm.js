@@ -25,6 +25,7 @@ class TripForm extends Component {
         .doc(localStorage.getItem("uid"))
         .collection("trips"),
       trips: [],
+      notList: [],
     };
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
@@ -61,6 +62,25 @@ class TripForm extends Component {
     return Object.keys(object).find(
       (key) => object[key].toLowerCase() === value.toLowerCase()
     );
+  }
+
+  setUserNotifications = (not) => {
+    const firestore = firebase.firestore().collection('users').doc(localStorage.getItem("uid"));
+    let jsonSplit;
+    var list = [];
+    firestore.onSnapshot((data) => {
+      let json = JSON.stringify(data.data());
+      jsonSplit = JSON.parse(json);
+      if (!jsonSplit.notifications.includes(not) && !this.state.notList.includes(not)) {
+        this.setState({ notList: jsonSplit.notifications });
+        list = this.state.notList;
+        list.push(not);
+        console.log("notfication added to db: " + not);
+        this.setState({ notList: list });
+        firebase.firestore().collection('users').doc(localStorage.getItem("uid")).set({ notifications: list });
+      }
+    });
+    return;
   }
 
   componentDidMount() {
@@ -102,7 +122,7 @@ class TripForm extends Component {
               placeholder="Enter End Date"
             />
           </div>
-          <div id="buttonContainer">
+          <div id="buttonContainer" onClick={() => this.setUserNotifications("You have added a new country to your trip list!")}>
             <input type="submit" id="submit" value="Submit" />
           </div>
         </form>
