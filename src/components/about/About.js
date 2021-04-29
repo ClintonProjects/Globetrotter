@@ -65,7 +65,7 @@ class About extends Component {
                 <td><img src={logo} alt="Avatar" /></td>
                 <td>
                   <p className="h6">Evan Campion, Co-Founder</p>
-                  <p>Evan is the co-founder of Globetrotter Point. He studied chemistry in Limerick (Ireland) and finished his PhD in 2015. During this time, he started working in the IT sector and developed various websites. Evan enjoys rock climbing, mountain-biking, and other adventures around the globe.</p>
+                  <p>Evan is one of the co-founder of Globetrotter Point. He studied a BBS.Accounting and Finance in Limerick (Ireland) and he has a strong experience working as an Senior Analyst. Besides Globetrotter Point, he loves sports but particularly surfing and he is the Secretary of Maynooth Language Society. Evan is an outgoing person who loves learning new languages and last but not least, he has a good level of Spanish.  </p>
                 </td>
               </tr>
               <tr>
@@ -78,14 +78,14 @@ class About extends Component {
               <tr>
                 <td><img src={logo} alt="Avatar" /></td>
                 <td>
-                  <p className="h6">Cristina Gonzalez Marrero, Co-Founder, Social Media Marketing</p>
-                  <p>Cristina lives in Tenerife (Canary Islands) and she is our driving force in social networking. She has over 10 years of internet marketing experience. Besides Globetrotter Point, she is currently active as community manager on NGO , an international micro blogging platform.</p>
+                  <p className="h6">Cristina González Marrero, Co-Founder</p>
+                  <p>Cristina is from Tenerife (Canary Islands). She has a BSc.Mathematics in ULL (Tenerife) and was a Maths Teacher for many years. However, she has discovered her passion in Software Development and in doing so undertook a Fullstack Bootcamp in 2018 to develop her skills. Besides Globertrotter Point, she is one of the competitors in Maynooth Dance Society representing NUIM in Ireland and is an avid surfer. </p>
                 </td>
               </tr>
               <tr>
                 <td><img src={logo} alt="Avatar" /></td>
                 <td>
-                  <p className="h6">Kim Winter, Co-Founder, Marketing and Growth Hacking</p>
+                  <p className="h6">Kim Winters, Co-Founder, Marketing and Growth Hacking</p>
                   <p>Kim lives in Waterford (Ireland) and she has joined our team recently as an online marketer and growth hacker. Kim studied linguistics and has over five years experience in content management and internet marketing. She enjoys travelling, hiking, and any handicraft work in which she can express her imagination.</p>
                 </td>
               </tr>

@@ -18,6 +18,7 @@ class Settings extends Component {
         .doc(localStorage.getItem("uid"))
         .collection("settings"),
     };
+    this.addData = this.addData.bind(this);
   }
   addData(event) {
     // adding user settings to firestore
@@ -75,9 +76,10 @@ class Settings extends Component {
                 <Form.Control
                   id="fullname"
                   name="Name"
-                  type="input"
-                  value={"hello cris"}
+                  type="text"
+                  value={""}
                 />
+                <input type="text" id="fname" name="fname"></input>
               </Form.Group>
               <Form.Group controlId="formBirthday">
                 <Form.Label>Birthday (DD/MM/YYYY):</Form.Label>
