@@ -4,7 +4,7 @@ import "firebase/firestore"; // attach firestore
 import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
 import "./TripForm.css";
-import { Container, Form, Button, Row, Col, DropdownButton, Dropdown} from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
@@ -30,6 +30,7 @@ class TripForm extends Component {
     };
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
+    this.setUserNotifications = this.setUserNotifications.bind(this);
   }
   // function that will add data to firestore
   addData(event) {
@@ -102,65 +103,67 @@ class TripForm extends Component {
   render() {
     return (
       <Container>
-      <Row className="pt-5">
-            <Col/>
-            <Col className="col-8 contactUs p-4">
-              <p className="h2 text-center">Your Trip</p>
-              <Row>
+        <Row className="pt-5">
+          <Col />
+          <Col className="col-8 contactUs p-4">
+            <p className="h2 text-center">Your Trip</p>
+            <Row>
               <Form onSubmit={this.addData}>
-                  <Form.Group>
-                    <Form.Control as="select" id="country" className="select_center_align">
-                      <option key='blankChoice' hidden value >Select Trip Country</option>
-                      {options.map((option, index) => (
-                          <option  block key={index}>{option}</option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Control id="startdate"  className="text-center" name="startdate" type="input" placeholder="Enter Start Date"/>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Control id="enddate"  className="text-center" name="enddate" type="input" placeholder="Enter End Date"/>
-                  </Form.Group>
-                  <Button id="submit" className="buttonStyle" variant="primary" type="submit" block>
+                <Form.Group>
+                  <Form.Control as="select" id="country" className="select_center_align">
+                    <option key='blankChoice' hidden value >Select Trip Country</option>
+                    {options.map((option, index) => (
+                      <option block key={index}>{option}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control id="startdate" className="text-center" name="startdate" type="input" placeholder="Enter Start Date" />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control id="enddate" className="text-center" name="enddate" type="input" placeholder="Enter End Date" />
+                </Form.Group>
+                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block onClick={() => this.setUserNotifications("You have added a trip!")}>
                   SUBMIT
+                  
                   </Button>
-               </Form>
-               </Row>
-               <Row className="pt-3">
-               <Dropdown id="country" title="Select Trip Country">
+              </Form>
+            </Row>
+            <Row className="pt-3">
+              <Dropdown id="country" title="Select Trip Country">
                 <Dropdown.Toggle block className="buttonStyle">
                   VISITED COUNTRIES
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="w-100" >
                   {this.state.trips.map((trip, index) => (
-                      <Dropdown.Item key={index}>{
-                        <Container className="p-1">
-                          <Row>
-                            <Col/>
-                            <Col className="col-8 text-center">
-                              <Row>
+                    <Dropdown.Item key={index}>{
+                      <Container className="p-1">
+                        <Row>
+                          <Col />
+                          <Col className="col-8 text-center">
+                            <Row>
                               {trip.country}
-                              </Row>
-                               <Row>
-                               <span>from : {trip.startDate}</span>
-                                <span>to : {trip.endDate}</span>
-                              </Row>
-                            </Col>
-                            <Col/>
-                          </Row>
-                          </Container>
-                      }
-                      </Dropdown.Item>
+                            </Row>
+                            <Row>
+                              <span>from : {trip.startDate}</span>
+                              <span>to : {trip.endDate}</span>
+                            </Row>
+                          </Col>
+                          <Col />
+                        </Row>
+                      </Container>
+                    }
+                    </Dropdown.Item>
                   ))
                   }
                 </Dropdown.Menu>
-              </Dropdown> 
-              </Row>
-            </Col>
-            <Col/>
+              </Dropdown>
             </Row>
+          </Col>
+          <Col />
+        </Row>
       </Container>
+
     );
   }
 }
