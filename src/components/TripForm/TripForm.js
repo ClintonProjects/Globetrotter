@@ -4,6 +4,7 @@ import "firebase/firestore"; // attach firestore
 import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
 import "./TripForm.css";
+import { Container, Form, Button, Row, Col, DropdownButton, Dropdown} from 'react-bootstrap';
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
@@ -100,44 +101,66 @@ class TripForm extends Component {
 
   render() {
     return (
-      <>
-        <form className="trip-form" onSubmit={this.addData}>
-          <h1>Your Trip</h1>
-          <div id="inputContainer">
-            <select id="country" name="country">
-              {options.map((option, index) => (
-                <option key={index}>{option}</option>
-              ))}
-            </select>
-            <input
-              type="text"
-              id="startdate"
-              name="startdate"
-              placeholder="Enter Start Date"
-            />
-            <input
-              type="text"
-              id="enddate"
-              name="enddate"
-              placeholder="Enter End Date"
-            />
-          </div>
-          <div id="buttonContainer" onClick={() => this.setUserNotifications("You have added a new country to your trip list!")}>
-            <input type="submit" id="submit" value="Submit" />
-          </div>
-        </form>
-
-        <div className="tripList">
-          <h4>list the trips here</h4>
-          {this.state.trips.map((trip, index) => (
-            <div key={index}>
-              {trip.country}
-              <div>from : {trip.startDate}</div>
-              <div>to : {trip.endDate}</div>
-            </div>
-          ))}
-        </div>
-      </>
+      <Container>
+      <Row className="pt-5">
+            <Col/>
+            <Col className="col-8 contactUs p-4">
+              <p className="h2 text-center">Your Trip</p>
+              <Row>
+              <Form onSubmit={this.addData}>
+                  <Form.Group>
+                    <Form.Control as="select" id="country" className="select_center_align">
+                      <option key='blankChoice' hidden value >Select Trip Country</option>
+                      {options.map((option, index) => (
+                          <option  block key={index}>{option}</option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control id="startdate"  className="text-center" name="startdate" type="input" placeholder="Enter Start Date"/>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control id="enddate"  className="text-center" name="enddate" type="input" placeholder="Enter End Date"/>
+                  </Form.Group>
+                  <Button id="submit" className="buttonStyle" variant="primary" type="submit" block>
+                  SUBMIT
+                  </Button>
+               </Form>
+               </Row>
+               <Row className="pt-3">
+               <Dropdown id="country" title="Select Trip Country">
+                <Dropdown.Toggle block className="buttonStyle">
+                  VISITED COUNTRIES
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="w-100" >
+                  {this.state.trips.map((trip, index) => (
+                      <Dropdown.Item key={index}>{
+                        <Container className="p-1">
+                          <Row>
+                            <Col/>
+                            <Col className="col-8 text-center">
+                              <Row>
+                              {trip.country}
+                              </Row>
+                               <Row>
+                               <span>from : {trip.startDate}</span>
+                                <span>to : {trip.endDate}</span>
+                              </Row>
+                            </Col>
+                            <Col/>
+                          </Row>
+                          </Container>
+                      }
+                      </Dropdown.Item>
+                  ))
+                  }
+                </Dropdown.Menu>
+              </Dropdown> 
+              </Row>
+            </Col>
+            <Col/>
+            </Row>
+      </Container>
     );
   }
 }

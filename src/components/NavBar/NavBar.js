@@ -113,7 +113,7 @@ class NavBar extends Component {
     return (
       <div id="bar" className="container-fluid" >
         <div className="row">
-          <div className="col-sm-1 boradercover" onClick="notfalse()">
+          <div className="col-sm-1 boradercover" /*onClick="notfalse()"*/>
             <div className="logo">
               {!authenticated && (
                 <Link to="/"><img src={logo} alt="Logo" className="icon" /></Link>
@@ -125,7 +125,7 @@ class NavBar extends Component {
           </div>
           <div className="row col-sm-3" />
           <div className="row col-sm-4 boradercover">
-            <div className="links" onClick="notfalse()">
+            <div className="links" /*onClick="notfalse()"*/>
               {!authenticated && (
                 <Link className="nav-text" to="/login">Map</Link>
               )}
@@ -144,7 +144,7 @@ class NavBar extends Component {
                 <Link className="nav-text" to="/login">Photo</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/uploadPhotos">Photo</Link>
+                <Link className="nav-text" to="/galery">Photo</Link>
               )}
 
               {!authenticated && (

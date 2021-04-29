@@ -14,7 +14,7 @@ import {
 class About extends Component {
   render() {
     return (
-      <Container flex className="About pt-3">
+      <Container flex="true" className="About pt-3">
         <Container className="AboutContent whiteBackground">
         <Row>
           <Col xs={1}/>

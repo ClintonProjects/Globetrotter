@@ -20,7 +20,7 @@ import Login from "./components/Login/login.js";
 import { createHashHistory } from "history";
 import ForgotPass from "./components/ForgotPassword/forgotPass.js";
 import NavBar from "./components/NavBar/NavBar.js";
-import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
+//import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
 import Gallery from "./components/photoGallery/gallery.js";
 import TripForm from "./components/TripForm/TripForm.js";
 import Footer from "./components/footer/Footer.js";
@@ -146,7 +146,7 @@ class App extends Component {
                 )} />
               <Route path="/forgotPass" component={ForgotPass} />
               <Route path="/settings" component={Settings} />
-              <Route
+              {/* <Route
                 path="/uploadPhotos"
                 render={() => (
                   <UploadPhotos
@@ -154,9 +154,9 @@ class App extends Component {
                     currentUser={this.state.currentUser}
                   />
                 )}
-              />
+              /> */}
               <Route
-                path="/gallery"
+                path="/galery"
                 render={() => (
                   <Gallery
                     authenticated={this.state.authenticated}
