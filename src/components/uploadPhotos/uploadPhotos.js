@@ -135,10 +135,8 @@ class UploadPhotos extends Component {
               variant="dark"/>
             </Row>
             <Row>
-                <Col>
-                  <Gallery authenticated = {authenticated} currentUser ={currentUser}/>
-                </Col>
-                <Col xs={2} className="pr-4">
+
+            <Col xs={2} className="pr-4">
                 <div className="country-dropdown">
                 <button className="country-dropdown-btn" variant="info" size="sm" onClick={getCountryList}>Choose country</button>
                   <div className="country-dropdown-content">
@@ -163,7 +161,12 @@ class UploadPhotos extends Component {
                   <Row>
                     <Button className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
                   </Row>
+            </Col>
+
+                <Col>
+                  <Gallery authenticated = {authenticated} currentUser ={currentUser}/>
                 </Col>
+                
 
             </Row>
 
