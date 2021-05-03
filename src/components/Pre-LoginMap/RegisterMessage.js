@@ -34,15 +34,15 @@ export class RegisterMessage extends Component {
          <Row className="no-gutters">
            <Col>
            {/* <Link to="/tripForm" ><u>Add a Trip</u></Link> */}
-           <a className="nounderline" href="/login">
-           <Button className="buttonStyle" variant="primary" type="submit" block>LOGIN</Button>
-           </a>
+           <Link className="nounderline" to="/login" onClick={this.props.picBack}>
+           <Button className="buttonStyle" variant="primary" block>LOGIN</Button>
+           </Link>
            </Col>
            <Col xs={2} ><p className="h6 textColour text-center">or</p></Col>
            <Col>
-           <a className="nounderline" href="/register">
-           <Button onClick={this.kepUserLogedIn} className="buttonStyle" variant="primary" type="submit" block>REGISTER</Button>
-           </a>
+           <Link className="nounderline" to="/register" onClick={this.props.picBack}>
+           <Button onClick={this.kepUserLogedIn} className="buttonStyle" variant="primary" block>REGISTER</Button>
+           </Link>
            </Col>
          </Row>
        </Col>

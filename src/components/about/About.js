@@ -32,9 +32,9 @@ class About extends Component {
             <p>Phone: +353 1 708 6000 <br/>
                  Fax: +353 1 628 9063<br/>
             Email address: info@globetrotterpoint.com<br/></p>
-            <a className="nounderline" href="/contactus">
+            <Link className="nounderline" to="/contactus" onClick={this.props.picBack}>
            <Button className="buttonStyle" variant="primary" type="submit" block>CONTACT US</Button>
-           </a>
+           </Link>
             </Col>
             <Col>
             <h5>Address:</h5>

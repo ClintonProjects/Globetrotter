@@ -1,10 +1,10 @@
 #PreloginMap{
     position: relative;
-    background-image: url(./demo_map.png);
-    background-size: auto;
+    background-image: url(./map_grey.png);
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: 70px !important;
+    margin-top: 30px !important;
     height: 80vh;
 }
 

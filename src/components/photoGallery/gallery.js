@@ -363,7 +363,7 @@ class Gallery extends Component {
 
         //Picture menu react element
         const picMenu = <Popover id={'popover-positioned-right-start'}>
-            <Popover.Title as="h1" className="text-center buttonStyle white-text">Picture Menu</Popover.Title>
+            <Popover.Title as="h2" className="text-center buttonStyle white-text">Picture Menu</Popover.Title>
             <Popover.Content
                 onFocus={() => this.stopSliding()}
                 onMouseMove={() => this.stopSliding()}
@@ -372,42 +372,56 @@ class Gallery extends Component {
                     { picMenuTimeoutID: [...this.state.picMenuTimeoutID, setTimeout(() => this.startSliding(), 3000)] })}
             >
         <Container>
-            <Row className="pb-4">
-                <InputGroup className="mb-3">
+            <Row className="pb-1">
+                <Col>
+                <InputGroup fluid="true"  className="mb-1">
                         <FormControl
                         placeholder="Picture Comment"
                         aria-label="Picture Comment"
+                        className="galery_med_text"
                         onChange={event => { 
                             this.setState({ picComment : event.target.value });
                         }} 
                         />
                         <InputGroup.Append>
-                            <Button variant="outline-info" onClick={this.commentPicHandler}>Add Comment</Button>
+                            <Button variant="outline-info" className="galery_med_text" onClick={this.commentPicHandler}>Add Comment</Button>
                         </InputGroup.Append>
                 </InputGroup>
+                </Col>
             </Row>
-            <Row className="pb-3">
-                <Button variant="outline-info" onClick={this.sharePicHandler}>Share</Button>
+            <Row className="pb-1">
+                <Col >
+                 <Button block variant="outline-info" className="galery_med_text" onClick={this.sharePicHandler}>Share</Button>
+                </Col>
+                
             </Row>
-            <Row className="pb-3">
-                <Button variant="outline-info" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
+            <Row className="pb-1">
+                <Col>
+                    <Button block variant="outline-info" className="galery_med_text" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
+                </Col>
+             </Row>
+            <Row className="pb-1">
+                <Col>
+                    <InputGroup className="mb-3">
+                            <FormControl
+                            placeholder="Country"
+                            aria-label="Country"
+                            className="galery_med_text"
+                            onChange={event => { 
+                                this.setState({ settingCountry : event.target.value });
+                            }} 
+                            />
+                            <InputGroup.Append>
+                                <Button variant="outline-info" className="galery_med_text" onClick={this.setCountry}> Set Country </Button>
+                            </InputGroup.Append>
+                    </InputGroup>
+                </Col>
             </Row>
-            <Row className="pb-4">
-                <InputGroup className="mb-3">
-                        <FormControl
-                        placeholder="Country"
-                        aria-label="Country"
-                        onChange={event => { 
-                            this.setState({ settingCountry : event.target.value });
-                        }} 
-                        />
-                        <InputGroup.Append>
-                            <Button variant="outline-dark" onClick={this.setCountry}> Set Country </Button>
-                        </InputGroup.Append>
-                </InputGroup>
+            <Row className="pb-1">
+                <Col>
+                    <Button block variant="outline-dark" className="galery_med_text" onClick={this.deletePicHandler}>Delete</Button>
+                </Col>
             </Row>
-            <Row className="pb-3">
-                <Button variant="outline-dark" onClick={this.deletePicHandler}>Delete</Button></Row>
         </Container>
         </Popover.Content>                        
     </Popover>
@@ -421,7 +435,7 @@ class Gallery extends Component {
         </Col>
     }));
     return(
-        <Container fluid className="Gallery pl-2">
+        <Container fluid="true" className="Gallery pl-2">
             <Row>
               {/* shows photo upload progress to user */}
               <ProgressBar animated now={this.state.progress} label={this.state.progress+'%'}
@@ -431,12 +445,12 @@ class Gallery extends Component {
             <Row>
             <Col xs={2} className="pl-4">
             <Row>
-                <p className="h5 pt-5">Add Picture</p>
+                <p className="h5 pt-5">Upload Menu</p>
                 {/*Acordion inspired from https://react-bootstrap.netlify.app/components/accordion/#accordion */}
                 <Accordion className="w-100">
                 <Card className="w-100">
                     <Accordion.Toggle as={Card.Header} eventKey="0" className="text-center buttonStyle white-text">
-                    UPLOAD MENU
+                    ADD PICTURES
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                     <Card.Body>
@@ -462,7 +476,9 @@ class Gallery extends Component {
                             />
                         </Form.Group>
                         <Row>
-                            <Button className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
+                            <Col>
+                            <Button block className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
+                            </Col>
                         </Row>
         
                         </Form>
@@ -473,10 +489,10 @@ class Gallery extends Component {
                 </Accordion>
             </Row>
             <Row>
-                <p className="h5 pt-5">PHOTO LIBRARY</p>
+                <p className="h5 pt-5">Photo Library</p>
                 <Row >
-                <Button variant="info" className="ml-3" size="m" onClick={showPhotos} > PHOTOS </Button>
-                <Button variant="info" className="ml-3" size="m" onClick={showFavourites} > FAVOURITES </Button>
+                <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showPhotos} > PHOTOS </Button>
+                <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showFavourites} > FAVOURITES </Button>
                 </Row>
                 <Dropdown id="galeryCountry" title="Select Trip Country">
                 <Dropdown.Toggle  className="w-100 buttonStyle">

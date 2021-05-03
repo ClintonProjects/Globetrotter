@@ -3,7 +3,8 @@
     min-height: calc(100vh - 200px);
     /* IMPORTANT for this to match footer and nav bar heights (which need to be fixed!) */
     max-height: calc(100vh - 130px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     position: relative;
   }
@@ -25,6 +26,9 @@
 
 .galery_small_text {
   font-size: .7em !important;
+}
+.galery_med_text {
+  font-size: .8em !important;
 }
 
 .country-dropdown {

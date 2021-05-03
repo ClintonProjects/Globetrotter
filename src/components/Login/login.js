@@ -58,7 +58,7 @@ class Login extends Component {
           <img src={logo} alt="Logo" />
           <p className="h2 textColour text-center">Welcome back!</p>
           {authenticated && <p className="h6 textColour text-center pb-2">Successfully logged in</p>}
-          {authenticated && <Link to="/mapview">
+          {authenticated && <Link to="/mapview" onClick={this.props.picNoBack}>
           <Button className="buttonStyle" variant="primary" block>Go to Map</Button>
           </Link>}
           {!authenticated && <p className="h6 textColour text-center pb-2">Please login to your account</p>}

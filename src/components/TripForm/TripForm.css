@@ -17,6 +17,15 @@
   -moz-text-align-last: center;
 }
 
+.trip_form_left_col{
+  max-width: 200px;
+}
+
+.trip_form_middle_col{
+  max-width: 300px;
+  min-width: 300px;
+}
+
 .trip-form {
   position: absolute;
   top: 50%;

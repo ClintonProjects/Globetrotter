@@ -46,7 +46,7 @@ class Logout extends Component {
             <Button onClick={this.logOutUser} className="buttonStyle" variant="primary" type="submit" block>LOGOUT</Button>
             </Col>
             <Col>
-              <Link to="/mapview" >
+              <Link to="/mapview" onClick={this.props.picNoBack}>
                 <Button className="buttonStyle" variant="primary" block>STAY</Button>
               </Link>
             </Col>

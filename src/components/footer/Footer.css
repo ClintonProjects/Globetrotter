@@ -9,11 +9,16 @@
 }
 
 .footer-borader {
- border-top: 0.1em solid white; 
+ border-top: 0.1em solid #17a2b8; 
 }
 
 .footerText {
   font-size: .8em;
+}
+
+.footerTextColour {
+  font-size: .8em;
+  color: #17a2b8 !important;
 }
 
 .a, .a:hover, .a:visited, .a:active {
