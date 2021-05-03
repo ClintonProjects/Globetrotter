@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
+import "firebase/auth"; // attach authentication
 import { Setting, settingsConverter } from "../fsObjConversion.js";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import * as FaIcons from "react-icons/fa";
@@ -19,6 +20,7 @@ class Settings extends Component {
         .collection("settings"),
     };
     this.addData = this.addData.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
   addData(event) {
     // adding user settings to firestore
@@ -28,13 +30,7 @@ class Settings extends Component {
       var birthday = document.getElementById("birthday");
       var gender = document.getElementById("gender");
       var email = document.getElementById("email");
-      var password = document.getElementById("password"); // Not sure about adding password ?
-
-      // this.state.tripRef
-      //   .doc(`${docID}`)
-      //   .withConverter(tripConverter)
-      //   .set(new Trip(country.value, startDate.value, endDate.value));
-
+      
       this.state.personRef
         .doc(localStorage.getItem("uid"))
         .withConverter(settingsConverter)
@@ -46,23 +42,14 @@ class Settings extends Component {
     }
   }
 
-  /*componentDidMount() {
-    this.state.personRef.withConverter(settingsConverter).onSnapshot((docs) => {
-      if (!docs.empty) {
-        var arr = [];
-        docs.forEach((doc) => {
-          var settings = doc.data();
-          arr.push(settings.toObject());
-        });
-        this.setState({ settings: arr });
-      } else {
-        console.log("It's empty");
-      }
-    });
+  changePassword() {
+    var password = document.getElementById("password");
+    var user = firebase.auth().currentUser;
+    user.updatePassword(password.value).then( () => console.log("congratulations, the password has been changed")).catch ( err => console.log(err.message));
+  }
 
-  } */
   render() {
-    console.log("evan => ", user);
+    
     return (
       <Container>
         <Row>
@@ -120,9 +107,10 @@ class Settings extends Component {
                       type="password"
                       value={""}
                     />
+                    <input type="text" id="fname" name="fname"></input>
                   </Col>
                   <Col>
-                    <Button variant="outline-info" type="submit" block>
+                    <Button variant="outline-info" type="submit" block onClick={this.changePassword}>
                       CHANGE PASSWORD
                     </Button>
                   </Col>
