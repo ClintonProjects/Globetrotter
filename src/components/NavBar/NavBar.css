@@ -65,7 +65,10 @@ nav {
 .nav-text .nav-text:hover, .nav-text:visited, .nav-text:active{
     color: white !important;
     text-decoration: none;
-  }
+}
+.icon_nav_logo{
+    margin-left: 30% !important;
+}
 
 .icon {
 /* background: black; */

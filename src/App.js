@@ -34,6 +34,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      picBackground: false,
       authenticated: false,
       currentUser: null,
     };
@@ -84,6 +85,15 @@ class App extends Component {
     });
   }
 
+  /*change the css class based on browser location*/
+  enablePicBackground = () => {
+    this.setState({picBackground: true});
+  }
+  /*change the css class based on browser location*/
+  disablePicBackground = () => {
+    this.setState({picBackground: false});
+  }
+
   render() {
     if (this.state.authenticated) {
       localStorage.setItem("uid", this.state.currentUser.uid);
@@ -93,20 +103,27 @@ class App extends Component {
     // prevents error when /mapview is directly typed into the url
 
     //extract url information from browser (https://stackoverflow.com/a/52732656)
-    let location = window.location.pathname;
+    //let location = window.location.pathname;
     return (
-      /*change the css class based on browser location*/
-      <Container fluid className={
-        location !== "/" && location !== "/mapview" && location !== "/preloginmap"
-        ? "content pictureBackground" : "content "}>
+      
+      <div className={this.state.picBackground ? "pictureBackground" : "whiteBackground"}>
+      <Container fluid className="content">
         <Router>
           <Row>
-            <NavBar authenticated={this.state.authenticated} />
+            <NavBar authenticated={this.state.authenticated} 
+            picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
           </Row>
           <Row>
             <Switch>
-              <Route path="/" component={Preloginmap} exact />
-              <Route path="/about" component={About} />
+              <Route path="/" exact 
+                render={() => (
+                  <Preloginmap picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
+                )}
+              />
+              <Route path="/about" 
+              render={() => (
+                <About picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
+              )}/>
               <Route
                 path="/mapview"
                 render={() => (
@@ -120,6 +137,7 @@ class App extends Component {
               <Route path="/contactus" component={ContactUs} />
               <Route path="/login" render={() => (
                 <Login
+                picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}
                   authenticated={this.state.authenticated}
                 />
               )} />
@@ -136,7 +154,8 @@ class App extends Component {
                 render={() => (
                   <Logout
                     authenticated={this.state.authenticated}
-                    currentUser={this.state.currentUser} />
+                    currentUser={this.state.currentUser} 
+                    picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
                 )} />
               <Route path="/register" 
                 render={() => (
@@ -177,6 +196,7 @@ class App extends Component {
           </Row>
         </Router>
         </Container>
+        </div>
     );
   }
 }

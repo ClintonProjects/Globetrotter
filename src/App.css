@@ -8,8 +8,8 @@
 }
 
 .pictureBackground{
-    background-image: url(./images/background.png);
-    background-size: cover;
+    background-image: url(./images/more_opaque_background_large.png);
+    background-size: 3500px;
     background-position: center;
 }
 

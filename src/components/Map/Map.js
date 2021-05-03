@@ -9,7 +9,12 @@ import pictures from "./img/pictures30x30.png";
 import newAlbum from "./img/newAlbum30x30.png";
 import guestView from "./img/guestView30x30.png";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
-import "firebase/firestore"; // attach firestore
+import "firebase/firestore";
+import { Container, Row, Col, Button } from 'react-bootstrap'; 
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";// attach fir
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
@@ -78,6 +83,7 @@ class Map extends Component {
         polygonSeries.tooltip.label.interactionsEnabled = true;
         polygonSeries.tooltip.keepTargetHover = true;
         polygonTemplate.tooltipPosition = "fixed";
+        
         //logged in user
         polygonTemplate.tooltipHTML = renderToString(
           this.buildTooltipMenu("{name}")
@@ -87,8 +93,8 @@ class Map extends Component {
         //polygonTemplate.tooltipHTML = renderToString(this.buildTooltipMenuGuest('{name}'));
 
         // Create hover state and set alternative fill color
-        // let hs = polygonTemplate.states.create("hover");
-        // hs.properties.fill = am4core.color("#17a2b8");
+        let hs = polygonTemplate.states.create("hover");
+        hs.properties.fill = am4core.color("#17a2b8");
 
         polygonTemplate.propertyFields.fill = "fill"; // fill in countries
 
@@ -106,32 +112,43 @@ class Map extends Component {
   //For logged in user
   buildTooltipMenu = (name) => {
     return (
-      <div className="tooltip-menu">
-        <div className="tooltip-menu-countryName">
-          {name}
-          <div className="tooltip-menu-icons-container">
-            <img
+      // <Container className="Gallery pl-2 tooltip-menu">
+      <Container className="tooltip_wrrapper">
+        <Row className="font-weight-bold tooltip-menu-countryName">
+          <Col>
+          <label>{name}</label>
+          </Col>
+        </Row>
+        <Row>
+          <Col/>
+          <Col xs={10} className="pl-4 ">
+          <img
               title="Browse albums"
               className="tooltip-menu-icons"
               src={albums}
             />
-            <div className="tooltip-menu-text"> 5 </div>{" "}
+            <p className="tooltip-menu-text"> 5 </p>{" "}
             {/*TODO: get real data from system*/}
             <img
               title="Browse pictures"
               className="tooltip-menu-icons"
               src={pictures}
             />
-            <div className="tooltip-menu-text"> 25 </div>{" "}
+            <p className="tooltip-menu-text"> 25 </p>{" "}
             {/*TODO: get real data from system*/}
-            <img
-              title="Create a new albums"
-              className="tooltip-menu-icons"
-              src={newAlbum}
-            />
-          </div>
-        </div>
-      </div>
+          </Col>
+          <Col/>
+        </Row>
+        <Row>
+          <Col>
+            <Button block size="sm" variant="info" className="mt-1 galery_med_text">ADD NEW TRIP</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col><Button block size="sm" variant="info" className="mt-1 galery_med_text">SEE PHOTOS</Button></Col>
+        </Row>
+      </Container>
+
     );
   };
   //For guest users

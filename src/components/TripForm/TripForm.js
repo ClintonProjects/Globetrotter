@@ -4,7 +4,7 @@ import "firebase/firestore"; // attach firestore
 import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
 import "./TripForm.css";
-import { Container, Form, Button, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, DropdownButton, Dropdown} from 'react-bootstrap';
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
@@ -27,6 +27,7 @@ class TripForm extends Component {
         .collection("trips"),
       trips: [],
       notList: [],
+      selectedCountry: ''
     };
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
@@ -37,14 +38,14 @@ class TripForm extends Component {
     // add try catch to prevent firestore error on invalid input
     try {
       event.preventDefault(); // prevent the form from actually submitting
-      var country = document.getElementById("country");
+      var country = this.state.selectedCountry;
       var startDate = document.getElementById("startdate");
       var endDate = document.getElementById("enddate");
-      const docID = country.value;
+      const docID = country;
       const userSeries = {
         location: {
-          id: this.getKeyByValue(ISO, country.value),
-          name: country.value,
+          id: this.getKeyByValue(ISO, country),
+          name: country,
           fill: `amd4color("#000")`,
         },
       };
@@ -52,7 +53,7 @@ class TripForm extends Component {
       this.state.tripRef
         .doc(`${docID}`)
         .withConverter(tripConverter)
-        .set(new Trip(country.value, startDate.value, endDate.value));
+        .set(new Trip(country, startDate.value, endDate.value));
       console.log("trip added");
     } catch (error) {
       alert("invalid input");
@@ -99,71 +100,80 @@ class TripForm extends Component {
       }
     });
   }
+//React select value handling inpired from https://stackoverflow.com/a/47850550
+  captureSelectValue = (e) => {
+    let {name, value} = e.target;
+    this.setState({selectedCountry: value})
+  }
 
   render() {
     return (
-      <Container>
-        <Row className="pt-5">
-          <Col />
-          <Col className="col-8 contactUs p-4">
+      <Container fluid="true" >
+      <Row className="pt-5">
+      <Col className=" pt-4">
+        <Row className="pt-3">
+          <p className="h4">Trips History</p>
+        </Row>
+        <Row className="trip_form_left_col">
+          <Dropdown id="country" title="Select Trip Country">
+          <Dropdown.Toggle  className="buttonStyle" block="true">
+            VISITED COUNTRIES
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100" >
+            {this.state.trips.map((trip, index) => (
+                <Dropdown.Item key={index}>{
+                  <Container className="p-1">
+                    <Row>
+                      <Col className="col-8 text-center">
+                        <Row>
+                        {trip.country}
+                        </Row>
+                          <Row>
+                          <span>from : {trip.startDate}</span>
+                          <span>to : {trip.endDate}</span>
+                        </Row>
+                      </Col>
+                    </Row>
+                    </Container>
+                }
+                </Dropdown.Item>
+            ))
+            }
+          </Dropdown.Menu>
+        </Dropdown>
+              </Row>
+      </Col>
+      <Col xs={6}>
+        <Row >
+          <Col/>
+          <Col className="trip_form_middle_col contactUs p-5 mt-5">
             <p className="h2 text-center">Your Trip</p>
-            <Row>
-              <Form onSubmit={this.addData}>
+            <Form onSubmit={this.addData}>
                 <Form.Group>
-                  <Form.Control as="select" id="country" className="select_center_align">
+                  <Form.Control as="select" id="country" className="select_center_align" onChange={this.captureSelectValue}>
                     <option key='blankChoice' hidden value >Select Trip Country</option>
                     {options.map((option, index) => (
-                      <option block key={index}>{option}</option>
+                        <option key={index} block="true">{option}</option>
                     ))}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Control id="startdate" className="text-center" name="startdate" type="input" placeholder="Enter Start Date" />
+                  <Form.Control id="startdate"  className="text-center" name="startdate" type="input" placeholder="Enter Start Date"/>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Control id="enddate" className="text-center" name="enddate" type="input" placeholder="Enter End Date" />
+                  <Form.Control id="enddate"  className="text-center" name="enddate" type="input" placeholder="Enter End Date"/>
                 </Form.Group>
-                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block onClick={() => this.setUserNotifications("You have added a trip!")}>
-                  SUBMIT
-                  
-                  </Button>
-              </Form>
-            </Row>
-            <Row className="pt-3">
-              <Dropdown id="country" title="Select Trip Country">
-                <Dropdown.Toggle block className="buttonStyle">
-                  VISITED COUNTRIES
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="w-100" >
-                  {this.state.trips.map((trip, index) => (
-                    <Dropdown.Item key={index}>{
-                      <Container className="p-1">
-                        <Row>
-                          <Col />
-                          <Col className="col-8 text-center">
-                            <Row>
-                              {trip.country}
-                            </Row>
-                            <Row>
-                              <span>from : {trip.startDate}</span>
-                              <span>to : {trip.endDate}</span>
-                            </Row>
-                          </Col>
-                          <Col />
-                        </Row>
-                      </Container>
-                    }
-                    </Dropdown.Item>
-                  ))
-                  }
-                </Dropdown.Menu>
-              </Dropdown>
-            </Row>
+                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block="true" onClick={() => this.setUserNotifications("You have added a trip!")}>
+                SUBMIT
+                </Button>
+            </Form>
           </Col>
-          <Col />
+          <Col/>
         </Row>
+      </Col>
+            <Col />
+            </Row>
       </Container>
-
     );
   }
 }

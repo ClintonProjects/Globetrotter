@@ -116,10 +116,10 @@ class NavBar extends Component {
           <div className="col-sm-1 boradercover" /*onClick="notfalse()"*/>
             <div className="logo">
               {!authenticated && (
-                <Link to="/"><img src={logo} alt="Logo" className="icon" /></Link>
+                <Link to="/" onClick={this.props.picNoBack}><img src={logo} alt="Logo" className="icon icon_nav_logo" /></Link>
               )}
               {authenticated && (
-                <Link to="/mapview"><img src={logo} alt="Logo" className="icon" /></Link>
+                <Link to="/mapview" onClick={this.props.picNoBack}><img src={logo} alt="Logo" className="icon icon_nav_logo" /></Link>
               )}
             </div>
           </div>
@@ -127,40 +127,40 @@ class NavBar extends Component {
           <div className="row col-sm-4 boradercover">
             <div className="links" /*onClick="notfalse()"*/>
               {!authenticated && (
-                <Link className="nav-text" to="/login">Map</Link>
+                <Link className="nav-text" to="/login" onClick={this.props.picBack}>Map</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/mapview" >Map</Link>
+                <Link className="nav-text" to="/mapview" onClick={this.props.picNoBack} >Map</Link>
               )}
 
               {!authenticated && (
-                <Link className="nav-text" to="/login">Trips</Link>
+                <Link className="nav-text" to="/login" onClick={this.props.picBack}>Trips</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/tripform">Trips</Link>
+                <Link className="nav-text" to="/tripform" onClick={this.props.picBack}>Trips</Link>
               )}
 
               {!authenticated && (
-                <Link className="nav-text" to="/login">Photo</Link>
+                <Link className="nav-text" to="/login" onClick={this.props.picBack}>Photo</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/galery">Photo</Link>
+                <Link className="nav-text" to="/galery" onClick={this.props.picBack}>Photo</Link>
               )}
 
               {!authenticated && (
-                <Link className="nav-text" to="/about">About</Link>
+                <Link className="nav-text" to="/about" onClick={this.props.picBack}>About</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/about">About</Link>
+                <Link className="nav-text" to="/about" onClick={this.props.picBack}>About</Link>
               )}
             </div>
           </div>
           <div className="col-sm-2">
             <div className="rightsideLogos">
-              <div className="marginleftright" onClick="notfalse()">
+              <div className="marginleftright">
                 {authenticated && (
                   <span>
-                    <Link to="/settings"><span><FaIcons.FaUser className="icon" /></span></Link>
+                    <Link to="/settings"><span><FaIcons.FaUser className="icon" onClick={this.props.picBack}/></span></Link>
 
                   </span>)}
               </div>
@@ -171,11 +171,11 @@ class NavBar extends Component {
                   </button>
                   </span>)}
               </div>
-              <div className="marginleftright" onClick="notfalse()">
-                {authenticated && (
-                  <span>
-                    <Link to="/logout"><span><FaIcons.FaSignOutAlt className="icon" /></span></Link>
-                  </span>)}
+              <div className="marginleftright">
+              {authenticated && (
+                <span>
+                  <Link to="/logout"><span><FaIcons.FaSignOutAlt className="icon" onClick={this.props.picBack}/></span></Link>
+                </span>)}
               </div>
               {/* <div className="marginleftright">
               {authenticated && (
@@ -209,7 +209,6 @@ class NavBar extends Component {
                 {/* <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6> */}
               </div>
             )}
-            
             {this.state.notList.length == 0 && (
               <div className="not2">
                 <img src={Logo} className="kirby" />

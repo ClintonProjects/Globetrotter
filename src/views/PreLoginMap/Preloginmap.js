@@ -11,7 +11,7 @@ class Preloginmap extends Component {
   render() {
     return (
       <Container id="PreloginMap" fluid>
-        <RegisterMessage className="preloginMessage"/>
+        <RegisterMessage className="preloginMessage" picBack={this.props.picBack}  picNoBack={this.props.picNoBack}/>
         {/*<Link to="/profile">
            <div class="prelogmap"> 
           <img src={DemoMap} class="img" />
