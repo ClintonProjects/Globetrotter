@@ -70,6 +70,9 @@ class NavBar extends Component {
     return;
   }
 
+
+
+
   removeItem = (item) => {
     console.log("remove item");
     var list = this.state.notList;
@@ -186,25 +189,21 @@ class NavBar extends Component {
 
         {this.state.notficitonBox && (
           <div className="notbox">
-            <div className="Insidenotbox">
-              <div className="left-top-notbox">
-                <b>
-                  <div className="text-dark nottext">Notifications</div>
-                </b>
-                {/* <b><span className="text-dark consize"> <FaIcons.FaCircle div className="green" /> Connected</span></b> */}
+            {this.state.notList.length >= 1 && (
+              <div className="not1">
+                <h6 className="not1text">
+                  <button className="red" onClick={() => this.notficitonBoxSettings()}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
+                  <div class="space Notificationstext">Notifications:</div>
+                </h6>
+                {/* <h6 className="not1text">{this.state.timelist[1]} Hours ago</h6> */}
               </div>
-              <div
-                className="right-top-notbox"
-                onClick={this.notficitonBoxSettings}
-              >
-                <FaIcons.FaRegTimesCircle className="xicon" />
-              </div>
-            </div>
+            )}
+
 
             {this.state.notList.length == 0 && (
-              <div className="not1">
-                <button className="red" onClick={() => this.notficitonBoxSettings()}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                <h6 className="not1text">
+              <div className="not1noavaiable">
+                <button className="rednoavaiable" onClick={() => this.notficitonBoxSettings()}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
+                <h6 className="not1textnoavaiable">
                   <b>You have no notifications available </b>
                 </h6>
                 {/* <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6> */}

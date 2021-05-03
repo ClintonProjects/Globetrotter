@@ -26,10 +26,12 @@ class TripForm extends Component {
         .doc(localStorage.getItem("uid"))
         .collection("trips"),
       trips: [],
+      notList: [],
       selectedCountry: ''
     };
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
+    this.setUserNotifications = this.setUserNotifications.bind(this);
   }
   // function that will add data to firestore
   addData(event) {
@@ -63,6 +65,25 @@ class TripForm extends Component {
     return Object.keys(object).find(
       (key) => object[key].toLowerCase() === value.toLowerCase()
     );
+  }
+
+  setUserNotifications = (not) => {
+    const firestore = firebase.firestore().collection('users').doc(localStorage.getItem("uid"));
+    let jsonSplit;
+    var list = [];
+    firestore.onSnapshot((data) => {
+      let json = JSON.stringify(data.data());
+      jsonSplit = JSON.parse(json);
+      if (!jsonSplit.notifications.includes(not) && !this.state.notList.includes(not)) {
+        this.setState({ notList: jsonSplit.notifications });
+        list = this.state.notList;
+        list.push(not);
+        console.log("notfication added to db: " + not);
+        this.setState({ notList: list });
+        firebase.firestore().collection('users').doc(localStorage.getItem("uid")).set({ notifications: list });
+      }
+    });
+    return;
   }
 
   componentDidMount() {
@@ -119,7 +140,7 @@ class TripForm extends Component {
             ))
             }
           </Dropdown.Menu>
-        </Dropdown> 
+        </Dropdown>
               </Row>
       </Col>
       <Col xs={6}>
@@ -142,7 +163,7 @@ class TripForm extends Component {
                 <Form.Group>
                   <Form.Control id="enddate"  className="text-center" name="enddate" type="input" placeholder="Enter End Date"/>
                 </Form.Group>
-                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block="true">
+                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block="true" onClick={() => this.setUserNotifications("You have added a trip!")}>
                 SUBMIT
                 </Button>
             </Form>

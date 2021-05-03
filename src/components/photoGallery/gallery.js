@@ -33,7 +33,7 @@ class Gallery extends Component {
             progress: 0,
             showProgressBar: false,
             country: null,
-
+            notList: [],
             countryList: [],
             countryView: null,
             docs: [],
@@ -55,6 +55,26 @@ class Gallery extends Component {
         this.setCountry = this.setCountry.bind(this);
         this.setURL = this.setURL.bind(this);
         this.addCountry = this.addCountry.bind(this);
+        this.setUserNotifications = this.setUserNotifications.bind(this);
+    }
+
+    setUserNotifications = (not) => {
+        const firestore = firebase.firestore().collection('users').doc(localStorage.getItem("uid"));
+        let jsonSplit;
+        var list = [];
+        firestore.onSnapshot((data) => {
+            let json = JSON.stringify(data.data());
+            jsonSplit = JSON.parse(json);
+            if (!jsonSplit.notifications.includes(not) && !this.state.notList.includes(not)) {
+                this.setState({ notList: jsonSplit.notifications });
+                list = this.state.notList;
+                list.push(not);
+                console.log("notfication added to db: " + not);
+                this.setState({ notList: list });
+                firebase.firestore().collection('users').doc(localStorage.getItem("uid")).set({ notifications: list });
+            }
+        });
+        return;
     }
 
     setURL(urlpassed){
@@ -136,9 +156,27 @@ class Gallery extends Component {
         docPath.update({ comments: this.state.picComment })
             //advise if successfully added comment field or not
             .then(() => {
-                alert("Successfully saved your comments for this picture: " + this.state.picComment);
+                toast.info('😾 Successfully saved your comments for this picture: ' + this.state.picComment, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                })
             }).catch((error) => {
-                alert("Error saving comments" + error);
+                {
+                    toast.info('😾 Error saving comments: ' + error, {
+                        position: "bottom-center",
+                        autoClose: 2500,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                }
             })
     }
     addToFavouritesHandler = () => {
@@ -149,9 +187,25 @@ class Gallery extends Component {
         docPath.update({ favourites: true })
             //advise if successfully added comment field or not
             .then(() => {
-                alert("Successfully saved your photo to Favourites");
+                toast.info('😾 Successfully saved your photo to Favourites', {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                })
             }).catch((error) => {
-                alert("Error saving photo" + error);
+                toast.info('😾 Error saving photo: ' + error, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                })
             })
     }
 
@@ -164,13 +218,29 @@ class Gallery extends Component {
 
             .then((doc) => {
                 var url = doc.data().imageURL;
-                alert("Share your image using: "+url);
+                // toast.info('😾 Share your image using: ' + url, {
+                //     position: "bottom-center",
+                //     autoClose: 2500,
+                //     hideProgressBar: true,
+                //     closeOnClick: true,
+                //     pauseOnHover: false,
+                //     draggable: true,
+                //     progress: undefined,
+                // });
                 this.state.imageLink = url;
                 this.state.imageAvaiable = true;
                 navigator.clipboard.writeText(url);
                 firebase.firestore().collection('users').doc(localStorage.getItem("uid")).update({ notifications: ["Congratulations, you have shared an image"] });
             }).catch((error) => {
-                alert("Error getting image URL " + error);
+                toast.info('😾 Error getting image URL ' + error, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
     }
 
@@ -182,9 +252,25 @@ class Gallery extends Component {
         docPath.delete()
             //advise if successful or unsuccessful delete
             .then(() => {
-                alert("Successfully deleted image");
+                toast.info('😾 Successfully deleted image', {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             }).catch((error) => {
-                alert("Error deleting photo " + error);
+                toast.info('😾 Error deleting photo : ' + error, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
     }
     setCountry = () => {
@@ -195,9 +281,25 @@ class Gallery extends Component {
         docPath.update({ country: this.state.settingCountry })
             //advise if successful or unsuccessful delete
             .then(() => {
-                alert("Successfully updated country for this image: "+ this.state.settingCountry);
+                toast.info('😾 Successfully updated country for this image: ' + this.state.settingCountry, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             }).catch((error) => {
-                alert("Error updating country for this image " + error);
+                toast.info('😾 Error updating country for this image ' + error, {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
     }
 
@@ -246,45 +348,46 @@ class Gallery extends Component {
 
         const handleSubmission = () => {
 
-            if (image != null){ //stops errors if user tries to upload non-image file type
-            //show progress bar
-            this.setState({showProgressBar: true});
-            //images is just creating the name of the folder in firebase storage
-            //want to change `images` to the country name that user is uploading to 
-              const uploadTask = storage.ref(image.name);
-              const imageRef = firestore
-                                  .collection("users")
-                                  .doc(localStorage.getItem("uid"))
-                                  .collection("images");
-              uploadTask.put(image) //uploads image to firebase storage
-              .on(
-              "state_changed",
-              snapshot => {//current progress of upload
-                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                this.setState({progress: percentage}); //update state progress
-              }, 
-              error => { //if error
-                console.log(error);
-                //hide progress bar after 2 sec
-                setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
-              },
-              async ()=>{ 
-                //if successfully uploaded, get URL
-                const url = await uploadTask.getDownloadURL()
-                this.setURL(url); //update state url
-                console.log(this.state.url);
-                const createdAt = timestamp();
-                console.log(imageRef)
-                imageRef.add({ //adding the image url to the users firestore
-                  imageURL: url, 
-                  date: createdAt, 
-                  country: this.state.country,
-                  name: image.name }); //should be adding to the 
-                //hide progress bar after 2 sec
-                setTimeout( () => this.setState({ showProgressBar: false }), 3000 );
-                this.setState({country: null});
-              }
-            )
+            if (image != null) { //stops errors if user tries to upload non-image file type
+                //show progress bar
+                this.setState({ showProgressBar: true });
+                //images is just creating the name of the folder in firebase storage
+                //want to change `images` to the country name that user is uploading to
+                const uploadTask = storage.ref(image.name);
+                const imageRef = firestore
+                    .collection("users")
+                    .doc(localStorage.getItem("uid"))
+                    .collection("images");
+                uploadTask.put(image) //uploads image to firebase storage
+                    .on(
+                        "state_changed",
+                        snapshot => {//current progress of upload
+                            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            this.setState({ progress: percentage }); //update state progress
+                        },
+                        error => { //if error
+                            console.log(error);
+                            //hide progress bar after 2 sec
+                            setTimeout(() => this.setState({ showProgressBar: false }), 3000);
+                        },
+                        async () => {
+                            //if successfully uploaded, get URL
+                            const url = await uploadTask.getDownloadURL()
+                            this.setURL(url); //update state url
+                            console.log(this.state.url);
+                            const createdAt = timestamp();
+                            console.log(imageRef)
+                            imageRef.add({ //adding the image url to the users firestore
+                                imageURL: url,
+                                date: createdAt,
+                                country: this.state.country,
+                                name: image.name
+                            }); //should be adding to the
+                            //hide progress bar after 2 sec
+                            setTimeout(() => this.setState({ showProgressBar: false }), 3000);
+                            this.setState({ country: null });
+                        }
+                    )
             }
             
         };
@@ -379,23 +482,23 @@ class Gallery extends Component {
                         placeholder="Picture Comment"
                         aria-label="Picture Comment"
                         className="galery_med_text"
-                        onChange={event => { 
+                        onChange={event => {
                             this.setState({ picComment : event.target.value });
-                        }} 
+                        }}
                         />
-                        <InputGroup.Append>
+                        <InputGroup.Append onClick={() => this.setUserNotifications("You have added a comment to an image!")}>
                             <Button variant="outline-info" className="galery_med_text" onClick={this.commentPicHandler}>Add Comment</Button>
                         </InputGroup.Append>
                 </InputGroup>
                 </Col>
             </Row>
-            <Row className="pb-1">
+            <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image!")}>
                 <Col >
                  <Button block variant="outline-info" className="galery_med_text" onClick={this.sharePicHandler}>Share</Button>
                 </Col>
-                
+
             </Row>
-            <Row className="pb-1">
+            <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image to your favourites!")}>
                 <Col>
                     <Button block variant="outline-info" className="galery_med_text" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
                 </Col>
@@ -407,9 +510,9 @@ class Gallery extends Component {
                             placeholder="Country"
                             aria-label="Country"
                             className="galery_med_text"
-                            onChange={event => { 
+                            onChange={event => {
                                 this.setState({ settingCountry : event.target.value });
-                            }} 
+                            }}
                             />
                             <InputGroup.Append>
                                 <Button variant="outline-info" className="galery_med_text" onClick={this.setCountry}> Set Country </Button>
@@ -417,19 +520,19 @@ class Gallery extends Component {
                     </InputGroup>
                 </Col>
             </Row>
-            <Row className="pb-1">
+            <Row className="pb-1" onClick={() => this.setUserNotifications("You have deleted an image!")}>
                 <Col>
                     <Button block variant="outline-dark" className="galery_med_text" onClick={this.deletePicHandler}>Delete</Button>
                 </Col>
             </Row>
         </Container>
-        </Popover.Content>                        
+        </Popover.Content>
     </Popover>
     //method that will build thumnails pictures
     const tItems = (docs && docs.map(doc =>{
         return <Col xs={6} md={2} className="col-2" key={doc.id}>
             <Image src={doc.imageURL} alt="users-travel-pic" rounded
-            doc_id={doc.id} 
+            doc_id={doc.id}
             onClick={this.thumbnailClick}
             className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"}/>
         </Col>
