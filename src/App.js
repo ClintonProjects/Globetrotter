@@ -67,8 +67,6 @@ class App extends Component {
       localStorage.setItem("uid", this.state.currentUser.uid);
       localStorage.setItem("email", this.state.currentUser.email);
     }
-    //else localStorage.setItem("uid", "K26KJF569YU6gNaIZOySCG6uoGB2");
-    // prevents error when /mapview is directly typed into the url
 
     //extract url information from browser (https://stackoverflow.com/a/52732656)
     //let location = window.location.pathname;

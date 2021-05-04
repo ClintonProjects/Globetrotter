@@ -46,11 +46,11 @@ class ContactUs extends Component {
            <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Your email address:</Form.Label>
-                <Form.Control id="EmailContact"  name="email" type="email" value={email} onChange={this.handleChangeEmail}/>
+                <Form.Control id="EmailContact" name="email" type="email" value={email} onChange={this.handleChangeEmail}/>
               </Form.Group>
               <Form.Group controlId="formSubject">
                 <Form.Label>Subject:</Form.Label>
-                <Form.Control id="SubjectContact"  name="subject" type="input" value={subject} onChange={this.handleChangeSubject}/>
+                <Form.Control id="SubjectContact" name="subject" type="input" value={subject} onChange={this.handleChangeSubject}/>
               </Form.Group>
               <Form.Group controlId="formDescription">
                 <Form.Label>Description:</Form.Label>
