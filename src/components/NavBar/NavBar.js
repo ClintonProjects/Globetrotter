@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import * as FaIcons from "react-icons/fa";
 import "./NavBar.css";
 import Firebase from "firebase/app";
-import "firebase/auth";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import Logout from "../Logout/logout";
-import Login from "../Login/login"
 import Logo from './SLEEPY.png';
 import logo from './logo/fullLogoNew.png';
 import firebase from "firebase/app";
@@ -29,31 +26,15 @@ class NavBar extends Component {
     this.removeItem = this.removeItem.bind(this);
     this.getUserNotifications = this.getUserNotifications.bind(this);
 
-    // this.setState({ userId: id});
   }
 
   not() {
     return this.state.notficitonBox;
   }
 
-  //can use localStorage.getItem("uid") for the uid
-  //works on every page after the user logs in
-  getUserId() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user != null) {
-        let String = user.uid;
-        this.setState({ userId: String });
-        console.log(String);
-      } else
-        console.log("empty");
-    });
-  }
-
-
   getUserNotifications = () => {
     const firestore = firebase.firestore().collection('users').doc(localStorage.getItem("uid"));
-    const notPath = firebase.firestore().collection('users').doc(localStorage.getItem("uid")).get("notifications");
-    console.log(this.state.userId);
+        
     let jsonSplit;
     firestore.onSnapshot((data) => {
       try {
@@ -144,7 +125,7 @@ class NavBar extends Component {
                 <Link className="nav-text" to="/login" onClick={this.props.picBack}>Photo</Link>
               )}
               {authenticated && (
-                <Link className="nav-text" to="/galery" onClick={this.props.picBack}>Photo</Link>
+                <Link className="nav-text" to="/gallery" onClick={this.props.picBack}>Photo</Link>
               )}
 
               {!authenticated && (
@@ -177,12 +158,6 @@ class NavBar extends Component {
                   <Link to="/logout"><span><FaIcons.FaSignOutAlt className="icon" onClick={this.props.picBack}/></span></Link>
                 </span>)}
               </div>
-              {/* <div className="marginleftright">
-              {authenticated && (
-              <small>
-                Logged on as {localStorage.getItem("email")}
-              </small> )}
-              </div>  */}
             </div>
           </div>
         </div>

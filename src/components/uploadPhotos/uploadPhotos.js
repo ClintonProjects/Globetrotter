@@ -83,7 +83,6 @@ class UploadPhotos extends Component {
     }})}
       
       const handleSubmission = () => {
-
             if (image != null){ //stops errors if user tries to upload non-image file type
             //show progress bar
             this.setState({showProgressBar: true});

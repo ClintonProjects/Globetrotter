@@ -10,10 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 //need it for file input dialog
 import BsCustomFileInput from 'bs-custom-file-input';
 
-//update rules back to 
-//allow read, write: if request.auth != null; 
-//after correcting logged in user issue
-
 //so we can interact easily with firestore in this component
 const firestore = firebase.firestore();
 const storage = firebase.storage();
@@ -32,7 +28,7 @@ class Gallery extends Component {
             url: null,
             progress: 0,
             showProgressBar: false,
-            country: null,
+            country: "not specified",
             notList: [],
             countryList: [],
             countryView: null,
@@ -97,7 +93,6 @@ class Gallery extends Component {
         this.setState({ countryView: countryPassed });
     }
 
-
     //method to handle thumbnail clicks
     thumbnailClick = (event) => {
         let docID = event.currentTarget.getAttribute('doc_id');
@@ -123,8 +118,6 @@ class Gallery extends Component {
             //set the selected thumbnail id to the newly retrieved doc
             this.setState({ selectedThumbnail: carouselDocId });
         }
-        
-
     }
 
     //method to disable carousel sliding and show pic menu tooltip
@@ -137,7 +130,6 @@ class Gallery extends Component {
         this.setState({ carouselStartTimeoutID: [] });
         this.state.picMenuTimeoutID.forEach(timeout => clearTimeout(timeout));
         this.setState({ picMenuTimeoutID: [] });
-
     }
 
     //method to enable carousel sliding and hide pic menu tooltip
@@ -215,7 +207,6 @@ class Gallery extends Component {
         //use firestore delete method (call on full path collection-> document to be deleted)
         var docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("images").doc(getDocID);
         docPath.get()
-
             .then((doc) => {
                 var url = doc.data().imageURL;
                 // toast.info('😾 Share your image using: ' + url, {
@@ -304,6 +295,8 @@ class Gallery extends Component {
     }
 
     getCountryList = () => {
+        //get the country list from the trips collection in firestore
+        //we want users to upload a trip before uploading photos so we only want them to be able to select from these countries
         let docPath = firestore.collection("users").doc(localStorage.getItem("uid")).collection("trips")
         docPath.onSnapshot((snap) => {
             if (snap.empty) {
@@ -320,11 +313,7 @@ class Gallery extends Component {
         })
     }
 
-
     render() {
-        const authenticated = this.props.authenticated;
-        const currentUser = this.props.currentUser;  
-        //const country = "ireland"; //update with trip form
         const image = this.state.image;
         //sets the allowed file types that can be uploaded
         const types = ['image/jpeg', 'image/png'];
@@ -347,12 +336,9 @@ class Gallery extends Component {
         };
 
         const handleSubmission = () => {
-
             if (image != null) { //stops errors if user tries to upload non-image file type
                 //show progress bar
                 this.setState({ showProgressBar: true });
-                //images is just creating the name of the folder in firebase storage
-                //want to change `images` to the country name that user is uploading to
                 const uploadTask = storage.ref(image.name);
                 const imageRef = firestore
                     .collection("users")
@@ -382,14 +368,12 @@ class Gallery extends Component {
                                 date: createdAt,
                                 country: this.state.country,
                                 name: image.name
-                            }); //should be adding to the
+                            }); 
                             //hide progress bar after 2 sec
                             setTimeout(() => this.setState({ showProgressBar: false }), 3000);
-                            this.setState({ country: null });
                         }
                     )
             }
-            
         };
 
         const showPhotos = () => {
@@ -406,10 +390,10 @@ class Gallery extends Component {
                         });
                         this.setState({ docs: documents }); //update state with the documents array
                         console.log(docs); //check
-
                     }
                 })
         }
+
         const showFavourites = () => {
             this.setState({ docs: [] });
             currentGallery
@@ -425,10 +409,10 @@ class Gallery extends Component {
                         });
                         this.setState({ docs: documents }); //update state with the documents array
                         console.log(docs); //check
-
                     }
                 })
         }
+
         const showCountry = (id) => {
             let countryName = id.toLowerCase();
             console.log(countryName);
@@ -441,12 +425,12 @@ class Gallery extends Component {
                     } else {
                         let documents = [];
                         snap.forEach(doc => {
-                            if (doc.data().country.toLowerCase() === countryName)
+                            if (doc.data().country === null) console.log("country empty")
+                            if (doc.data().country.toLowerCase() === countryName )
                                 documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
                         });
                         this.setState({ docs: documents }); //update state with the documents array
                         console.log(docs); //check
-
                     }
                 })
         }
@@ -560,15 +544,12 @@ class Gallery extends Component {
                         <Form>
                         <Form.Group>
                         <Form.Control as="select" id="country" className="galery_small_text select_center_align" onChange={this.addCountry}>
-
                         <option key='blankChoice' hidden value className="galery_small_text" >Choose Country</option>
                         {this.state.countryList.map((c) => (
                             <option  block key={c.id}>{c.id}</option>
                         ))}
-
                         </Form.Control> 
                         </Form.Group> 
-
                         {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
                         <Form.Group>
                             <Form.File className="text-left galery_small_text"
@@ -583,9 +564,7 @@ class Gallery extends Component {
                             <Button block className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
                             </Col>
                         </Row>
-        
                         </Form>
-
                     </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -603,11 +582,11 @@ class Gallery extends Component {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="w-100" >
                   {this.state.countryList.map((country, index) => (
-                      <Dropdown.Item key={index}>{
+                      <Dropdown.Item key={index} onClick={() => showCountry(country.id)}>{
                         <Container className="p-1">
                           <Row>
                             <Col className="col-6 text-left galery_small_text">
-                            {country.id}
+                            {country.id} 
                             </Col>
                             <Col/>
                           </Row>
