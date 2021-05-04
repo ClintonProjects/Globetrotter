@@ -20,11 +20,11 @@ export default class Trip {
   }
 }
 export class Setting {
-  constructor(fullname, birthday, gender, email) {
+  constructor(fullname, birthday, gender) {
     this.fullname = fullname;
     this.birthday = birthday;
     this.gender = gender;
-    this.email = email;
+    //this.email = email;
   }
   // will transform data to an object for adding to array
   // and in mapping to trip list
@@ -33,7 +33,7 @@ export class Setting {
       fullname: this.fullname,
       birthday: this.birthday,
       gender: this.gender,
-      email: this.email
+      //email: this.email
     };
   }
 }
@@ -59,11 +59,11 @@ export const settingsConverter = {
       fullname: setting.fullname,
       birthday: setting.birthday,
       gender: setting.gender,
-      email: setting.email
+      //email: setting.email
     };
   },
   fromFirestore: function (snapshot, options) {
     const setting = snapshot.data(options);
-    return new Setting(setting.fullname, setting.birthday, setting.gender, setting.email);
+    return new Setting(setting.fullname, setting.birthday, setting.gender);
   },
 };
