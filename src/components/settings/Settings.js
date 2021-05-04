@@ -4,7 +4,10 @@ import "firebase/firestore"; // attach firestore
 import "firebase/auth"; // attach authentication
 import { Setting, settingsConverter } from "../fsObjConversion.js";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-
+import {
+  BrowserRouter as Router,
+  Link,
+} from "react-router-dom";
 
 const firestore = firebase.firestore(); // create fs instance
 
@@ -16,6 +19,7 @@ class Settings extends Component {
       birthday:"",
       gender:"",
       password:"",
+      updated: false,
       personRef: firestore
         .collection("users")
         .doc(localStorage.getItem("uid"))
@@ -36,13 +40,14 @@ class Settings extends Component {
       var birthday = this.state.birthday;
       var gender = this.state.gender;
       
-      console.log(fullname);
       this.state.personRef
         .doc(localStorage.getItem("uid"))
         .withConverter(settingsConverter)
         .set(new Setting(fullname, birthday, gender ));
       console.log("details modified");
       alert("Thanks! Your details are now saved.")
+      this.setState({updated: true});
+      console.log(this.state.updated);
     } catch (error) {
       alert("invalid input");
       console.error(error);
@@ -54,7 +59,9 @@ class Settings extends Component {
     var password = this.state.password;
     var user = firebase.auth().currentUser;
     user.updatePassword(password)
-      .then( () => alert("Congratulations, your password has been changed"))
+      .then( () => alert("Congratulations, your password has been changed"),
+      
+      )
       .catch ( 
         err => alert(err.message));
   }
@@ -68,7 +75,7 @@ class Settings extends Component {
           <Col className="col-8 contactUs p-4">
             <p className="h2 ">Personal Information</p>
             <hr className="textColour" />
-            <Form onSubmit={this.addData}>
+            {!this.state.updated && <Form onSubmit={this.addData}>
               <Form.Group controlId="formFullName">
                 <Form.Label>Full Name:</Form.Label>
                 <Form.Control
@@ -129,7 +136,13 @@ class Settings extends Component {
               >
                 UPDATE
               </Button>
-            </Form> 
+            </Form> }
+            {/* redirects user to add a trip once they have updated their details */}
+            {this.state.updated && <Link to="tripform">Your details are now updated! Please add your first trip.
+            <Button className="buttonStyle" variant="primary" block>
+              Add Trip</Button>
+              </Link>}
+
             {/* change password had to be moved outside of the form for details or onSubmit changePassword
             the form onSubmit (addData) was happening -> Line 70*/}
             <Form.Group controlId="formPassword">
