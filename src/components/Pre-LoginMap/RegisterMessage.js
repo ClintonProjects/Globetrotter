@@ -33,7 +33,6 @@ export class RegisterMessage extends Component {
        
          <Row className="no-gutters">
            <Col>
-           {/* <Link to="/tripForm" ><u>Add a Trip</u></Link> */}
            <Link className="nounderline" to="/login" onClick={this.props.picBack}>
            <Button className="buttonStyle" variant="primary" block>LOGIN</Button>
            </Link>
@@ -48,10 +47,6 @@ export class RegisterMessage extends Component {
        </Col>
        <Col/>
        </Row>
-
-      {/*} <div class="col-12 loginMessage text-center">
-        <Link className="logInMsg-nav-text" to="/profile">Login to unlock all features, Please Click to login</Link>
-    </div>*/}
 
      </Container>
 

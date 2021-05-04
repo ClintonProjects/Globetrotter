@@ -379,7 +379,6 @@ class Gallery extends Component {
         const showPhotos = () => {
             this.setState({ docs: [] });
             currentGallery
-                //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
                 .onSnapshot((snap) => {
                     if (snap.empty) {
                         console.log("Docs is empty");
@@ -397,7 +396,6 @@ class Gallery extends Component {
         const showFavourites = () => {
             this.setState({ docs: [] });
             currentGallery
-                //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
                 .onSnapshot((snap) => {
                     if (snap.empty) {
                         console.log("Docs is empty");
@@ -417,8 +415,7 @@ class Gallery extends Component {
             let countryName = id.toLowerCase();
             console.log(countryName);
             this.setState({ docs: [] });
-            currentGallery
-                //.orderBy('createdAt', 'desc') *Anna can decide order that photos or albums are displayed
+            currentGallery 
                 .onSnapshot((snap) => {
                     if (snap.empty) {
                         console.log("Docs is empty");
@@ -573,6 +570,8 @@ class Gallery extends Component {
             <Row>
                 <p className="h5 pt-5">Photo Library</p>
                 <Row >
+                    {/* showPhotos(), showFavourites() and showCountry() update the docs array in state 
+                    which controls which photos are shown to the user at any time  */}
                 <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showPhotos} > PHOTOS </Button>
                 <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showFavourites} > FAVOURITES </Button>
                 </Row>
@@ -621,8 +620,6 @@ class Gallery extends Component {
                         }> 
                         {cItems} </Carousel>
                     </OverlayTrigger>
-                
-                    
                 </Row>
                 <Row className="no-gutters galery-thumbnail-row">
                     {tItems}                 
@@ -644,7 +641,7 @@ class Gallery extends Component {
                 draggable
                 pauseOnHover
             />
-            {/* Same as */}
+            
             <ToastContainer />
 
             {this.state.imageAvaiable ?

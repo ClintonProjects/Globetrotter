@@ -23,7 +23,6 @@ import NavBar from "./components/NavBar/NavBar.js";
 import Gallery from "./components/photoGallery/gallery.js";
 import TripForm from "./components/TripForm/TripForm.js";
 import Footer from "./components/footer/Footer.js";
-import Profile from "./components/Profile/profile.js";
 import Settings from "./components/settings/Settings.js";
 import "./App.css";
 
@@ -143,12 +142,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                path="/profile"
-                render={() => (
-                  <Profile authenticated={this.state.authenticated} />
-                )}
-              />
+              
             </Switch>
           </Row>
           <Row>
