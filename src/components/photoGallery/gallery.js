@@ -72,10 +72,11 @@ class Gallery extends Component {
         });
         return;
     }
-
+    //set url for the image so we can save in firestore
     setURL(urlpassed){
         this.setState({ url: urlpassed});
       } 
+    //adding the country to state so we can upload with the image
       addCountry = (event) =>{
         let countryName = event.target.value;
         console.log(countryName);
@@ -88,7 +89,7 @@ class Gallery extends Component {
         BsCustomFileInput.init()
         this.getCountryList();
       } 
-
+    //allows a user to set the country on an image if not done with upload
     setCountry(countryPassed) {
         this.setState({ countryView: countryPassed });
     }

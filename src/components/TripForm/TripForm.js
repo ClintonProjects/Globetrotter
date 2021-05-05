@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../myFirebaseConfig.js"; // import the firebase app
 import "firebase/firestore"; // attach firestore
+import 'firebase/storage'; //needed for photo upload
 import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
 import "./TripForm.css";
@@ -8,6 +9,8 @@ import { Container, Form, Button, Row, Col, DropdownButton, Dropdown} from 'reac
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
+const storage = firebase.storage();
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 const options = Object.values(ISO);
 
@@ -27,11 +30,22 @@ class TripForm extends Component {
         .collection("trips"),
       trips: [],
       notList: [],
-      selectedCountry: ''
+      selectedCountry: '',
+      image: null,
+      url: null,
+      progress: 0,
+      showProgressBar: false,
+      //country: "not specified",
+      docs: [],
     };
+    this.setURL = this.setURL.bind(this);
     this.addData = this.addData.bind(this);
     this.getKeyByValue = this.getKeyByValue.bind(this);
     this.setUserNotifications = this.setUserNotifications.bind(this);
+  }
+  //set url for the image so we can save in firestore
+  setURL(urlpassed){
+    this.setState({ url: urlpassed});
   }
   // function that will add data to firestore
   addData(event) {
@@ -107,6 +121,64 @@ class TripForm extends Component {
   }
 
   render() {
+
+    const image = this.state.image;
+    //sets the allowed file types that can be uploaded
+    const types = ['image/jpeg', 'image/png'];
+    const docs = this.state.docs;
+
+    const changeHandler = (event) => {
+      let photo = event.target.files[0];
+      //confirms that the correct file types have been uploaded
+      if (types.includes(photo.type)){
+      this.setState({image: photo});
+      }else{
+      //if error
+      photo =null; //removes file from photo variable if not image
+      alert("Please upload an image file (jpeg or png)");
+      }  
+  };
+
+  const handleSubmission = () => {
+      if (image != null) { //stops errors if user tries to upload non-image file type
+          //show progress bar
+          this.setState({ showProgressBar: true });
+          const uploadTask = storage.ref(image.name);
+          const imageRef = firestore
+              .collection("users")
+              .doc(localStorage.getItem("uid"))
+              .collection("images");
+          uploadTask.put(image) //uploads image to firebase storage
+              .on(
+                  "state_changed",
+                  snapshot => {//current progress of upload
+                      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                      this.setState({ progress: percentage }); //update state progress
+                  },
+                  error => { //if error
+                      console.log(error);
+                      //hide progress bar after 2 sec
+                      setTimeout(() => this.setState({ showProgressBar: false }), 3000);
+                  },
+                  async () => {
+                      //if successfully uploaded, get URL
+                      const url = await uploadTask.getDownloadURL()
+                      this.setURL(url); //update state url
+                      console.log(this.state.url);
+                      const createdAt = timestamp();
+                      console.log(imageRef)
+                      imageRef.add({ //adding the image url to the users firestore
+                          imageURL: url,
+                          date: createdAt,
+                          country: this.state.selectedCountry,
+                          name: image.name
+                      }); 
+                      //hide progress bar after 2 sec
+                      setTimeout(() => this.setState({ showProgressBar: false }), 3000);
+                  }
+              )
+      }
+  };
     return (
       <Container fluid="true" >
       <Row className="pt-5">
@@ -163,9 +235,21 @@ class TripForm extends Component {
                 <Form.Group>
                   <Form.Control id="enddate"  className="text-center" name="enddate" type="input" placeholder="Enter End Date"/>
                 </Form.Group>
-                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block="true" onClick={() => this.setUserNotifications("You have added a trip!")}>
-                SUBMIT
-                </Button>
+                {/* adding the image with the trip form */}
+                <Form.Group>
+                            <Form.File className="text-left galery_small_text"
+                                id="custom-file"
+                                label="Choose file"
+                                custom
+                                multiple onChange={changeHandler}
+                            />
+                </Form.Group>
+                {/* this onclick is used for notifications and for adding images to the storage and the users firestore */}
+                <Button id="submit" className="buttonStyle" variant="primary" type="submit" block="true" 
+                onClick={() => {
+                  this.setUserNotifications("You have added a trip!");
+                  handleSubmission();
+                }}>SUBMIT</Button>
             </Form>
           </Col>
           <Col/>
