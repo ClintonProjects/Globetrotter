@@ -369,7 +369,7 @@ class Gallery extends Component {
                                 date: createdAt,
                                 country: this.state.country,
                                 name: image.name
-                            }); 
+                            });
                             //hide progress bar after 2 sec
                             setTimeout(() => this.setState({ showProgressBar: false }), 3000);
                         }
@@ -416,7 +416,7 @@ class Gallery extends Component {
             let countryName = id.toLowerCase();
             console.log(countryName);
             this.setState({ docs: [] });
-            currentGallery 
+            currentGallery
                 .onSnapshot((snap) => {
                     if (snap.empty) {
                         console.log("Docs is empty");
@@ -544,10 +544,10 @@ class Gallery extends Component {
                         <Form.Control as="select" id="country" className="galery_small_text select_center_align" onChange={this.addCountry}>
                         <option key='blankChoice' hidden value className="galery_small_text" >Choose Country</option>
                         {this.state.countryList.map((c) => (
-                            <option  block key={c.id}>{c.id}</option>
+                            <option  block="true" key={c.id}>{c.id}</option>
                         ))}
                         </Form.Control> 
-                        </Form.Group> 
+                        </Form.Group>
                         {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
                         <Form.Group>
                             <Form.File className="text-left galery_small_text"
@@ -571,7 +571,7 @@ class Gallery extends Component {
             <Row>
                 <p className="h5 pt-5">Photo Library</p>
                 <Row >
-                    {/* showPhotos(), showFavourites() and showCountry() update the docs array in state 
+                    {/* showPhotos(), showFavourites() and showCountry() update the docs array in state
                     which controls which photos are shown to the user at any time  */}
                 <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showPhotos} > PHOTOS </Button>
                 <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showFavourites} > FAVOURITES </Button>
@@ -586,7 +586,7 @@ class Gallery extends Component {
                         <Container className="p-1">
                           <Row>
                             <Col className="col-6 text-left galery_small_text">
-                            {country.id} 
+                            {country.id}
                             </Col>
                             <Col/>
                           </Row>
@@ -642,7 +642,7 @@ class Gallery extends Component {
                 draggable
                 pauseOnHover
             />
-            
+
             <ToastContainer />
 
             {this.state.imageAvaiable ?

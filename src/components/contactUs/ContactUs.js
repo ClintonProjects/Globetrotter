@@ -44,15 +44,15 @@ class ContactUs extends Component {
             <hr className="textColour"/>
             <p className="h5 pb-2">Submit a request:</p>
            <Form onSubmit={this.handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
+              <Form.Group>
                 <Form.Label>Your email address:</Form.Label>
-                <Form.Control id="EmailContact" name="email" type="email" value={email} onChange={this.handleChangeEmail}/>
+                <Form.Control id="EmailContact" fill_color_override="true" name="email" type="email" value={email} onChange={this.handleChangeEmail}/>
               </Form.Group>
-              <Form.Group controlId="formSubject">
+              <Form.Group>
                 <Form.Label>Subject:</Form.Label>
-                <Form.Control id="SubjectContact" name="subject" type="input" value={subject} onChange={this.handleChangeSubject}/>
+                <Form.Control id="SubjectContact"  name="subject" type="input" value={subject} onChange={this.handleChangeSubject}/>
               </Form.Group>
-              <Form.Group controlId="formDescription">
+              <Form.Group>
                 <Form.Label>Description:</Form.Label>
                 <Form.Control as="textarea" rows={5} id="DescriptionContact"  name="description" value={description} onChange={this.handleChangeDescription} />
               </Form.Group>
