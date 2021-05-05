@@ -6,6 +6,10 @@ import Trip, { tripConverter } from "../fsObjConversion.js"; // for fs transfers
 import ISO from "./names.json";
 import "./TripForm.css";
 import { Container, Form, Button, Row, Col, DropdownButton, Dropdown} from 'react-bootstrap';
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
 
 // declare global variable for use in componentDidMount & addData
 const firestore = firebase.firestore();
@@ -33,10 +37,7 @@ class TripForm extends Component {
       selectedCountry: '',
       image: null,
       url: null,
-      progress: 0,
-      showProgressBar: false,
-      //country: "not specified",
-      docs: [],
+      submitted: false
     };
     this.setURL = this.setURL.bind(this);
     this.addData = this.addData.bind(this);
@@ -69,6 +70,7 @@ class TripForm extends Component {
         .withConverter(tripConverter)
         .set(new Trip(country, startDate.value, endDate.value));
       console.log("trip added");
+      this.setState({submitted: true})
     } catch (error) {
       alert("invalid input");
       console.error(error);
@@ -125,7 +127,6 @@ class TripForm extends Component {
     const image = this.state.image;
     //sets the allowed file types that can be uploaded
     const types = ['image/jpeg', 'image/png'];
-    const docs = this.state.docs;
 
     const changeHandler = (event) => {
       let photo = event.target.files[0];
@@ -141,8 +142,6 @@ class TripForm extends Component {
 
   const handleSubmission = () => {
       if (image != null) { //stops errors if user tries to upload non-image file type
-          //show progress bar
-          this.setState({ showProgressBar: true });
           const uploadTask = storage.ref(image.name);
           const imageRef = firestore
               .collection("users")
@@ -152,8 +151,7 @@ class TripForm extends Component {
               .on(
                   "state_changed",
                   snapshot => {//current progress of upload
-                      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                      this.setState({ progress: percentage }); //update state progress
+                      console.log("uploading image");
                   },
                   error => { //if error
                       console.log(error);
@@ -173,8 +171,7 @@ class TripForm extends Component {
                           country: this.state.selectedCountry,
                           name: image.name
                       }); 
-                      //hide progress bar after 2 sec
-                      setTimeout(() => this.setState({ showProgressBar: false }), 3000);
+                      
                   }
               )
       }
@@ -219,8 +216,10 @@ class TripForm extends Component {
         <Row >
           <Col/>
           <Col className="trip_form_middle_col contactUs p-5 mt-5">
-            <p className="h2 text-center">Your Trip</p>
-            <Form onSubmit={this.addData}>
+          {!this.state.submitted && <p className="h2 text-center">Your Trip</p>}
+          {this.state.submitted && <p className="h2 text-center">Congratulations!</p>}
+          {this.state.submitted && <p className="h2 text-center">Your Trip is added</p>}
+            {!this.state.submitted && <Form onSubmit={this.addData}>
                 <Form.Group>
                   <Form.Control as="select" id="country" className="select_center_align" onChange={this.captureSelectValue}>
                     <option key='blankChoice' hidden value >Select Trip Country</option>
@@ -250,7 +249,18 @@ class TripForm extends Component {
                   this.setUserNotifications("You have added a trip!");
                   handleSubmission();
                 }}>SUBMIT</Button>
-            </Form>
+            </Form>}
+            {/* conditional rendering for helping user decide what they want to do next */}
+            {this.state.submitted && 
+            <Link className="nounderline" to="/gallery" onClick={this.props.picBack}>
+              <Button className="buttonStyle" variant="primary" block>See Photo Gallery</Button>
+           </Link>}
+           {this.state.submitted &&
+              <Button className="buttonStyle" variant="primary" block
+                onClick={() => {
+                  this.setState({submitted: false});
+                }}> Add Another Trip
+              </Button>}
           </Col>
           <Col/>
         </Row>
