@@ -41,7 +41,9 @@ class NavBar extends Component {
         let json = JSON.stringify(data.data());
         jsonSplit = JSON.parse(json);
         console.log(jsonSplit.notifications);
-        this.setState({ notList: jsonSplit.notifications });
+        let list = jsonSplit.notifications;
+        list = list.reverse();
+        this.setState({ notList: list });
         return
       } catch (exp) {
         firebase.firestore().collection('users').doc(localStorage.getItem("uid")).set({ notifications: [] });

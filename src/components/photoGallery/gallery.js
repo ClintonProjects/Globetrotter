@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Carousel, Button, Row, Col, Image, OverlayTrigger, Popover, InputGroup, FormControl, ProgressBar, Form, Accordion, Card, Dropdown } from 'react-bootstrap';
 import firebase from "../myFirebaseConfig.js";
 import Firebase from "firebase/app";
-import 'firebase/storage'; 
+import 'firebase/storage';
 import 'firebase/firestore';
 import "./Gallery.css";
 import { ToastContainer, toast } from 'react-toastify';
@@ -73,22 +73,22 @@ class Gallery extends Component {
         return;
     }
     //set url for the image so we can save in firestore
-    setURL(urlpassed){
-        this.setState({ url: urlpassed});
-      } 
+    setURL(urlpassed) {
+        this.setState({ url: urlpassed });
+    }
     //adding the country to state so we can upload with the image
-      addCountry = (event) =>{
+    addCountry = (event) => {
         let countryName = event.target.value;
         console.log(countryName);
-        this.setState({country: countryName});
+        this.setState({ country: countryName });
         console.log(this.state.country);
-      }
+    }
 
-      componentDidMount() {
+    componentDidMount() {
         //not sure why is this needed but the library instructions ask for it: https://www.npmjs.com/package/bs-custom-file-input#how-to-use-it
         BsCustomFileInput.init()
         this.getCountryList();
-      } 
+    }
     //allows a user to set the country on an image if not done with upload
     setCountry(countryPassed) {
         this.setState({ countryView: countryPassed });
@@ -327,13 +327,13 @@ class Gallery extends Component {
         const changeHandler = (event) => {
             let photo = event.target.files[0];
             //confirms that the correct file types have been uploaded
-            if (types.includes(photo.type)){
-            this.setState({image: photo});
-            }else{
-            //if error
-            photo =null; //removes file from photo variable if not image
-            alert("Please upload an image file (jpeg or png)");
-            }  
+            if (types.includes(photo.type)) {
+                this.setState({ image: photo });
+            } else {
+                //if error
+                photo = null; //removes file from photo variable if not image
+                alert("Please upload an image file (jpeg or png)");
+            }
         };
 
         const handleSubmission = () => {
@@ -374,6 +374,19 @@ class Gallery extends Component {
                             setTimeout(() => this.setState({ showProgressBar: false }), 3000);
                         }
                     )
+
+                this.setUserNotifications("You have uploaded an image!");
+
+
+                toast.info('😾 You have uploaded an image!', {
+                    position: "bottom-center",
+                    autoClose: 2500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         };
 
@@ -424,7 +437,7 @@ class Gallery extends Component {
                         let documents = [];
                         snap.forEach(doc => {
                             if (doc.data().country === null) console.log("country empty")
-                            if (doc.data().country.toLowerCase() === countryName )
+                            if (doc.data().country.toLowerCase() === countryName)
                                 documents.push({ ...doc.data(), id: doc.id }); //push data and the unique firestore doc id to the array documents
                         });
                         this.setState({ docs: documents }); //update state with the documents array
@@ -456,196 +469,197 @@ class Gallery extends Component {
                 onMouseLeave={() => this.setState(
                     { picMenuTimeoutID: [...this.state.picMenuTimeoutID, setTimeout(() => this.startSliding(), 3000)] })}
             >
-        <Container>
-            <Row className="pb-1">
-                <Col>
-                <InputGroup fluid="true"  className="mb-1">
-                        <FormControl
-                        placeholder="Picture Comment"
-                        aria-label="Picture Comment"
-                        className="galery_med_text"
-                        onChange={event => {
-                            this.setState({ picComment : event.target.value });
-                        }}
-                        />
-                        <InputGroup.Append onClick={() => this.setUserNotifications("You have added a comment to an image!")}>
-                            <Button variant="outline-info" className="galery_med_text" onClick={this.commentPicHandler}>Add Comment</Button>
-                        </InputGroup.Append>
-                </InputGroup>
-                </Col>
-            </Row>
-            <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image!")}>
-                <Col >
-                 <Button block variant="outline-info" className="galery_med_text" onClick={this.sharePicHandler}>Share</Button>
-                </Col>
+                <Container>
+                    <Row className="pb-1">
+                        <Col>
+                            <InputGroup fluid="true" className="mb-1">
+                                <FormControl
+                                    placeholder="Picture Comment"
+                                    aria-label="Picture Comment"
+                                    className="galery_med_text"
+                                    onChange={event => {
+                                        this.setState({ picComment: event.target.value });
+                                    }}
+                                />
+                                <InputGroup.Append onClick={() => this.setUserNotifications("You have added a comment to an image!")}>
+                                    <Button variant="outline-info" className="galery_med_text" onClick={this.commentPicHandler}>Add Comment</Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image!")}>
+                        <Col >
+                            <Button block variant="outline-info" className="galery_med_text" onClick={this.sharePicHandler}>Share</Button>
+                        </Col>
 
-            </Row>
-            <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image to your favourites!")}>
-                <Col>
-                    <Button block variant="outline-info" className="galery_med_text" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
-                </Col>
-             </Row>
-            <Row className="pb-1">
-                <Col>
-                    <InputGroup className="mb-3">
-                            <FormControl
-                            placeholder="Country"
-                            aria-label="Country"
-                            className="galery_med_text"
-                            onChange={event => {
-                                this.setState({ settingCountry : event.target.value });
-                            }}
-                            />
-                            <InputGroup.Append>
-                                <Button variant="outline-info" className="galery_med_text" onClick={this.setCountry}> Set Country </Button>
-                            </InputGroup.Append>
-                    </InputGroup>
-                </Col>
-            </Row>
-            <Row className="pb-1" onClick={() => this.setUserNotifications("You have deleted an image!")}>
-                <Col>
-                    <Button block variant="outline-dark" className="galery_med_text" onClick={this.deletePicHandler}>Delete</Button>
-                </Col>
-            </Row>
-        </Container>
-        </Popover.Content>
-    </Popover>
-    //method that will build thumnails pictures
-    const tItems = (docs && docs.map(doc =>{
-        return <Col xs={6} md={2} className="col-2" key={doc.id}>
-            <Image src={doc.imageURL} alt="users-travel-pic" rounded
-            doc_id={doc.id}
-            onClick={this.thumbnailClick}
-            className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"}/>
-        </Col>
-    }));
-    return(
-        <Container fluid="true" className="Gallery pl-2">
-            <Row>
-              {/* shows photo upload progress to user */}
-              <ProgressBar animated now={this.state.progress} label={this.state.progress+'%'}
-              className={this.state.showProgressBar == true ? "d-inline-flex" : "d-none"}
-              variant="dark"/>
-            </Row>
-            <Row>
-            <Col xs={2} className="pl-4">
-            <Row>
-                <p className="h5 pt-5">Upload Menu</p>
-                {/*Acordion inspired from https://react-bootstrap.netlify.app/components/accordion/#accordion */}
-                <Accordion className="w-100">
-                <Card className="w-100">
-                    <Accordion.Toggle as={Card.Header} eventKey="0" className="text-center buttonStyle white-text">
-                    ADD PICTURES
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                        <Form>
-                        <Form.Group>
-                        <Form.Control as="select" id="country" className="galery_small_text select_center_align" onChange={this.addCountry}>
-                        <option key='blankChoice' hidden value className="galery_small_text" >Choose Country</option>
-                        {this.state.countryList.map((c) => (
-                            <option  block="true" key={c.id}>{c.id}</option>
-                        ))}
-                        </Form.Control> 
-                        </Form.Group>
-                        {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
-                        <Form.Group>
-                            <Form.File className="text-left galery_small_text"
-                                id="custom-file"
-                                label="Choose file"
-                                custom
-                                multiple onChange={changeHandler}
-                            />
-                        </Form.Group>
+                    </Row>
+                    <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image to your favourites!")}>
+                        <Col>
+                            <Button block variant="outline-info" className="galery_med_text" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
+                        </Col>
+                    </Row>
+                    <Row className="pb-1">
+                        <Col>
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                    placeholder="Country"
+                                    aria-label="Country"
+                                    className="galery_med_text"
+                                    onChange={event => {
+                                        this.setState({ settingCountry: event.target.value });
+                                    }}
+                                />
+                                <InputGroup.Append>
+                                    <Button variant="outline-info" className="galery_med_text" onClick={this.setCountry}> Set Country </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row className="pb-1" onClick={() => this.setUserNotifications("You have deleted an image!")}>
+                        <Col>
+                            <Button block variant="outline-dark" className="galery_med_text" onClick={this.deletePicHandler}>Delete</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            </Popover.Content>
+        </Popover>
+        //method that will build thumnails pictures
+        const tItems = (docs && docs.map(doc => {
+            return <Col xs={6} md={2} className="col-2" key={doc.id}>
+                <Image src={doc.imageURL} alt="users-travel-pic" rounded
+                    doc_id={doc.id}
+                    onClick={this.thumbnailClick}
+                    className={this.state.selectedThumbnail == doc.id ? "img-thumbnail galery-thumbnail" : "img-thumbnail"} />
+            </Col>
+        }));
+        return (
+            <Container fluid="true" className="Gallery pl-2">
+                <Row>
+                    {/* shows photo upload progress to user */}
+                    <ProgressBar animated now={this.state.progress} label={this.state.progress + '%'}
+                        className={this.state.showProgressBar == true ? "d-inline-flex" : "d-none"}
+                        variant="dark" />
+                </Row>
+                <Row>
+                    <Col xs={2} className="pl-4">
                         <Row>
-                            <Col>
-                            <Button block className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
-                            </Col>
+                            <p className="h5 pt-5">Upload Menu</p>
+                            {/*Acordion inspired from https://react-bootstrap.netlify.app/components/accordion/#accordion */}
+                            <Accordion className="w-100">
+                                <Card className="w-100">
+                                    <Accordion.Toggle as={Card.Header} eventKey="0" className="text-center buttonStyle white-text">
+                                        ADD PICTURES
+                    </Accordion.Toggle>
+                                    <Accordion.Collapse eventKey="0">
+                                        <Card.Body>
+                                            <Form>
+                                                <Form.Group>
+                                                    <Form.Control as="select" id="country" className="galery_small_text select_center_align" onChange={this.addCountry}>
+                                                        <option key='blankChoice' hidden value className="galery_small_text" >Choose Country</option>
+                                                        {this.state.countryList.map((c) => (
+                                                            <option block="true" key={c.id}>{c.id}</option>
+                                                        ))}
+                                                    </Form.Control>
+                                                </Form.Group>
+                                                {/* inspired from: https://react-bootstrap.netlify.app/components/forms/#forms-custom-file*/}
+                                                <Form.Group>
+                                                    <Form.File className="text-left galery_small_text"
+                                                        id="custom-file"
+                                                        label="Choose file"
+                                                        custom
+                                                        multiple onChange={changeHandler}
+                                                    />
+                                                </Form.Group>
+                                                <Row>
+                                                    <Col >
+                                                        <Button block className="float-right" variant="outline-info" size="sm" id="uploadphoto-button" onClick={handleSubmission}>Upload</Button>
+                                                    </Col>
+                                                </Row>
+                                            </Form>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>
                         </Row>
-                        </Form>
-                    </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-                </Accordion>
-            </Row>
-            <Row>
-                <p className="h5 pt-5">Photo Library</p>
-                <Row >
-                    {/* showPhotos(), showFavourites() and showCountry() update the docs array in state
+                        <Row>
+                            <p className="h5 pt-5">Photo Library</p>
+                            <Row >
+                                {/* showPhotos(), showFavourites() and showCountry() update the docs array in state
                     which controls which photos are shown to the user at any time  */}
-                <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showPhotos} > PHOTOS </Button>
-                <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showFavourites} > FAVOURITES </Button>
-                </Row>
-                <Dropdown id="galeryCountry" title="Select Trip Country">
-                <Dropdown.Toggle  className="w-100 buttonStyle">
-                  COUNTRY
+                                <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showPhotos} > PHOTOS </Button>
+                                <Button variant="info" className="ml-3 pb-2 mb-1" size="m" onClick={showFavourites} > FAVOURITES </Button>
+                            </Row>
+                            <Dropdown id="galeryCountry" title="Select Trip Country">
+                                <Dropdown.Toggle className="w-100 buttonStyle">
+                                    COUNTRY
                 </Dropdown.Toggle>
-                <Dropdown.Menu className="w-100" >
-                  {this.state.countryList.map((country, index) => (
-                      <Dropdown.Item key={index} onClick={() => showCountry(country.id)}>{
-                        <Container className="p-1">
-                          <Row>
-                            <Col className="col-6 text-left galery_small_text">
-                            {country.id}
-                            </Col>
-                            <Col/>
-                          </Row>
-                          </Container>
-                      }
-                      </Dropdown.Item>
-                  ))
-                  }
-                </Dropdown.Menu>
-              </Dropdown>
-            </Row>
-            </Col>
-            <Col xs={7} className="pl-4">
-            <Row className={this.state.docs.length===0? "d-none":"contactUs p-3"}>
-                <Row className="pb-2">
-                    <OverlayTrigger
-                        //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
-                        trigger={['hover', 'focus']}
-                        key="right"
-                        placement="right-start"
-                        show={this.state.showPicMenuTooltip}
-                        delay={{ show: 0, hide: 10 }}
-                        overlay={picMenu}
-                    >
-                        <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
-                        onFocus={() => { this.stopSliding(); }}
-                        onMouseMove={() => { this.stopSliding(); }}
-                        onMouseLeave={() => 
-                        //start sliding with timemout method to to give mouse a chance to enter pic menu
-                        this.setState( {
-                            carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout( () => this.startSliding(), 3000 )]})
-                        }> 
-                        {cItems} </Carousel>
-                    </OverlayTrigger>
+                                <Dropdown.Menu className="w-100" >
+                                    {this.state.countryList.map((country, index) => (
+                                        <Dropdown.Item key={index} onClick={() => showCountry(country.id)}>{
+                                            <Container className="p-1">
+                                                <Row>
+                                                    <Col className="col-6 text-left galery_small_text">
+                                                        {country.id}
+                                                    </Col>
+                                                    <Col />
+                                                </Row>
+                                            </Container>
+                                        }
+                                        </Dropdown.Item>
+                                    ))
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Row>
+                    </Col>
+                    <Col xs={7} className="pl-4">
+                        <Row className={this.state.docs.length === 0 ? "d-none" : "contactUs p-3"}>
+                            <Row className="pb-2">
+                                <OverlayTrigger
+                                    //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
+                                    trigger={['hover', 'focus']}
+                                    key="right"
+                                    placement="right-start"
+                                    show={this.state.showPicMenuTooltip}
+                                    delay={{ show: 0, hide: 10 }}
+                                    overlay={picMenu}
+                                >
+                                    <Carousel pause="hover" interval={this.state.carouselInterval} activeIndex={this.state.carouselIndex} onSelect={this.carouselSelect}
+                                        onFocus={() => { this.stopSliding(); }}
+                                        onMouseMove={() => { this.stopSliding(); }}
+                                        onMouseLeave={() =>
+                                            //start sliding with timemout method to to give mouse a chance to enter pic menu
+                                            this.setState({
+                                                carouselStartTimeoutID: [...this.state.carouselStartTimeoutID, setTimeout(() => this.startSliding(), 3000)]
+                                            })
+                                        }>
+                                        {cItems} </Carousel>
+                                </OverlayTrigger>
+                            </Row>
+                            <Row className="no-gutters galery-thumbnail-row">
+                                {tItems}
+                            </Row>
+                        </Row>
+                    </Col>
+                    <Col xs={2} />
                 </Row>
-                <Row className="no-gutters galery-thumbnail-row">
-                    {tItems}                 
-                </Row>
-            </Row>
-            </Col>
-            <Col xs={2}/>
-            </Row>
 
 
-            <ToastContainer
-                position="bottom-center"
-                autoClose={2500}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={2500}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
 
-            <ToastContainer />
+                <ToastContainer />
 
-            {this.state.imageAvaiable ?
+                {this.state.imageAvaiable ?
                     <Row>
                         {this.state.imageAvaiable = false}
                         {toast.info('😾 Image added to your clipboard!', {
@@ -659,8 +673,8 @@ class Gallery extends Component {
                         })}
                     </Row>
                     : ""}
-        </Container>
-    )
+            </Container>
+        )
 
 
     }
