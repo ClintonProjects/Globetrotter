@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./forgotPass.css";
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
   BrowserRouter as Router,
   Link,

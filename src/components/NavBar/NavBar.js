@@ -4,7 +4,7 @@ import "./NavBar.css";
 import Firebase from "firebase/app";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import Logo from './SLEEPY.png';
-import logo from './logo/fullLogoNew.png';
+import logo from './logo/logo_final_full.png';
 import firebase from "firebase/app";
 import 'firebase/firestore';
 
@@ -95,7 +95,7 @@ class NavBar extends Component {
       <div id="bar" className="container-fluid" >
         <div className="row">
           <div className="col-sm-1 boradercover" /*onClick="notfalse()"*/>
-            <div className="logo">
+            <div className="logo icon_nav_logo">
               {!authenticated && (
                 <Link to="/" onClick={this.props.picNoBack}><img src={logo} alt="Logo" className="icon icon_nav_logo" /></Link>
               )}
@@ -106,7 +106,7 @@ class NavBar extends Component {
           </div>
           <div className="row col-sm-3" />
           <div className="row col-sm-4 boradercover">
-            <div className="links" /*onClick="notfalse()"*/>
+            <div className="links linkFont" /*onClick="notfalse()"*/>
               {!authenticated && (
                 <Link className="nav-text" to="/login" onClick={this.props.picBack}>Map</Link>
               )}

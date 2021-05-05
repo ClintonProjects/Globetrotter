@@ -3,7 +3,7 @@ import { Container, Form, Button, Row, Col, Image, OverlayTrigger, Popover, Inpu
 import "./RegisterMessage.css";
 import Map from './Map';
 import Login from '../Login/login.js';
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
   BrowserRouter as Router,
   Switch,
