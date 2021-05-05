@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Container, Form, Button, Row, Col, Image, OverlayTrigger, Popover, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Button, Row, Col} from 'react-bootstrap';
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./logout.css";
 import Login from "../Login/login";
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
   BrowserRouter as Router,
   Link,

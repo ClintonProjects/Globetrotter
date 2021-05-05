@@ -3,7 +3,7 @@ import { Container, Form, Button, Row, Col} from 'react-bootstrap';
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./login.css";
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
   BrowserRouter as Router,
   Link,

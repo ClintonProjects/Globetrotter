@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Container, Form, Button, Row, Col, Image, OverlayTrigger, Popover, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col} from 'react-bootstrap';
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./rego.css";
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
     BrowserRouter as Router,
     Link,
