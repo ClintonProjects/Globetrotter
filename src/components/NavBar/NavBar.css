@@ -62,10 +62,27 @@ nav {
     width: 60vw;
 }
 
-.nav-text .nav-text:hover, .nav-text:visited, .nav-text:active{
-    color: white !important;
-    text-decoration: none;
-}
+/* unvisited link */
+#bar a:link {
+    color: white;
+  }
+  
+  /* visited link */
+  #bar a:visited {
+    color: white;
+  }
+  
+  /* mouse over link */
+  #bar a:hover {
+    color: white;
+  }
+  
+  /* selected link */
+  #bar a:active {
+    color: white;
+  }
+
+
 .icon_nav_logo{
     margin-left: 30% !important;
 }
