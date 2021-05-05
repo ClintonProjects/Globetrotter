@@ -244,10 +244,10 @@ class TripForm extends Component {
                   <p className="h2 text-center">Your Trip</p>
                 )}
                 {this.state.submitted && (
-                  <p className="h2 text-center">Congratulations!</p>
+                  <p className="h3 text-center">Congratulations!</p>
                 )}
                 {this.state.submitted && (
-                  <p className="h2 text-center">Your Trip is added</p>
+                  <p className="h4 pt-1 pb-1 text-center">Your Trip is added</p>
                 )}
                 {!this.state.submitted && (
                   <Form onSubmit={this.addData}>
@@ -269,31 +269,22 @@ class TripForm extends Component {
                       </Form.Control>
                     </Form.Group>
                     <Form.Group>
-                      <Form.Control
-                        id="startdate"
-                        className="text-center"
-                        name="startdate"
-                        type="input"
-                        placeholder="Enter Start Date"
+                      <Form.Control fill_color_override="true"
+                        id="startdate" className="text-center" name="startdate"
+                        type="input" placeholder="Enter Start Date"
                       />
                     </Form.Group>
                     <Form.Group>
-                      <Form.Control
-                        id="enddate"
-                        className="text-center"
-                        name="enddate"
-                        type="input"
-                        placeholder="Enter End Date"
+                      <Form.Control fill_color_override="true"
+                        id="enddate" className="text-center" name="enddate"
+                        type="input" placeholder="Enter End Date"
                       />
                     </Form.Group>
                     {/* adding the image with the trip form */}
                     <Form.Group>
-                      <Form.File
-                        className="text-left galery_small_text"
-                        id="custom-file"
-                        label="Choose file"
-                        custom
-                        multiple
+                      <Form.File fill_color_override="true"
+                        className="text-left galery_small_text" id="custom-file"
+                        label="Choose file" custom multiple
                         onChange={changeHandler}
                       />
                     </Form.Group>
@@ -314,30 +305,36 @@ class TripForm extends Component {
                   </Form>
                 )}
                 {/* conditional rendering for helping user decide what they want to do next */}
-                {this.state.submitted && (
-                  <Link
-                    className="nounderline"
-                    to="/gallery"
-                    onClick={this.props.picBack}
-                  >
-                    <Button className="buttonStyle" variant="primary" block>
-                      See Photo Gallery
+                {this.state.submitted && 
+                <Row className="pb-2">
+                  <Col>
+                    <Link
+                      className="nounderline"
+                      to="/gallery"
+                      onClick={this.props.picBack}>
+                      <Button className="buttonStyle" variant="primary" block>
+                        See Photo Gallery
+                      </Button>
+                    </Link>
+                  </Col>
+                </Row>}
+                {this.state.submitted && 
+                  <Row>
+                    <Col>
+                      <Button
+                      className="buttonStyle"
+                      variant="primary"
+                      block
+                      onClick={() => {
+                        this.setState({ submitted: false });
+                      }}
+                    >
+                      {" "}
+                      Add Another Trip
                     </Button>
-                  </Link>
-                )}
-                {this.state.submitted && (
-                  <Button
-                    className="buttonStyle"
-                    variant="primary"
-                    block
-                    onClick={() => {
-                      this.setState({ submitted: false });
-                    }}
-                  >
-                    {" "}
-                    Add Another Trip
-                  </Button>
-                )}
+                    </Col>
+                  </Row>
+                }
               </Col>
               <Col />
             </Row>

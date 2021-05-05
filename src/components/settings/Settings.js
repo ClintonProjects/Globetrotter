@@ -71,62 +71,41 @@ class Settings extends Component {
     return (
       <Container>
         <Row>
-          <Col>
+          <Col/>
           <Col className="col-8 contactUs p-4">
             <p className="h2 ">Personal Information</p>
             <hr className="textColour" />
             {!this.state.updated && <Form onSubmit={this.addData}>
-              <Form.Group controlId="formFullName">
+              <Form.Group>
                 <Form.Label>Full Name:</Form.Label>
                 <Form.Control
-                  id="fullname"
-                  name="Name"
-                  type="text"
+                  id="fullname" name="Name" type="input" fill_color_override="true"
                   //added onChange event listeners to set state when user enters their data
                   onChange={event => {
                     this.setState({ fullName : event.target.value });
                 }}
-                  //value={""}
                 />
-                {/* <input type="text" id="fname" name="fname"></input> */}
               </Form.Group>
-              <Form.Group controlId="formBirthday">
+              <Form.Group>
                 <Form.Label>Birthday (DD/MM/YYYY):</Form.Label>
                 <Form.Control
-                  id="birthday"
-                  name="birthday"
-                  type="input"
+                  id="birthday" name="birthday" type="input" fill_color_override="true"
                   //added onChange event listeners to set state when user enters their data
                   onChange={event => {
                     this.setState({ birthday : event.target.value });
                 }}
-                  //value={""}
                 />
               </Form.Group>
-              <Form.Group controlId="formGender">
+              <Form.Group>
                 <Form.Label>Gender (F/M):</Form.Label>
                 <Form.Control
-                  id="gender"
-                  name="gender"
-                  type="input"
+                  id="gender" name="gender" type="input" fill_color_override="true"
                   //added onChange event listeners to set state when user enters their data
                   onChange={event => {
                     this.setState({ gender : event.target.value });
                 }}
-                  //value={""}
                 />
-              </Form.Group>
-              {/* <Form.Group controlId="formEmail">
-                <Form.Label>Email Address:</Form.Label>
-                <Form.Control
-                  id="email"
-                  className="whiteBackground"
-                  name="email"
-                  type="email"
-                  //value={""}
-                />
-              </Form.Group> */}
-              
+              </Form.Group>              
 
               <Button
                 className="buttonStyle"
@@ -138,14 +117,17 @@ class Settings extends Component {
               </Button>
             </Form> }
             {/* redirects user to add a trip once they have updated their details */}
-            {this.state.updated && <Link to="tripform">Your details are now updated! Please add your first trip.
-            <Button className="buttonStyle" variant="primary" block>
-              Add Trip</Button>
-              </Link>}
+            {this.state.updated && <Row>
+              <p>Your details are now updated! Please add your first trip.</p>
+              <Link to="tripform">
+              <Button className="buttonStyle" variant="primary" block>Add Trip</Button>
+                </Link>
+            </Row>
+            }
 
             {/* change password had to be moved outside of the form for details or onSubmit changePassword
             the form onSubmit (addData) was happening -> Line 70*/}
-            <Form.Group controlId="formPassword">
+            <Form.Group>
                 <Form.Label>Password:</Form.Label>
                 <Form.Row className="pb-3">
                   <Col>
@@ -170,8 +152,7 @@ class Settings extends Component {
                 </Form.Row>
               </Form.Group>
           </Col>
-          </Col>
-              
+          <Col/>
         </Row>
         </Container>
     );
