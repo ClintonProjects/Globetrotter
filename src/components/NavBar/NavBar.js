@@ -18,17 +18,18 @@ class NavBar extends Component {
       //     notList: ["Notficiton #1", "Notficiton #2", "Notficiton #3"],
       //     timelist: [8, 2, 1]
       userId: localStorage.getItem("uid"),
-      notList: [],
+      notificationboxList: [],
       timelist: [],
     }
-    this.not = this.not.bind(this);
+    this.notificationbox = this.notificationbox.bind(this);
     this.notficitonBoxSettings = this.notficitonBoxSettings.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.getUserNotifications = this.getUserNotifications.bind(this);
+    this.closeNotificationBox = this.closeNotificationBox.bind(this);
 
   }
 
-  not() {
+  notificationbox() {
     return this.state.notficitonBox;
   }
 
@@ -46,7 +47,7 @@ class NavBar extends Component {
         console.log(jsonSplit.notifications);
         let list = jsonSplit.notifications;
         list = list.reverse();
-        this.setState({ notList: list });
+        this.setState({ notificationboxList: list });
         return
       } catch (exp) {
         firebase.firestore().collection('users').doc(localStorage.getItem("uid")).set({ notifications: [] });
@@ -64,13 +65,13 @@ class NavBar extends Component {
 
   removeItem = (item) => {
     console.log("remove item");
-    var list = this.state.notList;
+    var list = this.state.notificationboxList;
     console.log(list);
     var removeitem = list[item];
     console.log(item);
     list = list.filter(item => item !== removeitem);
     console.log(list);
-    this.setState({ notList: list });
+    this.setState({ notificationboxList: list });
     firebase.firestore().collection('users').doc(localStorage.getItem("uid")).update({ notifications: list });
     return;
   }
@@ -84,7 +85,8 @@ class NavBar extends Component {
     else this.setState({ notficitonBox: false });
   }
 
-  notfalse() {
+  closeNotificationBox = () => {
+    console.log("close notifcaitons");
     this.setState({ notficitonBox: false });
   }
 
@@ -97,13 +99,12 @@ class NavBar extends Component {
     // const removeItem = this.props.removeItem;
     const authenticated = this.props.authenticated;
     const currentUser = this.props.currentUser;
-    const notfalse = this.props.notfalse;
 
     return (
       <div id="bar" className="container-fluid" >
         <div className="row">
-          <div className="col-sm-1 boradercover" /*onClick="notfalse()"*/>
-            <div className="logo icon_nav_logo">
+          <div className="col-sm-1 boradercover">
+            <div className="logo icon_nav_logo" onClick={() => this.closeNotificationBox()}>
               {!authenticated && (
                 <Link to="/" onClick={this.props.picNoBack}><img src={logo} alt="Logo" className="icon icon_nav_logo" /></Link>
               )}
@@ -114,7 +115,7 @@ class NavBar extends Component {
           </div>
           <div className="row col-sm-3" />
           <div className="row col-sm-4 boradercover">
-            <div className="links linkFont" /*onClick="notfalse()"*/>
+            <div className="links linkFont" onClick={() => this.closeNotificationBox()}>
               {!authenticated && (
                 <Link className="nav-text" to="/login" onClick={this.props.picBack}>Map</Link>
               )}
@@ -172,10 +173,10 @@ class NavBar extends Component {
 
         {
           this.state.notficitonBox && (
-            <div className="notbox">
-              {this.state.notList.length >= 1 && (
-                <div className="not1">
-                  <h6 className="not1text">
+            <div className="notificationbox">
+              {this.state.notificationboxList.length >= 1 && (
+                <div className="notificationbox1">
+                  <h6 className="notificationbox1text">
                     <button className="red" onClick={() => this.notficitonBoxSettings()}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
                     <div class="space Notificationstext">Notifications:</div>
                   </h6>
@@ -184,46 +185,46 @@ class NavBar extends Component {
               )}
 
 
-              {this.state.notList.length == 0 && (
-                <div className="not1noavaiable">
+              {this.state.notificationboxList.length == 0 && (
+                <div className="notificationbox1noavaiable">
                   <button className="rednoavaiable" onClick={() => this.notficitonBoxSettings()}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                  <h6 className="not1textnoavaiable">
+                  <h6 className="notificationbox1textnoavaiable">
                     <b>You have no notifications available </b>
                   </h6>
-                  {/* <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6> */}
+                  {/* <h6 className="notificationbox1text">{this.state.timelist[0]} Hours ago</h6> */}
                 </div>
               )}
-              {this.state.notList.length == 0 && (
-                <div className="not2">
+              {this.state.notificationboxList.length == 0 && (
+                <div className="notificationbox2">
                   <img src={Logo} className="kirby" />
                 </div>
               )}
 
-              {this.state.notList.length >= 1 && (
-                <div className="not1">
-                  <h6 className="not1text">
+              {this.state.notificationboxList.length >= 1 && (
+                <div className="notificationbox1">
+                  <h6 className="notificationbox1text">
                     <button className="green" onClick={() => this.removeItem(0)}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                    <div class="space">{this.state.notList[0]}</div>
+                    <div class="space">{this.state.notificationboxList[0]}</div>
                   </h6>
                   {/* <h6 className="not1text">{this.state.timelist[0]} Hours ago</h6> */}
                 </div>
               )}
 
-              {this.state.notList.length >= 2 && (
-                <div className="not1">
-                  <h6 className="not1text">
+              {this.state.notificationboxList.length >= 2 && (
+                <div className="notificationbox1">
+                  <h6 className="notificationbox1text">
                     <button className="green" onClick={() => this.removeItem(1)}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                    <div class="space">{this.state.notList[1]}</div>
+                    <div class="space">{this.state.notificationboxList[1]}</div>
                   </h6>
                   {/* <h6 className="not1text">{this.state.timelist[1]} Hours ago</h6> */}
                 </div>
               )}
 
-              {this.state.notList.length >= 3 && (
-                <div className="not1">
-                  <h6 className="not1text">
+              {this.state.notificationboxList.length >= 3 && (
+                <div className="notificationbox1">
+                  <h6 className="notificationbox1text">
                     <button className="green" onClick={() => this.removeItem(2)}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                    <div class="space">{this.state.notList[2]}</div>
+                    <div class="space">{this.state.notificationboxList[2]}</div>
                   </h6>
                   {/* <h6 className="not1text">{this.state.timelist[2]} Hours ago</h6> */}
                 </div>
