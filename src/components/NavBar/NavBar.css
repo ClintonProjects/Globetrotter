@@ -114,12 +114,10 @@ size: "2.3em";
 #bar .notbox {
     background-color: white; 
     position: absolute;
-    width: 12.5%;
-    margin-left: 76%;
+    width: 25vh;
     z-index: 999;
     border: peru solid 1px;
-    
-    /* border: yellow solid 1px;  */
+    right: 10%;
 }
 
 #bar .Insidenotbox {
