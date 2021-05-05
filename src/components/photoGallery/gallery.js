@@ -80,6 +80,7 @@ class Gallery extends Component {
     setURL(urlpassed){
         this.setState({ url: urlpassed});
       } 
+      
       addCountry = (event) =>{
         let countryName = event.target.value;
         console.log(countryName);
@@ -563,7 +564,7 @@ class Gallery extends Component {
 
                         <option key='blankChoice' hidden value className="galery_small_text" >Choose Country</option>
                         {this.state.countryList.map((c) => (
-                            <option  block key={c.id}>{c.id}</option>
+                            <option  block="true" key={c.id}>{c.id}</option>
                         ))}
 
                         </Form.Control> 

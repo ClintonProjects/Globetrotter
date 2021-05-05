@@ -20,6 +20,32 @@
 /*the webkit related style is needed to override cromes auto fill colour scheme*/
 /*https://stackoverflow.com/a/14205976*/
 /* Change the white to any color */
+input[fill_color_override="true"]:-webkit-autofill,
+input[fill_color_override="true"]:-webkit-autofill:hover,
+input[fill_color_override="true"]:-webkit-autofill:focus,
+input[fill_color_override="true"]:-webkit-autofill:active 
+{
+    box-shadow:0 0 0 30px white inset !important;
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+ -webkit-text-fill-color: black !important;
+}
+
+/*the webkit related style is needed to override cromes auto fill colour scheme*/
+/*https://stackoverflow.com/a/14205976*/
+/* Change the white to any color */
+input.whiteBackground:-webkit-autofill,
+input.whiteBackground:-webkit-autofill:hover,
+input.whiteBackground:-webkit-autofill:focus,
+input.whiteBackground:-webkit-autofill:active
+{
+    box-shadow:0 0 0 30px white inset !important;
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+ -webkit-text-fill-color: black !important;
+}
+
+/*the webkit related style is needed to override cromes auto fill colour scheme*/
+/*https://stackoverflow.com/a/14205976*/
+/* Change the white to any color */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -28,22 +54,6 @@ input:-webkit-autofill:active
     box-shadow:0 0 0 30px black inset !important;
  -webkit-box-shadow: 0 0 0 30px black inset !important;
  -webkit-text-fill-color: white !important;
-}
-
-/*the webkit related style is needed to override cromes auto fill colour scheme*/
-/*https://stackoverflow.com/a/14205976*/
-/* Change the white to any color */
-input.whiteBackground:-webkit-autofill,
-/* Change the white to any color */
-input.whiteBackground:-webkit-autofill:hover,
-/* Change the white to any color */
-input.whiteBackground:-webkit-autofill:focus,
-/* Change the white to any color */
-input.whiteBackground:-webkit-autofill:active
-{
-    box-shadow:0 0 0 30px white inset !important;
- -webkit-box-shadow: 0 0 0 30px white inset !important;
- -webkit-text-fill-color: black !important;
 }
 
 /*Change text in autofill textbox*/
