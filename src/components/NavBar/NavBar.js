@@ -33,6 +33,9 @@ class NavBar extends Component {
   }
 
   getUserNotifications = () => {
+  }
+
+  componentDidMount() {
     const firestore = firebase.firestore().collection('users').doc(localStorage.getItem("uid"));
 
     let jsonSplit;
@@ -51,6 +54,9 @@ class NavBar extends Component {
       }
     });
     return;
+
+
+
   }
 
 
@@ -193,7 +199,7 @@ class NavBar extends Component {
                 </div>
               )}
 
-              {this.state.notList.length > 0 && (
+              {this.state.notList.length >= 1 && (
                 <div className="not1">
                   <h6 className="not1text">
                     <button className="green" onClick={() => this.removeItem(0)}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
@@ -203,21 +209,21 @@ class NavBar extends Component {
                 </div>
               )}
 
-              {this.state.notList.length > 1 && (
+              {this.state.notList.length >= 2 && (
                 <div className="not1">
                   <h6 className="not1text">
                     <button className="green" onClick={() => this.removeItem(1)}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                    <div class="space">{this.state.notList[0]}</div>
+                    <div class="space">{this.state.notList[1]}</div>
                   </h6>
                   {/* <h6 className="not1text">{this.state.timelist[1]} Hours ago</h6> */}
                 </div>
               )}
 
-              {this.state.notList.length > 2 && (
+              {this.state.notList.length >= 3 && (
                 <div className="not1">
                   <h6 className="not1text">
                     <button className="green" onClick={() => this.removeItem(2)}><FaIcons.FaRegTimesCircle ></FaIcons.FaRegTimesCircle></button>
-                    <div class="space">{this.state.notList[0]}</div>
+                    <div class="space">{this.state.notList[2]}</div>
                   </h6>
                   {/* <h6 className="not1text">{this.state.timelist[2]} Hours ago</h6> */}
                 </div>

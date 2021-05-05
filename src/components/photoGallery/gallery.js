@@ -180,6 +180,7 @@ class Gallery extends Component {
         docPath.update({ favourites: true })
             //advise if successfully added comment field or not
             .then(() => {
+                this.setUserNotifications("Congratulations you have added an image to your favourites!");
                 toast.info('😾 Successfully saved your photo to Favourites', {
                     position: "bottom-center",
                     autoClose: 2500,
@@ -222,7 +223,7 @@ class Gallery extends Component {
                 this.state.imageLink = url;
                 this.state.imageAvaiable = true;
                 navigator.clipboard.writeText(url);
-                firebase.firestore().collection('users').doc(localStorage.getItem("uid")).update({ notifications: ["Congratulations, you have shared an image"] });
+                this.setUserNotifications("Congratulations you have shared an image!");
             }).catch((error) => {
                 toast.info('😾 Error getting image URL ' + error, {
                     position: "bottom-center",
@@ -487,13 +488,13 @@ class Gallery extends Component {
                             </InputGroup>
                         </Col>
                     </Row>
-                    <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image!")}>
+                    <Row className="pb-1">
                         <Col >
                             <Button block variant="outline-info" className="galery_med_text" onClick={this.sharePicHandler}>Share</Button>
                         </Col>
 
                     </Row>
-                    <Row className="pb-1" onClick={() => this.setUserNotifications("Congratulations you have added an image to your favourites!")}>
+                    <Row className="pb-1">
                         <Col>
                             <Button block variant="outline-info" className="galery_med_text" onClick={this.addToFavouritesHandler}>Add to Favourites</Button>
                         </Col>
