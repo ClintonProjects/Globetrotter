@@ -115,7 +115,7 @@ size: "2.3em";
 }
 
 
-#bar .notbox {
+#bar .notificationbox {
     background-color: white; 
     position: absolute;
     width: 25vh;
@@ -124,7 +124,7 @@ size: "2.3em";
     right: 10%;
 }
 
-#bar .Insidenotbox {
+#bar .Insidenotificationbox {
     width: 100%;
     position: relative;
     height: 30%;
@@ -134,7 +134,7 @@ size: "2.3em";
     /* background-color: yellow;  */
 }
 
-#bar .left-top-notbox {
+#bar .left-top-notificationbox {
     margin-top: 0%;
     margin-left: 7%;
     width: 60%;
@@ -187,7 +187,7 @@ size: "2.3em";
     
 }
 
-#bar .nottext{
+#bar .notificationboxtext{
     text-align: center;
     padding-top: 5%;
 }
@@ -196,7 +196,7 @@ size: "2.3em";
     font-size: 11px;
 }
 
-#bar .not21 {
+#bar .notificationbox21 {
     width: 100%;
     color: black;
     float: left;
@@ -208,7 +208,7 @@ size: "2.3em";
 }
     
 
-#bar .not1 {
+#bar .notificationbox1 {
 width: 100%;
 color: black;
 float: left;
@@ -219,7 +219,7 @@ padding-right: 5%;
 /* padding-top: 3%; */
 }
 
-#bar .not1noavaiable {
+#bar .notificationbox1noavaiable {
     width: 100%;
     color: black;
     float: left;
@@ -243,13 +243,13 @@ padding-right: 5%;
     } */
 
 
-#bar .not1text {
+#bar .notificationbox1text {
     margin-top: 5%;
     margin-left: 5%;
     font-size: 14px;
 }
 
-#bar .not1textnoavaiable {
+#bar .notificationbox1textnoavaiable {
     margin-top: 6%;
     margin-left: 0%;
     font-size: 13px;
@@ -262,7 +262,7 @@ padding-right: 5%;
         } */
 
 
-#bar .right-top-notbox {
+#bar .right-top-notificationbox {
     float: left;
     width: 100%;
     height: 100%;
