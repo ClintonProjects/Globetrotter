@@ -87,8 +87,8 @@ class Map extends Component {
         //polygonTemplate.tooltipHTML = renderToString(this.buildTooltipMenuGuest('{name}'));
 
         // Create hover state and set alternative fill color
-        //let hs = polygonTemplate.states.create("hover");
-        //hs.properties.fill = am4core.color("#17a2b8");
+        let hs = polygonTemplate.states.create("hover");
+        hs.properties.fill = am4core.color("#17a2b8");
 
         polygonTemplate.propertyFields.fill = "fill"; // fill in countries
 

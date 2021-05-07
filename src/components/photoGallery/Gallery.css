@@ -9,6 +9,10 @@
     position: relative;
   }
 
+.coarouselMaxWidth{
+  max-width: 50vw;
+}
+
 .galery-thumbnail {
   border-color: #020202 !important;
   box-shadow: 100 100 100px #030303 !important;

@@ -613,9 +613,10 @@ class Gallery extends Component {
                             </Dropdown>
                         </Row>
                     </Col>
+                    <Col/>
                     <Col xs={7} className="pl-4">
-                        <Row className={this.state.docs.length === 0 ? "d-none" : "contactUs p-3"}>
-                            <Row className="pb-2">
+                        <Row className={this.state.docs.length === 0 ? "d-none" : "contactUs p-3 coarouselMaxWidth"}>
+                            <Row className="pb-2 ">
                                 <OverlayTrigger
                                     //Bootstrap overlay popover inspired from https://react-bootstrap.netlify.app/components/overlays/
                                     trigger={['hover', 'focus']}
