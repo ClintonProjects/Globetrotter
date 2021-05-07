@@ -4,7 +4,7 @@ import "firebase/firestore"; // attach firestore
 import "firebase/auth"; // attach authentication
 import { Setting, settingsConverter } from "../fsObjConversion.js";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const firestore = firebase.firestore(); // create fs instance
 
@@ -12,9 +12,6 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullName: "",
-      birthday: "",
-      gender: "",
       password: "",
       updated: false,
       personRef: firestore
@@ -24,40 +21,45 @@ class Settings extends Component {
     };
     this.addData = this.addData.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    this.changeEmail = this.changeEmail.bind(this);
   }
   addData(event) {
     // adding user settings to firestore
     try {
       event.preventDefault();
-      // var fullname = document.getElementById("fullname");
-      // var birthday = document.getElementById("birthday");
-      // var gender = document.getElementById("gender");
-      // var email = document.getElementById("email");
-      var fullname = this.state.fullName;
-      var birthday = this.state.birthday;
-      var gender = this.state.gender;
+      var fullname = document.getElementById("fullname");
+      var birthday = document.getElementById("birthday");
+      var gender = document.getElementById("gender");
 
       this.state.personRef
         .doc(localStorage.getItem("uid"))
         .withConverter(settingsConverter)
-        .set(new Setting(fullname, birthday, gender));
-      console.log("details modified");
-      alert("Thanks! Your details are now saved.");
-      this.setState({ updated: true });
-      console.log(this.state.updated);
+        .set(new Setting(fullname.value, birthday.value, gender.value));
+      console.log("Details modified");
+      alert("Grand! Your details have been updated.");
     } catch (error) {
-      alert("invalid input");
+      alert("Invalid input");
       console.error(error);
     }
   }
 
+  // Method to be able to change your password
   changePassword() {
-    //var password = document.getElementById("password");
-    var password = this.state.password;
+    var password = document.getElementById("password");
     var user = firebase.auth().currentUser;
     user
-      .updatePassword(password)
+      .updatePassword(password.value) 
       .then(() => alert("Congratulations, your password has been changed"))
+      .catch((err) => alert(err.message));
+  }
+
+  // Method to be able to change your own email
+  changeEmail() {
+    var email = document.getElementById("email");
+    var user = firebase.auth().currentUser;
+    user
+      .updateEmail(email.value)
+      .then(() => alert("Congratulations, your email has been changed"))
       .catch((err) => alert(err.message));
   }
 
@@ -78,10 +80,6 @@ class Settings extends Component {
                     name="Name"
                     type="input"
                     fill_color_override="true"
-                    //added onChange event listeners to set state when user enters their data
-                    onChange={(event) => {
-                      this.setState({ fullName: event.target.value });
-                    }}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -91,10 +89,6 @@ class Settings extends Component {
                     name="birthday"
                     type="input"
                     fill_color_override="true"
-                    //added onChange event listeners to set state when user enters their data
-                    onChange={(event) => {
-                      this.setState({ birthday: event.target.value });
-                    }}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -104,10 +98,6 @@ class Settings extends Component {
                     name="gender"
                     type="input"
                     fill_color_override="true"
-                    //added onChange event listeners to set state when user enters their data
-                    onChange={(event) => {
-                      this.setState({ gender: event.target.value });
-                    }}
                   />
                 </Form.Group>
 
@@ -133,9 +123,33 @@ class Settings extends Component {
               </Row>
             )}
 
-            {/* change password had to be moved outside of the form for details or onSubmit changePassword
-            the form onSubmit (addData) was happening -> Line 70*/}
             <Form.Group>
+              <Form.Label>Email:</Form.Label>
+              <Form.Row className="pb-3">
+                <Col>
+                  <Form.Control
+                    id="email"
+                    className="whiteBackground"
+                    name="email"
+                    type="email"
+                    // onChange event listener to set state when user enters their data
+                    onChange={(event) => {
+                      this.setState({ email: event.target.value });
+                    }}
+                  />
+                  
+                </Col>
+                <Col>
+                  <Button
+                    variant="outline-info"
+                    type="submit"
+                    block
+                    onClick={this.changeEmail}
+                  >
+                    CHANGE EMAIL
+                  </Button>
+                </Col>
+              </Form.Row>
               <Form.Label>Password:</Form.Label>
               <Form.Row className="pb-3">
                 <Col>
@@ -144,13 +158,11 @@ class Settings extends Component {
                     className="whiteBackground"
                     name="password"
                     type="password"
-                    //added onChange event listeners to set state when user enters their data
+                    // onChange event listener to set state when user enters their data
                     onChange={(event) => {
                       this.setState({ password: event.target.value });
                     }}
-                    //value={""}
                   />
-                  {/* <input type="text" id="fname" name="fname"></input> */}
                 </Col>
                 <Col>
                   <Button
