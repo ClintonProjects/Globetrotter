@@ -3,7 +3,7 @@ import { Container, Form, Button, Row, Col, Image, OverlayTrigger, Popover, Inpu
 import "./RegisterMessage.css";
 import Map from './Map';
 import Login from '../Login/login.js';
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,25 +33,20 @@ export class RegisterMessage extends Component {
        
          <Row className="no-gutters">
            <Col>
-           {/* <Link to="/tripForm" ><u>Add a Trip</u></Link> */}
-           <a className="nounderline" href="/profile">
-           <Button className="buttonStyle" variant="primary" type="submit" block>LOGIN</Button>
-           </a>
+           <Link className="nounderline" to="/login" onClick={this.props.picBack}>
+           <Button className="buttonStyle" variant="primary" block>LOGIN</Button>
+           </Link>
            </Col>
            <Col xs={2} ><p className="h6 textColour text-center">or</p></Col>
            <Col>
-           <a className="nounderline" href="/register">
-           <Button onClick={this.kepUserLogedIn} className="buttonStyle" variant="primary" type="submit" block>REGISTER</Button>
-           </a>
+           <Link className="nounderline" to="/register" onClick={this.props.picBack}>
+           <Button onClick={this.kepUserLogedIn} className="buttonStyle" variant="primary" block>REGISTER</Button>
+           </Link>
            </Col>
          </Row>
        </Col>
        <Col/>
        </Row>
-
-      {/*} <div class="col-12 loginMessage text-center">
-        <Link className="logInMsg-nav-text" to="/profile">Login to unlock all features, Please Click to login</Link>
-    </div>*/}
 
      </Container>
 

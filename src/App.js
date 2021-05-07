@@ -20,13 +20,10 @@ import Login from "./components/Login/login.js";
 import { createHashHistory } from "history";
 import ForgotPass from "./components/ForgotPassword/forgotPass.js";
 import NavBar from "./components/NavBar/NavBar.js";
-import UploadPhotos from "./components/uploadPhotos/uploadPhotos.js";
 import Gallery from "./components/photoGallery/gallery.js";
 import TripForm from "./components/TripForm/TripForm.js";
 import Footer from "./components/footer/Footer.js";
-import Profile from "./components/Profile/profile.js";
 import Settings from "./components/settings/Settings.js";
-// import MapView from "./views/MapView/MapView";
 import "./App.css";
 
 class App extends Component {
@@ -34,38 +31,10 @@ class App extends Component {
     super(props);
 
     this.state = {
+      picBackground: false,
       authenticated: false,
       currentUser: null,
     };
-    this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
-  }
-  async componentDidMount() {
-    try {
-      this.getMessagesFromDatabase();
-    } catch (error) {
-      console.log(error);
-      this.setState({ errorMsg: error });
-    } // end of try catch
-  } // end of componentDidMount()
-  getMessagesFromDatabase() {
-    //for importing data from our FIREBASE database
-    let ref = Firebase.database().ref("");
-
-    ref.on("value", (snapshot) => {
-      // json array
-      let msgData = snapshot.val();
-      let newMessagesFromDB1 = [];
-      for (let m in msgData) {
-        // create a JSON object version of our object.
-        let currObject = {
-          id: msgData[m].id,
-        };
-        // add it to our newStateMessages array.
-        newMessagesFromDB1.push(currObject);
-      } // end for loop
-      // set state
-      this.setState({ users: newMessagesFromDB1 });
-    });
   }
   //check if user is authenticated,
   // if they are set to true, otherwise false
@@ -84,29 +53,43 @@ class App extends Component {
     });
   }
 
+  /*change the css class based on browser location*/
+  enablePicBackground = () => {
+    this.setState({picBackground: true});
+  }
+  /*change the css class based on browser location*/
+  disablePicBackground = () => {
+    this.setState({picBackground: false});
+  }
+
   render() {
     if (this.state.authenticated) {
       localStorage.setItem("uid", this.state.currentUser.uid);
       localStorage.setItem("email", this.state.currentUser.email);
     }
-    //else localStorage.setItem("uid", "K26KJF569YU6gNaIZOySCG6uoGB2");
-    // prevents error when /mapview is directly typed into the url
 
     //extract url information from browser (https://stackoverflow.com/a/52732656)
-    let location = window.location.pathname;
+    //let location = window.location.pathname;
     return (
-      /*change the css class based on browser location*/
-      <Container fluid className={
-        location !== "/" && location !== "/mapview" && location !== "/preloginmap"
-        ? "content pictureBackground" : "content "}>
+      
+      <div className={this.state.picBackground ? "pictureBackground" : "whiteBackground"}>
+      <Container fluid className="content">
         <Router>
           <Row>
-            <NavBar authenticated={this.state.authenticated} />
+            <NavBar authenticated={this.state.authenticated} 
+            picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
           </Row>
           <Row>
             <Switch>
-              <Route path="/" component={Preloginmap} exact />
-              <Route path="/about" component={About} />
+              <Route path="/" exact 
+                render={() => (
+                  <Preloginmap picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
+                )}
+              />
+              <Route path="/about" 
+              render={() => (
+                <About picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
+              )}/>
               <Route
                 path="/mapview"
                 render={() => (
@@ -118,7 +101,12 @@ class App extends Component {
               />
               <Route path="/preloginmap" component={Preloginmap} />
               <Route path="/contactus" component={ContactUs} />
-              <Route path="/login" component={Login} />
+              <Route path="/login" render={() => (
+                <Login
+                picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}
+                  authenticated={this.state.authenticated}
+                />
+              )} />
               <Route
                 path="/tripform"
                 render={() => (
@@ -131,20 +119,18 @@ class App extends Component {
               <Route path="/logout"
                 render={() => (
                   <Logout
+                    authenticated={this.state.authenticated}
+                    currentUser={this.state.currentUser} 
+                    picBack={this.enablePicBackground}  picNoBack={this.disablePicBackground}/>
+                )} />
+              <Route path="/register" 
+                render={() => (
+                  <Rego
+                    authenticated={this.state.authenticated}
                     currentUser={this.state.currentUser} />
                 )} />
-              <Route path="/register" component={Rego} />
               <Route path="/forgotPass" component={ForgotPass} />
               <Route path="/settings" component={Settings} />
-              <Route
-                path="/uploadPhotos"
-                render={() => (
-                  <UploadPhotos
-                    authenticated={this.state.authenticated}
-                    currentUser={this.state.currentUser}
-                  />
-                )}
-              />
               <Route
                 path="/gallery"
                 render={() => (
@@ -154,12 +140,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                path="/profile"
-                render={() => (
-                  <Profile authenticated={this.state.authenticated} />
-                )}
-              />
+              
             </Switch>
           </Row>
           <Row>
@@ -167,6 +148,7 @@ class App extends Component {
           </Row>
         </Router>
         </Container>
+        </div>
     );
   }
 }

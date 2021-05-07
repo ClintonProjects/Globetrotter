@@ -8,6 +8,24 @@
   justify-content: center;
   align-items: center;
 } */
+
+/* from  https://www.jotform.com/answers/983388-how-can-i-center-align-the-options-in-a-drop-down-field*/
+.select_center_align {
+  text-align-last: center;
+  text-align: center;
+  -ms-text-align-last: center;
+  -moz-text-align-last: center;
+}
+
+.trip_form_left_col{
+  max-width: 200px;
+}
+
+.trip_form_middle_col{
+  max-width: 300px;
+  min-width: 300px;
+}
+
 .trip-form {
   position: absolute;
   top: 50%;

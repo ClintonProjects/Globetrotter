@@ -3,15 +3,38 @@
     min-height: calc(100vh - 200px);
     /* IMPORTANT for this to match footer and nav bar heights (which need to be fixed!) */
     max-height: calc(100vh - 130px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     position: relative;
   }
+
+.coarouselMaxWidth{
+  max-width: 50vw;
+}
 
 .galery-thumbnail {
   border-color: #020202 !important;
   box-shadow: 100 100 100px #030303 !important;
 }
+
+.galery-thumbnail-row {
+  min-height: calc(10vh);
+  max-height: calc(15vh);
+  overflow: auto;
+}
+
+.white-text {
+  color: white;
+}
+
+.galery_small_text {
+  font-size: .7em !important;
+}
+.galery_med_text {
+  font-size: .8em !important;
+}
+
 .country-dropdown {
   position: relative;
   display: inline-block;

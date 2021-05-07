@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Firebase from "firebase/app";
 import 'firebase/auth';
 import "./forgotPass.css";
-import logo from "../NavBar/logo/fullLogoNew.png";
+import logo from "../NavBar/logo/logo_final_full.png";
 import {
   BrowserRouter as Router,
   Link,
@@ -57,7 +57,7 @@ class ForgotPass extends Component {
             <p className="h6 textColour text-center pb-2">Enter the email associated with your account. We'll send you a reset link.</p>
             {/* //display the error message to the user if they enter an invalid email or password */}
             {error && (<p> <strong className="text-danger">ERROR: {error.message} </strong> </p>)}
-            {this.state.message ? "Check your email inbox for further instructions" : null}
+            {this.state.message ? <p className="h6 textColour text-center pb-2">"Check your email inbox for further instructions"</p> : null}
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label className="formTextColour">Email address</Form.Label>
